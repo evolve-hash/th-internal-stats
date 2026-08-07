@@ -28,8 +28,8 @@
    ============================================================ */
 
 window.TH_CONFIG = {
-  SUPABASE_URL:      '',
-  SUPABASE_ANON_KEY: '',
+  SUPABASE_URL:      'sb_publishable_sl-6TJdp_ZExo8N93AFF-Q_7cX27eZO',
+  SUPABASE_ANON_KEY: 'sb_publishable_sl-6TJdp_ZExo8N93AFF-Q_7cX27eZO',
 
   // Table name created by supabase/schema.sql
   TABLE: 'transactions',
