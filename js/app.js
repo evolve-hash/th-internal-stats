@@ -224,23 +224,26 @@
     });
     var props = Object.keys(propMap).map(function (k) { return { label: k, count: propMap[k] }; })
       .sort(function (a, b) { return b.count - a.count; });
-    var heading = 'Property type' + (side ? ' — ' + side.toLowerCase() + ' side' : '');
-    if (props.length) {
-      $('prop-mix').innerHTML =
-        '<div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;">' +
-        esc(heading) + '</div><div id="prop-mix-bars"></div>';
-      var untyped = scoped.length - typed;
-      C.ranked('prop-mix-bars', props, {
-        pctBase: typed,
-        caption: 'Share of the ' + typed + ' ' + (side ? side.toLowerCase() + '-side ' : '') +
-                 'transactions with a recorded property type' +
-                 (untyped ? '; ' + untyped + ' left it blank in the source workbook.' : '.')
-      });
-    } else {
-      $('prop-mix').innerHTML =
-        '<div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;">' +
-        esc(heading) + '</div><div style="font-size:12px;color:var(--ink-3);">No property type recorded for this side.</div>';
+    // Build the shell once — rebuilding it every render would throw away the
+    // rows that C.ranked() reuses to animate the reorder.
+    var shell = $('prop-mix');
+    if (!shell.querySelector('.mix-subhead')) {
+      shell.innerHTML = '<div class="mix-subhead"></div><div id="prop-mix-bars"></div>' +
+                        '<div class="mix-empty" hidden>No property type recorded for this side.</div>';
     }
+    shell.querySelector('.mix-subhead').textContent =
+      'Property type' + (side ? ' — ' + side.toLowerCase() + ' side' : '');
+    shell.querySelector('.mix-empty').hidden = props.length > 0;
+
+    var untyped = scoped.length - typed;
+    C.ranked('prop-mix-bars', props, {
+      pctBase: typed,
+      caption: props.length
+        ? 'Share of the ' + typed + ' ' + (side ? side.toLowerCase() + '-side ' : '') +
+          'transactions with a recorded property type' +
+          (untyped ? '; ' + untyped + ' left it blank in the source workbook.' : '.')
+        : ''
+    });
   }
 
   function setMixSide(side) {

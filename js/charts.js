@@ -218,49 +218,145 @@ window.TH_CHARTS = (function () {
     });
   }
 
-  /* ---------- ranked ordinal bars ---------- */
+  /* ---------- ranked ordinal bars ----------
+     Rows are keyed by label and reused across renders, so switching the
+     All/Buyer/Seller filter reorders and resizes them instead of tearing the
+     list down. Movement uses FLIP: measure where each surviving row sits,
+     re-order the DOM, then play it back from its old position. */
+  var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function tweenNumber(node, to, suffix) {
+    var from = Number(node.getAttribute('data-n') || 0);
+    node.setAttribute('data-n', to);
+    if (REDUCED || from === to) { node.textContent = to + suffix(to); return; }
+    var t0 = null, dur = 480;
+    function step(ts) {
+      if (t0 === null) t0 = ts;
+      var p = Math.min((ts - t0) / dur, 1);
+      var e = 1 - Math.pow(1 - p, 3);                 // easeOutCubic
+      var v = Math.round(from + (to - from) * e);
+      node.textContent = v + suffix(v);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
   function ranked(hostId, items, opts) {
     opts = opts || {};
     var host = document.getElementById(hostId);
     if (!host) return;
-    host.innerHTML = '';
+
     // Percentages are of the whole population, which may be larger than the
     // rows shown (a truncated tail still belongs in the denominator).
     var total = opts.pctBase || items.reduce(function (a, d) { return a + d.count; }, 0) || 1;
     var max = Math.max.apply(null, items.map(function (d) { return d.count; })) || 1;
     // Rank only the real categories; catch-all buckets sit outside the ramp
     // so a darker step always means a bigger share.
-    var ranked = items.filter(function (d) { return !d.neutral; });
+    var realRanked = items.filter(function (d) { return !d.neutral; });
 
+    // --- FLIP, first pass: where is everything now? ---
+    var prev = {};
+    Array.prototype.forEach.call(host.querySelectorAll('.obar'), function (row) {
+      if (!row.classList.contains('is-leaving')) prev[row.getAttribute('data-key')] = row.offsetTop;
+    });
+
+    var pool = {};
+    Array.prototype.forEach.call(host.querySelectorAll('.obar'), function (row) {
+      pool[row.getAttribute('data-key')] = row;
+    });
+
+    var seen = {}, order = [];
     items.forEach(function (d, i) {
+      var key = d.label;
+      seen[key] = true;
       var pct = d.count / total * 100;
       var w = d.count / max * 100;
       var fill;
       if (d.neutral) {
         fill = 'var(--ink-3)';
       } else {
-        var rank = ranked.indexOf(d);
-        var step = Math.min(6, Math.max(1, 6 - Math.floor(rank * 6 / Math.max(ranked.length, 1))));
+        var rank = realRanked.indexOf(d);
+        var step = Math.min(6, Math.max(1, 6 - Math.floor(rank * 6 / Math.max(realRanked.length, 1))));
         fill = 'var(--ramp-' + step + ')';
       }
-      var row = document.createElement('div');
-      row.className = 'obar';
-      row.innerHTML =
-        '<div class="obar__label">' + d.label + '</div>' +
-        '<div class="obar__track"><div class="obar__fill" style="width:' + w + '%;background:' + fill + ';animation-delay:' + (i * 55) + 'ms"></div></div>' +
-        '<div class="obar__val">' + d.count + ' · ' + pct.toFixed(0) + '%</div>';
-      host.appendChild(row);
-      // force the width transition to run from 0
-      requestAnimationFrame(function () {
-        var f = row.querySelector('.obar__fill');
-        if (f) f.style.width = w + '%';
-      });
+
+      var row = pool[key];
+      var isNew = !row;
+      if (isNew) {
+        row = document.createElement('div');
+        row.className = 'obar';
+        row.setAttribute('data-key', key);
+        row.innerHTML =
+          '<div class="obar__label"></div>' +
+          '<div class="obar__track"><div class="obar__fill" style="width:0"></div></div>' +
+          '<div class="obar__val" data-n="0"></div>';
+        row.querySelector('.obar__label').textContent = d.label;
+      }
+      row.classList.remove('is-leaving');
+
+      var f = row.querySelector('.obar__fill');
+      f.style.background = fill;
+      var val = row.querySelector('.obar__val');
+      tweenNumber(val, d.count, function (v) { return ' · ' + Math.round(v / total * 100) + '%'; });
+
+      order.push({ row: row, w: w, isNew: isNew, i: i });
     });
-    if (opts && opts.caption) {
-      var c = document.createElement('div');
-      c.style.cssText = 'font-size:11px;color:var(--ink-3);margin-top:12px;line-height:1.5;';
-      c.textContent = opts.caption;
-      host.appendChild(c);
+
+    // Rows that no longer apply fade out, then leave for real.
+    Object.keys(pool).forEach(function (k) {
+      if (seen[k]) return;
+      var row = pool[k];
+      if (row.classList.contains('is-leaving')) return;
+      row.classList.add('is-leaving');
+      setTimeout(function () { if (row.parentNode) row.parentNode.removeChild(row); }, REDUCED ? 0 : 300);
+    });
+
+    // Re-order / insert. Appending an existing node moves it.
+    var caption = host.querySelector('.obar-caption');
+    order.forEach(function (o) { host.appendChild(o.row); });
+
+    // --- FLIP, second pass: play each survivor back from where it was ---
+    order.forEach(function (o) {
+      var was = prev[o.row.getAttribute('data-key')];
+      if (!REDUCED && was !== undefined) {
+        var dy = was - o.row.offsetTop;
+        if (dy) {
+          o.row.style.transition = 'none';
+          o.row.style.transform = 'translateY(' + dy + 'px)';
+          requestAnimationFrame(function () {
+            o.row.style.transition = 'transform .5s var(--ease), opacity .3s var(--ease)';
+            o.row.style.transform = '';
+          });
+        }
+      }
+      if (o.isNew) {
+        o.row.classList.add('is-entering');
+        o.row.style.animationDelay = Math.min(o.i * 45, 320) + 'ms';
+        // Drop the class once it has played, otherwise it sticks to the row
+        // forever and the next entrance never animates.
+        o.row.addEventListener('animationend', function onDone() {
+          o.row.classList.remove('is-entering');
+          o.row.style.animationDelay = '';
+          o.row.removeEventListener('animationend', onDone);
+        });
+      }
+      // Let the width land on the next frame so the CSS transition runs.
+      var f = o.row.querySelector('.obar__fill');
+      requestAnimationFrame(function () { f.style.width = o.w + '%'; });
+    });
+
+    // Caption lives at the bottom and is reused so it never flickers.
+    if (opts.caption) {
+      if (!caption) {
+        caption = document.createElement('div');
+        caption.className = 'obar-caption';
+        host.appendChild(caption);
+      } else {
+        host.appendChild(caption);
+      }
+      caption.textContent = opts.caption;
+    } else if (caption) {
+      caption.parentNode.removeChild(caption);
     }
   }
 
