@@ -185,6 +185,12 @@ deploy.sh               one-command deploy to GitHub Pages
 No build step, no framework, no npm install. It is plain HTML, CSS, and
 JavaScript — open `index.html` and it runs.
 
+**Cache busting.** The `<link>` and `<script>` tags in `index.html` carry a
+`?v=xxxxxxxx` build id derived from the asset contents. Without it, GitHub Pages
+and the browser keep serving the previous `app.css` / `app.js` after a push —
+you get the new HTML with the old styles and dead buttons. If you ever edit an
+asset by hand, change that id (any new value works) so browsers refetch.
+
 ## Troubleshooting
 
 **Badge says "This device" when it should say "Live"** — the URL or key in
