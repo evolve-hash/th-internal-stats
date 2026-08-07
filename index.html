@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Team Howe — Commission Dashboard</title>
+<meta name="description" content="Team Howe commission and production dashboard — San Francisco real estate, 2008 to present.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="preload" href="assets/fonts/montserrat-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <img class="brand__logo" id="brand-logo" src="assets/logo-light.png" alt="Team Howe">
+      <div class="brand__rule"></div>
+      <div class="brand__tag">Remarkably Savvy. Refreshingly Honest.</div>
+    </div>
+    <div class="header-actions">
+      <div class="conn conn--local" id="conn" title="Data source">
+        <span class="conn__dot"></span>
+        <span class="conn__label" id="conn-label">Local</span>
+      </div>
+      <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+      <button class="btn-add" id="btn-add">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        <span>Add Sale</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="page-head">
+    <h1>Commission &amp; Production Dashboard</h1>
+    <p id="page-sub">San Francisco · Compass · Sherri Howe, CA DRE# 01816621</p>
+  </div>
+
+  <div id="banner-slot"></div>
+
+  <!-- ================= YTD ================= -->
+  <section class="section">
+    <div class="section-head">
+      <h2>Year to Date</h2>
+      <span class="meta" id="ytd-meta"></span>
+    </div>
+    <div class="kpi-grid" id="ytd-tiles"></div>
+  </section>
+
+  <!-- ================= CAREER ================= -->
+  <section class="section">
+    <div class="section-head">
+      <h2>Career Totals</h2>
+      <span class="meta" id="career-meta"></span>
+    </div>
+    <div class="kpi-grid" id="career-tiles"></div>
+  </section>
+
+  <!-- ================= TRENDS ================= -->
+  <section class="section">
+    <div class="section-head"><h2>Production Over Time</h2></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card__head">
+          <h3 class="card__title">Sales Volume by Year</h3>
+          <p class="card__sub">Total closed sale price, all represented sides</p>
+        </div>
+        <div class="card__body"><div class="chart-holder"><svg class="chart" id="chart-volume" viewBox="0 0 560 250"></svg></div></div>
+      </div>
+      <div class="card">
+        <div class="card__head">
+          <h3 class="card__title">Transactions Closed by Year</h3>
+          <p class="card__sub">Number of closed sides represented</p>
+        </div>
+        <div class="card__body"><div class="chart-holder"><svg class="chart" id="chart-count" viewBox="0 0 560 250"></svg></div></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <div class="card__head">
+        <h3 class="card__title">Gross vs. Net Commission by Year</h3>
+        <p class="card__sub">Net is after referral fees, brokerage split, and TC / home-warranty deductions</p>
+      </div>
+      <div class="card__body">
+        <div class="legend">
+          <div class="legend-item"><span class="legend-swatch" style="background:var(--series-a)"></span>Gross commission</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:var(--series-b)"></span>Net commission</div>
+        </div>
+        <div class="chart-holder"><svg class="chart" id="chart-comm" viewBox="0 0 1160 270"></svg></div>
+      </div>
+      <p class="card__note">Net commission was not broken out in the source workbook before 2012 — those years show gross only.</p>
+    </div>
+  </section>
+
+  <!-- ================= MIX ================= -->
+  <section class="section">
+    <div class="section-head">
+      <h2>Where Business Comes From</h2>
+      <span class="meta" id="mix-meta"></span>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card__head">
+          <h3 class="card__title">Source of Business</h3>
+          <p class="card__sub">Ranked by transaction count — darker means a larger share</p>
+        </div>
+        <div class="card__body"><div id="source-mix"></div></div>
+      </div>
+      <div class="card">
+        <div class="card__head">
+          <h3 class="card__title">Buyer vs. Seller Side</h3>
+          <p class="card__sub" id="side-sub"></p>
+        </div>
+        <div class="card__body">
+          <div class="splitbar" id="side-split"></div>
+          <div class="legend" id="side-legend"></div>
+          <div id="prop-mix" style="margin-top:20px;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TABLE ================= -->
+  <section class="section">
+    <div class="section-head">
+      <h2>All Transactions</h2>
+      <span class="meta">Click any column to sort · hover a row to edit or remove</span>
+    </div>
+    <div class="card" style="overflow:hidden;">
+      <div class="toolbar">
+        <div class="field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input class="input input--search" id="f-search" type="search" placeholder="Search client, address, referrer…" autocomplete="off">
+        </div>
+        <select class="select" id="f-year"><option value="">All years</option></select>
+        <select class="select" id="f-side"><option value="">Both sides</option><option>Buyer</option><option>Seller</option></select>
+        <select class="select" id="f-source"><option value="">All sources</option></select>
+        <button class="btn-ghost" id="f-reset">Reset</button>
+        <div class="toolbar__spacer"></div>
+        <span class="toolbar__count" id="table-count"></span>
+        <button class="btn-ghost" id="btn-export" title="Download the current view as CSV">Export CSV</button>
+      </div>
+      <div class="table-scroll">
+        <table class="tx">
+          <thead>
+            <tr>
+              <th data-sort="date">Date<span class="sort-arrow">▲</span></th>
+              <th data-sort="client">Client<span class="sort-arrow">▲</span></th>
+              <th data-sort="side">Side<span class="sort-arrow">▲</span></th>
+              <th data-sort="prop_type">Type<span class="sort-arrow">▲</span></th>
+              <th data-sort="address">Address<span class="sort-arrow">▲</span></th>
+              <th data-sort="sale_price" style="text-align:right">Sale Price<span class="sort-arrow">▲</span></th>
+              <th data-sort="gross_comm" style="text-align:right">Gross<span class="sort-arrow">▲</span></th>
+              <th data-sort="net_comm" style="text-align:right">Net<span class="sort-arrow">▲</span></th>
+              <th data-sort="source">Source<span class="sort-arrow">▲</span></th>
+              <th class="no-sort" style="text-align:right">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody id="tx-body"></tbody>
+        </table>
+      </div>
+      <div id="table-empty"></div>
+      <div class="pager" id="pager"></div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <strong>Team Howe</strong> · Compass · 3512 16th Street, San Francisco, CA 94114 · Sherri Howe, CA DRE# 01816621 · Compass CA DRE# 01527235<br>
+    Seeded from <strong>Commission_tracker1.xlsx</strong> (2008–2026). Year counts and volume reconcile to the workbook's original "Stats" tab within 0–3 transactions per year.<br>
+    <span id="footer-storage"></span>
+  </footer>
+
+</main>
+
+<!-- ================= MODAL ================= -->
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal__head">
+      <h3 id="modal-title">Add a Sale</h3>
+      <button class="modal__close" id="modal-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="tx-form">
+      <div class="modal__body">
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="i-date">Closing date *</label>
+            <input class="input" type="date" id="i-date" name="date" required>
+          </div>
+          <div class="form-field">
+            <label for="i-client">Client name *</label>
+            <input class="input" type="text" id="i-client" name="client" required placeholder="Jane &amp; John Smith">
+          </div>
+          <div class="form-field">
+            <label for="i-side">Side</label>
+            <select class="select" id="i-side" name="side">
+              <option value="">—</option><option>Buyer</option><option>Seller</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="i-prop">Property type</label>
+            <select class="select" id="i-prop" name="prop_type">
+              <option value="">—</option>
+              <option>Single Family</option><option>Condo</option><option>TIC</option>
+              <option>Duplex</option><option>2-Unit</option><option>Multi-Unit</option>
+              <option>Co-op</option><option>Loft</option>
+            </select>
+          </div>
+          <div class="form-field form-field--full">
+            <label for="i-address">Address</label>
+            <input class="input" type="text" id="i-address" name="address" placeholder="1234 Guerrero Street">
+          </div>
+          <div class="form-field">
+            <label for="i-city">City</label>
+            <input class="input" type="text" id="i-city" name="city" placeholder="San Francisco">
+          </div>
+          <div class="form-field">
+            <label for="i-price">Sale price ($) *</label>
+            <input class="input" type="number" id="i-price" name="sale_price" required min="0" step="1000" placeholder="1500000">
+          </div>
+          <div class="form-field">
+            <label for="i-gross">Gross commission ($)</label>
+            <input class="input" type="number" id="i-gross" name="gross_comm" min="0" step="0.01" placeholder="37500">
+            <span class="hint" id="hint-gross">Leave blank to auto-fill at 2.5% of sale price</span>
+          </div>
+          <div class="form-field">
+            <label for="i-net">Net commission ($)</label>
+            <input class="input" type="number" id="i-net" name="net_comm" min="0" step="0.01" placeholder="31875">
+            <span class="hint">What actually landed after splits and deductions</span>
+          </div>
+          <div class="form-field">
+            <label for="i-source">Source</label>
+            <select class="select" id="i-source" name="source">
+              <option>Referral</option><option>Repeat client</option><option>Sphere of influence</option>
+              <option>Marketing</option><option>GGMG community</option><option>Open house</option>
+              <option>Teammate's client</option><option>Networking</option><option>Yelp</option>
+              <option>Self-generated</option><option>Other</option><option>Not recorded</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="i-referrer">Referrer name</label>
+            <input class="input" type="text" id="i-referrer" name="referrer" placeholder="Who sent them your way">
+          </div>
+        </div>
+      </div>
+      <div class="modal__foot">
+        <button type="button" class="btn-secondary" id="modal-cancel">Cancel</button>
+        <button type="submit" class="btn-primary" id="modal-save">Save Sale</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script src="js/config.js"></script>
+<script src="js/seed.js"></script>
+<script src="js/store.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

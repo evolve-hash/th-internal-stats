@@ -1,0 +1,41 @@
+/* Montserrat — the teamhowe.com brand typeface, self-hosted.
+   Kept local rather than loaded from Google Fonts so the dashboard
+   renders identically offline, on a locked-down network, and without
+   handing a third party a request log of who opened it.
+   Source: @fontsource/montserrat (SIL Open Font License 1.1). */
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/montserrat-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/montserrat-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/fonts/montserrat-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/montserrat-latin-700-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../assets/fonts/montserrat-latin-800-normal.woff2') format('woff2');
+}
