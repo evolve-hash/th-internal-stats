@@ -28,8 +28,8 @@
    ============================================================ */
 
 window.TH_CONFIG = {
-  SUPABASE_URL:      'sb_publishable_sl-6TJdp_ZExo8N93AFF-Q_7cX27eZO',
-  SUPABASE_ANON_KEY: 'sb_publishable_sl-6TJdp_ZExo8N93AFF-Q_7cX27eZO',
+  SUPABASE_URL:      'https://evolve-hash.github.io/th-internal-stats',
+  SUPABASE_ANON_KEY: 'sb_publishable_y2cgcB3flNswsyPo0OAIKw_i4Iv6DM6',
 
   // Table name created by supabase/schema.sql
   TABLE: 'transactions',
