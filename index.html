@@ -106,13 +106,20 @@
   <section class="section">
     <div class="section-head">
       <h2>Where Business Comes From</h2>
-      <span class="meta" id="mix-meta"></span>
+      <div class="section-head__right">
+        <span class="meta" id="mix-meta"></span>
+        <div class="seg" id="mix-side" role="group" aria-label="Break down by side">
+          <button type="button" class="seg__btn is-on" data-side="">All</button>
+          <button type="button" class="seg__btn" data-side="Buyer">Buyer</button>
+          <button type="button" class="seg__btn" data-side="Seller">Seller</button>
+        </div>
+      </div>
     </div>
     <div class="grid-3">
       <div class="card">
         <div class="card__head">
           <h3 class="card__title">Source of Business</h3>
-          <p class="card__sub">Ranked by transaction count — darker means a larger share</p>
+          <p class="card__sub" id="source-sub">Ranked by transaction count — darker means a larger share</p>
         </div>
         <div class="card__body"><div id="source-mix"></div></div>
       </div>

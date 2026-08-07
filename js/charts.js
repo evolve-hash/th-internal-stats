@@ -17,13 +17,61 @@ window.TH_CHARTS = (function () {
     return n;
   }
 
+  var hideTimer = null;
+  var tipVisible = false;
+
   function showTip(evt, html) {
+    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
     tip.innerHTML = html;
     tip.style.opacity = '1';
-    tip.style.left = evt.clientX + 'px';
-    tip.style.top = evt.clientY + 'px';
+    tipVisible = true;
+
+    // Keep the bubble inside the viewport — on a phone it otherwise runs off
+    // the edge and gets clipped.
+    var pad = 8;
+    tip.style.left = '-9999px';
+    var w = tip.offsetWidth, h = tip.offsetHeight;
+    var x = Math.min(Math.max(evt.clientX, w / 2 + pad), window.innerWidth - w / 2 - pad);
+    var y = evt.clientY;
+    if (y - h - 10 < pad) y = evt.clientY + h + 26;   // flip below when near the top
+    tip.style.left = x + 'px';
+    tip.style.top = y + 'px';
+
+    // A touch never fires mouseleave/pointerleave, so without this the bubble
+    // would sit there forever. Auto-retire it.
+    if (evt.pointerType === 'touch') hideTimer = setTimeout(hideTip, 2600);
   }
-  function hideTip() { tip.style.opacity = '0'; }
+
+  function hideTip() {
+    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+    tip.style.opacity = '0';
+    tipVisible = false;
+  }
+
+  // Safety nets for touch: scrolling away or tapping outside a chart dismisses
+  // the bubble. (touchmove is deliberately NOT here — a tap with a pixel of
+  // finger travel would kill the tooltip before it was ever read.)
+  ['scroll', 'touchcancel'].forEach(function (ev) {
+    window.addEventListener(ev, function () { if (tipVisible) hideTip(); }, { passive: true });
+  });
+  document.addEventListener('pointerdown', function (e) {
+    if (tipVisible && !(e.target.closest && e.target.closest('.chart-holder'))) hideTip();
+  }, true);
+  document.addEventListener('visibilitychange', function () { if (document.hidden) hideTip(); });
+
+  function bindTip(node, htmlFor) {
+    var show = function (e) { showTip(e, htmlFor()); };
+    node.addEventListener('pointermove', show);
+    node.addEventListener('pointerdown', show);
+    // A touch pointer stops existing the instant the finger lifts, so the
+    // browser fires pointerleave immediately after every tap. Honouring it
+    // would blank the tooltip before it could be read — on touch the timer,
+    // the scroll handler and the tap-outside handler do the dismissing.
+    node.addEventListener('pointerleave', function (e) {
+      if (e.pointerType !== 'touch') hideTip();
+    });
+    node.addEventListener('pointercancel', hideTip);
+  }
 
   function money(v, compact) {
     if (v === null || v === undefined) return '—';
@@ -91,10 +139,9 @@ window.TH_CHARTS = (function () {
       g.appendChild(rect);
 
       var hit = el('rect', { x: padL + i * slot, y: padT, width: slot, height: plotH, 'class': 'bar-hit' });
-      hit.addEventListener('mousemove', function (e) {
-        showTip(e, '<strong>' + d.year + '</strong><div class="t-row"><span>' + opts.tipLabel + '</span><span>' + fmt(v) + '</span></div>');
+      bindTip(hit, function () {
+        return '<strong>' + d.year + '</strong><div class="t-row"><span>' + opts.tipLabel + '</span><span>' + fmt(v) + '</span></div>';
       });
-      hit.addEventListener('mouseleave', hideTip);
       g.appendChild(hit);
       svg.appendChild(g);
 
@@ -157,13 +204,11 @@ window.TH_CHARTS = (function () {
       });
 
       var hit = el('rect', { x: padL + i * slot, y: padT, width: slot, height: plotH, 'class': 'bar-hit' });
-      hit.addEventListener('mousemove', function (e) {
-        showTip(e,
-          '<strong>' + d.year + '</strong>' +
+      bindTip(hit, function () {
+        return '<strong>' + d.year + '</strong>' +
           '<div class="t-row"><span>Gross</span><span>' + money(d[kA]) + '</span></div>' +
-          '<div class="t-row"><span>Net</span><span>' + (d[kB] ? money(d[kB]) : 'not tracked') + '</span></div>');
+          '<div class="t-row"><span>Net</span><span>' + (d[kB] ? money(d[kB]) : 'not tracked') + '</span></div>';
       });
-      hit.addEventListener('mouseleave', hideTip);
       g.appendChild(hit);
       svg.appendChild(g);
 

@@ -97,17 +97,85 @@ SITE_URL="$(gh api "repos/$GH_USER/$REPO_NAME/pages" --jq .html_url 2>/dev/null 
 
 # ---------- 5. Supabase (optional) ----------
 bold "5/5  Supabase (optional — press Enter to skip)"
-info "Paste these from Supabase → Settings → API Keys."
-info "The publishable key is meant to be public. Never paste a secret key here."
 echo
-read -r -p "  Project URL      : " SB_URL || SB_URL=""
-read -r -p "  Publishable key  : " SB_KEY || SB_KEY=""
+info "Open your project on supabase.com in a browser, then:"
+echo
+info "  Project URL     Easiest: copy the address bar itself, the whole thing —"
+info "                  https://supabase.com/dashboard/project/....  I'll convert it."
+info "                  (A plain https://xxxx.supabase.co works too.)"
+echo
+info "  Publishable key  Settings ▸ API Keys.  Starts with  sb_publishable_"
+echo
+info "These are two different values. The publishable key is meant to be public;"
+info "never paste a secret key here. Press Enter at the first prompt to skip."
+echo
+
+# Accept anything that identifies the project and normalise it ourselves:
+#   https://abcdefgh.supabase.co                          → as-is
+#   https://supabase.com/dashboard/project/abcdefgh/...   → derive it
+#   abcdefgh                                              → derive it
+# Anything else gets a specific explanation rather than a generic retry.
+NORMALISED=""
+normalise_url() {
+  local v="${1%/}" rest ref
+  NORMALISED=""
+  case "$v" in
+    https://*.supabase.co|https://*.supabase.in)
+      NORMALISED="$v"; return 0 ;;
+    https://supabase.com/dashboard/project/*|http://supabase.com/dashboard/project/*)
+      rest="${v#*://supabase.com/dashboard/project/}"
+      ref="${rest%%/*}"
+      [ -n "$ref" ] && { NORMALISED="https://${ref}.supabase.co"; return 0; }
+      warn "Couldn't find the project id in that dashboard link."; return 1 ;;
+    *github.io*|*github.com*)
+      warn "That's your GitHub site — nothing to do with Supabase."
+      warn "The one I need is on supabase.com, in the SAME browser tab where your project is open."
+      return 1 ;;
+    sb_publishable_*|sb_secret_*|eyJ*)
+      warn "That's an API key, not the URL. The key goes in the NEXT question."; return 1 ;;
+    http://*|https://*)
+      warn "Not a Supabase address. Expected https://<project-id>.supabase.co"; return 1 ;;
+    '') return 1 ;;
+    *)
+      case "$v" in
+        *[!a-zA-Z0-9]*) warn "Expected https://<project-id>.supabase.co, or just the project id."; return 1 ;;
+        *) if [ ${#v} -ge 15 ]; then NORMALISED="https://${v}.supabase.co"; return 0; fi
+           warn "That looks too short to be a project id."; return 1 ;;
+      esac ;;
+  esac
+  return 1
+}
+
+SB_URL=""; SB_KEY=""
+for _ in 1 2 3 4; do
+  read -r -p "  Project URL      : " REPLY_URL || REPLY_URL=""
+  [ -z "$REPLY_URL" ] && { SB_URL=""; break; }    # empty = skip Supabase entirely
+  if normalise_url "$REPLY_URL"; then
+    SB_URL="$NORMALISED"
+    [ "$SB_URL" != "${REPLY_URL%/}" ] && ok "read that as  $SB_URL"
+    break
+  fi
+  SB_URL=""
+done
+
+if [ -n "$SB_URL" ]; then
+  for _ in 1 2 3; do
+    read -r -p "  Publishable key  : " SB_KEY || SB_KEY=""
+    [ -z "$SB_KEY" ] && break
+    case "$SB_KEY" in
+      sb_secret_*|*service_role*)
+        die "That is a SECRET key. Copy the publishable one instead — a secret key must never go in a public repo." ;;
+      https://*)
+        warn "That's the project URL again, not the key. The key starts with sb_publishable_" ; SB_KEY="" ; continue ;;
+      sb_publishable_*|eyJ*) break ;;
+      *)
+        warn "Expected a key starting with sb_publishable_ (or a legacy key starting eyJ)" ; SB_KEY="" ;;
+    esac
+  done
+fi
 
 if [ -n "${SB_URL:-}" ] && [ -n "${SB_KEY:-}" ]; then
-  case "$SB_KEY" in
-    sb_secret_*|*service_role*)
-      die "That looks like a SECRET key. Go back and copy the publishable one — the secret key must never go in a public repo." ;;
-  esac
+  [ "$SB_URL" = "$SB_KEY" ] && die "You pasted the same value twice. The URL and the key are different things, on different pages."
   python3 - "$SB_URL" "$SB_KEY" <<'PY'
 import re, sys, pathlib
 url, key = sys.argv[1].strip().rstrip('/'), sys.argv[2].strip()

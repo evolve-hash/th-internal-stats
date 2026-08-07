@@ -13,6 +13,7 @@
   var state = {
     rows: [],
     search: '', year: '', side: '', source: '',
+    mixSide: '',                       // side filter for the business-mix section
     sortKey: 'date', sortDir: 'desc',
     page: 1, perPage: 25,
     editingId: null
@@ -164,9 +165,18 @@
       tipLabel: 'Transactions' });
     C.grouped('chart-comm', years, { keyA: 'gross_comm', keyB: 'net_comm' });
 
+    renderMix(rows);
+  }
+
+  /* ---- "Where business comes from", filterable by side ---- */
+  function renderMix(rows) {
+    var side = state.mixSide;                       // '' | 'Buyer' | 'Seller'
+    var scoped = side ? rows.filter(function (r) { return r.side === side; }) : rows;
+    var noun = side ? side.toLowerCase() + '-side transactions' : 'closed transactions';
+
     // Source mix
     var srcMap = {};
-    rows.forEach(function (r) {
+    scoped.forEach(function (r) {
       var k = r.source || 'Not recorded';
       srcMap[k] = (srcMap[k] || 0) + 1;
     });
@@ -179,22 +189,27 @@
       src = src.slice(0, TOP);
       if (rest) src.push({ label: 'Smaller sources', count: rest, neutral: true });
     }
-    C.ranked('source-mix', src, { pctBase: rows.length });
-    $('mix-meta').textContent = rows.length.toLocaleString('en-US') + ' closed transactions';
+    C.ranked('source-mix', src, { pctBase: scoped.length });
 
-    // Buyer / seller split
+    $('source-sub').textContent = side
+      ? 'Where Team Howe\'s ' + side.toLowerCase() + ' business came from — ' + scoped.length + ' transactions'
+      : 'Ranked by transaction count — darker means a larger share';
+    $('mix-meta').textContent = scoped.length.toLocaleString('en-US') + ' ' + noun;
+
+    // Buyer / seller split — always the full picture, and doubles as the filter
     var buyer = rows.filter(function (r) { return r.side === 'Buyer'; }).length;
     var seller = rows.filter(function (r) { return r.side === 'Seller'; }).length;
     var known = buyer + seller;
-    var unknown = rows.length - known;
     $('side-sub').textContent = known
-      ? 'Of the ' + known + ' transactions where the side was recorded'
+      ? 'Of the ' + known + ' transactions where the side was recorded · tap a bar to filter'
       : 'No side recorded yet';
     if (known) {
       var bp = buyer / known * 100, sp = seller / known * 100;
       $('side-split').innerHTML =
-        '<div class="splitbar__seg" style="flex:0 0 ' + bp + '%;background:var(--ramp-5);color:#fff">' + buyer + ' Buyer</div>' +
-        '<div class="splitbar__seg" style="flex:0 0 ' + sp + '%;background:var(--ramp-2);color:#0b0b0b">' + seller + ' Seller</div>';
+        '<div class="splitbar__seg' + (side === 'Seller' ? ' is-dim' : '') + '" data-side="Buyer" ' +
+          'style="flex:0 0 ' + bp + '%;background:var(--ramp-5);color:#fff">' + buyer + ' Buyer</div>' +
+        '<div class="splitbar__seg' + (side === 'Buyer' ? ' is-dim' : '') + '" data-side="Seller" ' +
+          'style="flex:0 0 ' + sp + '%;background:var(--ramp-2);color:#0b0b0b">' + seller + ' Seller</div>';
       $('side-legend').innerHTML =
         '<div class="legend-item"><span class="legend-swatch" style="background:var(--ramp-5)"></span>Buyer side — ' + bp.toFixed(0) + '%</div>' +
         '<div class="legend-item"><span class="legend-swatch" style="background:var(--ramp-2)"></span>Seller side — ' + sp.toFixed(0) + '%</div>';
@@ -204,23 +219,49 @@
 
     // Property type mix
     var propMap = {}, typed = 0;
-    rows.forEach(function (r) {
+    scoped.forEach(function (r) {
       if (r.prop_type) { propMap[r.prop_type] = (propMap[r.prop_type] || 0) + 1; typed++; }
     });
     var props = Object.keys(propMap).map(function (k) { return { label: k, count: propMap[k] }; })
       .sort(function (a, b) { return b.count - a.count; });
+    var heading = 'Property type' + (side ? ' — ' + side.toLowerCase() + ' side' : '');
     if (props.length) {
-      $('prop-mix').innerHTML = '<div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;">Property type</div><div id="prop-mix-bars"></div>';
-      var untyped = rows.length - typed;
+      $('prop-mix').innerHTML =
+        '<div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;">' +
+        esc(heading) + '</div><div id="prop-mix-bars"></div>';
+      var untyped = scoped.length - typed;
       C.ranked('prop-mix-bars', props, {
         pctBase: typed,
-        caption: 'Share of the ' + typed + ' transactions with a recorded property type' +
-                 (untyped ? '; ' + untyped + ' older records left it blank in the source workbook.' : '.')
+        caption: 'Share of the ' + typed + ' ' + (side ? side.toLowerCase() + '-side ' : '') +
+                 'transactions with a recorded property type' +
+                 (untyped ? '; ' + untyped + ' left it blank in the source workbook.' : '.')
       });
     } else {
-      $('prop-mix').innerHTML = '';
+      $('prop-mix').innerHTML =
+        '<div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;">' +
+        esc(heading) + '</div><div style="font-size:12px;color:var(--ink-3);">No property type recorded for this side.</div>';
     }
   }
+
+  function setMixSide(side) {
+    if (state.mixSide === side) return;
+    state.mixSide = side;
+    Array.prototype.forEach.call(document.querySelectorAll('#mix-side .seg__btn'), function (b) {
+      b.classList.toggle('is-on', b.getAttribute('data-side') === side);
+    });
+    renderMix(state.rows);
+  }
+
+  $('mix-side').addEventListener('click', function (e) {
+    var b = e.target.closest('.seg__btn');
+    if (b) setMixSide(b.getAttribute('data-side'));
+  });
+  $('side-split').addEventListener('click', function (e) {
+    var s = e.target.closest('.splitbar__seg');
+    if (!s) return;
+    var v = s.getAttribute('data-side');
+    setMixSide(state.mixSide === v ? '' : v);   // tap the active one to clear
+  });
 
   /* ==================== TABLE ==================== */
   function filtered() {

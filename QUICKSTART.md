@@ -77,10 +77,19 @@ you add on your laptop won't show up on Sherri's.
 3. Left sidebar → **SQL Editor** → **New query**.
 4. Open `supabase/schema.sql` from the unzipped folder, copy **the whole file**,
    paste, **Run**. Expect "Success. No rows returned".
-5. Left sidebar → **Settings** (gear) → **API Keys**. You need two values:
-   - **Project URL** — looks like `https://abcdefgh.supabase.co`
-     (under Settings → **API**, or the **Connect** button at the top)
-   - **Publishable key** — starts with `sb_publishable_...`
+5. You need two values, and they live on **two different pages**:
+
+   - **Project URL** → Settings → **Data API** (or the **Connect** button at the
+     top of the dashboard). Looks like `https://abcdefgh.supabase.co`.
+
+     > Shortcut that always works: look at your browser's address bar. If it
+     > reads `supabase.com/dashboard/project/**abcdefgh**`, then your Project
+     > URL is `https://abcdefgh.supabase.co`.
+
+   - **Publishable key** → Settings → **API Keys**. Starts `sb_publishable_...`.
+
+   The **API Keys** page does *not* show the Project URL. Don't paste the key
+   into both boxes — that's the single easiest way to break this.
 
    > Supabase renamed these in 2025. If your project shows a **Legacy keys**
    > tab with an `anon` `public` key starting `eyJ...`, that works too — but

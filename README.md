@@ -10,6 +10,7 @@ required. Every chart and KPI recalculates instantly.
   brand blue `#6787b8` only.
 - Light and dark mode, remembered per device.
 - Sortable, searchable, filterable, paginated transaction table.
+- Source-of-business and property-type mix, filterable by buyer vs. seller side.
 - CSV export of whatever is currently filtered.
 - Works on desktop, tablet, and phone.
 
@@ -64,8 +65,12 @@ credit card required, and no charge unless you deliberately upgrade.
 
 ### 2. Point the app at it (2 min)
 
-1. In Supabase: **Settings** (gear) → **API Keys**.
+1. The two values live on **different pages**:
+   - **Project URL** → Settings → **Data API**, or the **Connect** button.
+     (Equivalently: `https://<the-id-in-your-address-bar>.supabase.co`.)
+   - **Publishable key** → Settings → **API Keys**.
 2. Copy the **Project URL** and the **publishable key** (`sb_publishable_...`).
+   They are different strings — the API Keys page has no URL on it.
    - If your project shows a **Legacy keys** tab with an `anon` `public` key
      starting `eyJ...`, that works identically — but the legacy keys retire at
      the end of 2026, so prefer the publishable one.
@@ -122,7 +127,16 @@ The year / side / source dropdowns stack on top of the search.
 
 **Export** — *Export CSV* downloads exactly what's on screen after filtering.
 
+**Break the mix down by side** — the *All · Buyer · Seller* control in the
+"Where business comes from" header re-cuts both the source-of-business and the
+property-type charts for that side only. You can also tap either half of the
+buyer/seller bar to filter, and tap it again to clear. It scopes that section
+only — the KPIs, the trend charts and the table are unaffected.
+
 **Dark mode** — the moon/sun button in the header. Remembered per device.
+
+**On a phone** — tap a bar to see its tooltip; it clears itself after a moment,
+or when you scroll or tap elsewhere.
 
 ---
 
