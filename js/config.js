@@ -28,7 +28,7 @@
    ============================================================ */
 
 window.TH_CONFIG = {
-  SUPABASE_URL:      'https://supabase.com/dashboard/project/dwosqvtnybwhgcbkwzbm',
+  SUPABASE_URL:      'https://dwosqvtnybwhgcbkwzbm.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_sl-6TJdp_ZExo8N93AFF-Q_7cX27eZO',
 
   // Table name created by supabase/schema.sql
