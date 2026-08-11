@@ -44,6 +44,70 @@
     render();               // charts re-read CSS vars
   });
 
+  /* ==================== AUTH ====================
+     Reading is open to anyone with the link. Writing needs a signed-in user,
+     enforced in the database by row-level security — the UI gating below is
+     only there so nobody is offered a button that would fail. */
+  function applyAuthState() {
+    var canWrite = store.canWrite();
+    var needsAuth = store.authAvailable();
+    var user = store.user();
+
+    document.body.classList.toggle('is-readonly', !canWrite);
+    $('btn-signin').hidden = !needsAuth || !!user;
+    $('who').hidden = !user;
+    if (user) $('who-email').textContent = user.email || 'signed in';
+
+    var meta = document.querySelector('.section-head .meta');
+    if (meta && meta.textContent.indexOf('hover a row') > -1 && !canWrite) {
+      meta.textContent = 'Click any column to sort';
+    }
+  }
+
+  var authBackdrop = $('auth-backdrop');
+  function openAuth() {
+    $('auth-error').hidden = true;
+    $('auth-form').reset();
+    authBackdrop.classList.add('open');
+    setTimeout(function () { $('auth-email').focus(); }, 60);
+  }
+  function closeAuth() { authBackdrop.classList.remove('open'); }
+
+  $('btn-signin').addEventListener('click', openAuth);
+  $('auth-close').addEventListener('click', closeAuth);
+  $('auth-cancel').addEventListener('click', closeAuth);
+  authBackdrop.addEventListener('click', function (e) { if (e.target === authBackdrop) closeAuth(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && authBackdrop.classList.contains('open')) closeAuth();
+  });
+
+  $('auth-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = $('auth-submit');
+    var err = $('auth-error');
+    err.hidden = true;
+    btn.disabled = true; btn.textContent = 'Signing in…';
+    store.signIn($('auth-email').value.trim(), $('auth-pass').value)
+      .then(function (user) {
+        closeAuth();
+        toast('Signed in as ' + (user.email || 'you') + '.');
+      })
+      .catch(function (e2) {
+        var m = String(e2.message || e2);
+        if (/invalid login credentials/i.test(m)) m = 'That email and password combination did not match. Check both, or reset the password in Supabase.';
+        else if (/email not confirmed/i.test(m)) m = 'That account exists but was never confirmed. In Supabase, open the user and use "Confirm email".';
+        err.textContent = m;
+        err.hidden = false;
+      })
+      .finally(function () { btn.disabled = false; btn.textContent = 'Sign in'; });
+  });
+
+  $('btn-signout').addEventListener('click', function () {
+    store.signOut().then(function () { toast('Signed out. You can still read everything.'); });
+  });
+
+  store.onAuthChange(function () { applyAuthState(); });
+
   /* ==================== TOASTS ==================== */
   function toast(msg) {
     var wrap = $('toast-wrap');
@@ -442,6 +506,7 @@
     ['date','client','side','prop_type','address','city','sale_price','gross_comm','net_comm','source','referrer']
       .forEach(function (k) { rec[k] = fd.get(k); });
 
+    if (!store.canWrite()) { closeModal(); openAuth(); return; }
     if (!rec.date || !rec.client || !rec.sale_price) {
       toast('Date, client, and sale price are required.');
       return;
@@ -481,6 +546,7 @@
   $('tx-body').addEventListener('click', function (e) {
     var btn = e.target.closest('[data-act]');
     if (!btn) return;
+    if (!store.canWrite()) { openAuth(); return; }
     var id = btn.closest('tr').getAttribute('data-id');
     var row = state.rows.find(function (r) { return String(r.id) === String(id); });
     if (!row) return;
@@ -577,9 +643,19 @@
   function setupBanner(info) {
     if (info.mode === 'cloud') return;
     if (safeGet('teamhowe.banner.dismissed') === '1') return;
-    var msg = info.error
-      ? '<strong>Could not reach Supabase</strong>, so the dashboard is running on this device only. Check the URL and anon key in <strong>js/config.js</strong>. (' + esc(info.error) + ')'
-      : '<strong>Running on this device.</strong> Edits are saved in this browser only — Sherri would not see them. Add your Supabase project URL and anon key to <strong>js/config.js</strong> to make the data shared and live. See <strong>README.md</strong> for the 10-minute setup.';
+    var msg;
+    if (info.error) {
+      msg = '<strong>Could not reach your database, so this is the built-in copy of the 521 sales.</strong> ' +
+            'Nothing has been lost — the live data is still in Supabase. Most likely one of: the project is ' +
+            '<strong>paused</strong> (free projects sleep after a week idle — open it at supabase.com and press Restore), ' +
+            'the URL or key in <strong>js/config.js</strong> is wrong, or this network is blocking the connection. ' +
+            'Anything you change here stays in this browser until the connection is back.' +
+            '<br><span style="opacity:.7">' + esc(info.error) + '</span>';
+    } else {
+      msg = '<strong>Running on this device.</strong> Edits are saved in this browser only — Sherri would not see them. ' +
+            'Add your Supabase project URL and publishable key to <strong>js/config.js</strong> to make the data shared and live. ' +
+            'See <strong>README.md</strong> for the setup.';
+    }
     $('banner-slot').innerHTML =
       '<div class="banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>' +
       '<div class="banner__text">' + msg + '</div>' +
@@ -600,14 +676,28 @@
     var th = document.querySelector('th[data-sort="date"]');
     th.classList.add('sorted', 'sorted-desc');
     render();
+    // Restore any existing session before deciding what to show.
+    store.initAuth().then(applyAuthState);
     if (info.seeded) toast('Database seeded with ' + state.rows.length + ' historical sales.');
     $('footer-storage').textContent = info.mode === 'cloud'
       ? 'Live data — every change is saved to the shared database.'
       : 'Running on this device — see README.md to connect the shared database.';
   }).catch(function (err) {
-    console.error(err);
-    document.querySelector('main').insertAdjacentHTML('afterbegin',
-      '<div class="banner"><div class="banner__text"><strong>Something went wrong loading the data.</strong> ' + esc(err.message || err) + '</div></div>');
+    // Last resort: never leave the page blank. Show the built-in copy and say so.
+    console.error('[Team Howe] boot failed, falling back to the bundled data:', err);
+    state.rows = (window.TH_SEED || []).slice();
+    try {
+      setConnBadge('memory');
+      populateFilters();
+      var th2 = document.querySelector('th[data-sort="date"]');
+      if (th2) th2.classList.add('sorted', 'sorted-desc');
+      render();
+    } catch (e2) { console.error(e2); }
+    $('banner-slot').innerHTML =
+      '<div class="banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>' +
+      '<div class="banner__text"><strong>Showing the built-in copy of the 521 sales.</strong> ' +
+      'The app could not finish loading the live data, so nothing you change here will be saved. ' +
+      'Reload once the connection is back.<br><span style="opacity:.7">' + esc(err.message || err) + '</span></div></div>';
   });
 
   window.addEventListener('resize', function () {

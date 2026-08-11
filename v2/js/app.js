@@ -643,9 +643,19 @@
   function setupBanner(info) {
     if (info.mode === 'cloud') return;
     if (safeGet('teamhowe.banner.dismissed') === '1') return;
-    var msg = info.error
-      ? '<strong>Could not reach Supabase</strong>, so the dashboard is running on this device only. Check the URL and anon key in <strong>js/config.js</strong>. (' + esc(info.error) + ')'
-      : '<strong>Running on this device.</strong> Edits are saved in this browser only — Sherri would not see them. Add your Supabase project URL and anon key to <strong>js/config.js</strong> to make the data shared and live. See <strong>README.md</strong> for the 10-minute setup.';
+    var msg;
+    if (info.error) {
+      msg = '<strong>Could not reach your database, so this is the built-in copy of the 521 sales.</strong> ' +
+            'Nothing has been lost — the live data is still in Supabase. Most likely one of: the project is ' +
+            '<strong>paused</strong> (free projects sleep after a week idle — open it at supabase.com and press Restore), ' +
+            'the URL or key in <strong>js/config.js</strong> is wrong, or this network is blocking the connection. ' +
+            'Anything you change here stays in this browser until the connection is back.' +
+            '<br><span style="opacity:.7">' + esc(info.error) + '</span>';
+    } else {
+      msg = '<strong>Running on this device.</strong> Edits are saved in this browser only — Sherri would not see them. ' +
+            'Add your Supabase project URL and publishable key to <strong>js/config.js</strong> to make the data shared and live. ' +
+            'See <strong>README.md</strong> for the setup.';
+    }
     $('banner-slot').innerHTML =
       '<div class="banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>' +
       '<div class="banner__text">' + msg + '</div>' +
@@ -673,9 +683,21 @@
       ? 'Live data — every change is saved to the shared database.'
       : 'Running on this device — see README.md to connect the shared database.';
   }).catch(function (err) {
-    console.error(err);
-    document.querySelector('main').insertAdjacentHTML('afterbegin',
-      '<div class="banner"><div class="banner__text"><strong>Something went wrong loading the data.</strong> ' + esc(err.message || err) + '</div></div>');
+    // Last resort: never leave the page blank. Show the built-in copy and say so.
+    console.error('[Team Howe] boot failed, falling back to the bundled data:', err);
+    state.rows = (window.TH_SEED || []).slice();
+    try {
+      setConnBadge('memory');
+      populateFilters();
+      var th2 = document.querySelector('th[data-sort="date"]');
+      if (th2) th2.classList.add('sorted', 'sorted-desc');
+      render();
+    } catch (e2) { console.error(e2); }
+    $('banner-slot').innerHTML =
+      '<div class="banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>' +
+      '<div class="banner__text"><strong>Showing the built-in copy of the 521 sales.</strong> ' +
+      'The app could not finish loading the live data, so nothing you change here will be saved. ' +
+      'Reload once the connection is back.<br><span style="opacity:.7">' + esc(err.message || err) + '</span></div></div>';
   });
 
   window.addEventListener('resize', function () {

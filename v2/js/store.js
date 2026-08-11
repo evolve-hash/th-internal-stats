@@ -87,6 +87,31 @@ window.TH_STORE = (function () {
   }
 
   /* ---------- init ---------- */
+  // A Supabase project that is paused, asleep, or behind a captive network can
+  // leave a request pending forever. Without a ceiling on that wait the whole
+  // dashboard renders empty and never recovers, which is the worst possible
+  // failure: it looks like the data is gone. Always fall back to something.
+  var BOOT_TIMEOUT_MS = 9000;
+
+  function withTimeout(promise, ms, label) {
+    return new Promise(function (resolve, reject) {
+      var done = false;
+      var timer = setTimeout(function () {
+        if (done) return;
+        done = true;
+        reject(new Error((label || 'The database') + ' did not respond within ' +
+                         Math.round(ms / 1000) + ' seconds.'));
+      }, ms);
+      promise.then(function (v) {
+        if (done) return;
+        done = true; clearTimeout(timer); resolve(v);
+      }, function (e) {
+        if (done) return;
+        done = true; clearTimeout(timer); reject(e);
+      });
+    });
+  }
+
   function init() {
     var configured = cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY;
 
@@ -98,12 +123,18 @@ window.TH_STORE = (function () {
       return Promise.resolve({ mode: mode, count: rows.length });
     }
 
-    return loadSupabase()
+    return withTimeout(loadSupabase(), BOOT_TIMEOUT_MS, 'The Supabase library')
       .then(function (lib) {
         supabase = lib.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
-        return supabase.from(cfg.TABLE || 'transactions')
-          .select('*')
-          .order('date', { ascending: true, nullsFirst: false });
+        return withTimeout(
+          Promise.resolve(
+            supabase.from(cfg.TABLE || 'transactions')
+              .select('*')
+              .order('date', { ascending: true, nullsFirst: false })
+          ),
+          BOOT_TIMEOUT_MS,
+          'Your Supabase project'
+        );
       })
       .then(function (res) {
         if (res.error) throw res.error;
@@ -218,7 +249,8 @@ window.TH_STORE = (function () {
 
   function initAuth() {
     if (!authAvailable()) return Promise.resolve(null);
-    return supabase.auth.getSession().then(function (res) {
+    return withTimeout(Promise.resolve(supabase.auth.getSession()), BOOT_TIMEOUT_MS, 'Supabase auth')
+      .then(function (res) {
       currentUser = (res && res.data && res.data.session) ? res.data.session.user : null;
       supabase.auth.onAuthStateChange(function (_evt, session) {
         currentUser = session ? session.user : null;
