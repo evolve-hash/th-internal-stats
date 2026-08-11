@@ -9,8 +9,8 @@
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/favicon.png">
 <link rel="preload" href="assets/fonts/montserrat-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/fonts.css?v=f8444cef">
-<link rel="stylesheet" href="css/app.css?v=f8444cef">
+<link rel="stylesheet" href="css/fonts.css?v=197340f2">
+<link rel="stylesheet" href="css/app.css?v=197340f2">
 </head>
 <body>
 
@@ -227,8 +227,14 @@
       <div class="section-head__right">
         <span class="meta" id="money-meta"></span>
         <select class="select" id="money-year"></select>
+        <button type="button" class="sec-toggle" id="money-toggle" aria-expanded="false" aria-controls="money-body">
+          <span id="money-toggle-label">Show</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
       </div>
     </div>
+    <div class="sec-collapse" id="money-body" data-open="false">
+    <div class="sec-collapse__inner">
     <div class="grid-2">
       <div class="card">
         <div class="card__head">
@@ -270,6 +276,8 @@
           <div id="calc-out"></div>
         </div>
         <p class="card__note">Rates come from the workbook's "Split Rules-Compass" tab. It leaves out TC fees, home warranties and referral fees, which vary per deal — so treat the result as the split, not the final cheque.</p>
+      </div>
+    </div>
       </div>
     </div>
   </section>
@@ -475,12 +483,12 @@
 <div class="tooltip" id="tooltip"></div>
 <div class="toast-wrap" id="toast-wrap"></div>
 
-<script src="js/config.js?v=f8444cef"></script>
-<script src="js/seed.js?v=f8444cef"></script>
-<script src="js/agents-seed.js?v=f8444cef"></script>
-<script src="js/economics-seed.js?v=f8444cef"></script>
-<script src="js/store.js?v=f8444cef"></script>
-<script src="js/charts.js?v=f8444cef"></script>
-<script src="js/app.js?v=f8444cef"></script>
+<script src="js/config.js?v=197340f2"></script>
+<script src="js/seed.js?v=197340f2"></script>
+<script src="js/agents-seed.js?v=197340f2"></script>
+<script src="js/economics-seed.js?v=197340f2"></script>
+<script src="js/store.js?v=197340f2"></script>
+<script src="js/charts.js?v=197340f2"></script>
+<script src="js/app.js?v=197340f2"></script>
 </body>
 </html>

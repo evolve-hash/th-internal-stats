@@ -17,7 +17,7 @@
     trendView: 'year',                 // 'year' | 'rolling' | 'season'
     sortKey: 'date', sortDir: 'desc',
     agentScope: 'active', agentSort: 'paid', agentDir: 'desc',
-    page: 1, perPage: 25,
+    page: 1, perPage: 15,
     editingId: null
   };
 
@@ -863,6 +863,27 @@
     });
     renderCalc();
   }
+
+  /* ---- collapsible sections ---- */
+  function initCollapse(toggleId, bodyId, labelId, key) {
+    var btn = $(toggleId), body = $(bodyId), label = $(labelId);
+    if (!btn || !body) return;
+    function apply(open, save) {
+      body.setAttribute('data-open', open ? 'true' : 'false');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (label) label.textContent = open ? 'Hide' : 'Show';
+      if (save) safeSet(key, open ? 'open' : 'closed');
+    }
+    // Collapsed unless this browser was left with it open.
+    apply(safeGet(key) === 'open', false);
+    btn.addEventListener('click', function () {
+      var open = body.getAttribute('data-open') !== 'true';
+      apply(open, true);
+      // Charts measure themselves, so anything drawn while hidden needs a redraw.
+      if (open) setTimeout(function () { renderWaterfall(); }, 360);
+    });
+  }
+  initCollapse('money-toggle', 'money-body', 'money-toggle-label', 'teamhowe.money.open');
 
   function renderCalc() {
     if (!SP) return;

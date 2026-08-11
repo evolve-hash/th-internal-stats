@@ -594,6 +594,22 @@ tr:hover .row-actions, tr:focus-within .row-actions { opacity: 1; }
 .split-sum strong { color: var(--ink); font-weight: 700; }
 .split-sum.over { color: var(--serious); }
 .grid-2--single { grid-template-columns: 1fr; }
+
+/* Collapsible section. grid-template-rows 0fr -> 1fr animates a height the
+   browser works out itself, which max-height cannot do without a magic number. */
+.sec-collapse { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .34s var(--ease); }
+.sec-collapse[data-open="false"] { grid-template-rows: 0fr; }
+.sec-collapse__inner { overflow: hidden; min-height: 0; }
+.sec-toggle {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 30px; padding: 0 11px; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--surface); color: var(--ink-2);
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  transition: background-color .16s var(--ease), color .16s var(--ease), border-color .16s var(--ease);
+}
+.sec-toggle:hover { background: var(--brand-wash-2); color: var(--ink); border-color: var(--brand); }
+.sec-toggle svg { transition: transform .3s var(--ease); }
+.sec-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
 #deduct-block .form-grid { margin-top: 0; }
 #deduct-block .split-foot { margin-top: 10px; }
 @media (max-width: 560px) { .split-row { grid-template-columns: 1fr 100px 28px; } }
