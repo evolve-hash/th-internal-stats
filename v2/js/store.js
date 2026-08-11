@@ -279,10 +279,170 @@ window.TH_STORE = (function () {
     });
   }
 
+  /* ---------- agents & payouts ----------
+     Payroll, so it only ever loads for a signed-in user. In local mode we use
+     the bundled copy so the section is explorable without a database. */
+  var agents = [];
+  var payouts = [];
+  var payoutsLoaded = false;
+
+  // Signing in fires two notifications — one when signInWithPassword resolves,
+  // one from Supabase's own onAuthStateChange. Both used to reach loadPayroll,
+  // both saw empty tables, and both seeded: every figure came out doubled.
+  // Collapsing concurrent calls onto one promise is what prevents that.
+  var payrollInFlight = null;
+
+  function loadPayroll() {
+    if (payrollInFlight) return payrollInFlight;
+    payrollInFlight = doLoadPayroll();
+    payrollInFlight.catch(function () {}).then(function () { payrollInFlight = null; });
+    return payrollInFlight;
+  }
+
+  function doLoadPayroll() {
+    if (!authAvailable()) {                        // local / preview mode
+      agents = (window.TH_AGENTS || []).slice();
+      payouts = (window.TH_PAYOUTS || []).map(function (p) {
+        return { transaction_id: p.tx, agent: p.agent, amount: p.amount, role: p.role, year: p.year };
+      });
+      payoutsLoaded = true;
+      return Promise.resolve({ agents: agents.length, payouts: payouts.length, mode: 'local' });
+    }
+    if (!currentUser) {
+      agents = []; payouts = []; payoutsLoaded = false;
+      return Promise.resolve({ agents: 0, payouts: 0, mode: 'locked' });
+    }
+    // Already have it for this session; don't refetch on every auth ping.
+    if (payoutsLoaded && payouts.length) {
+      return Promise.resolve({ agents: agents.length, payouts: payouts.length, mode: 'cloud' });
+    }
+
+    return withTimeout(Promise.resolve(supabase.from('agents').select('*')), BOOT_TIMEOUT_MS, 'The agents table')
+      .then(function (res) {
+        if (res.error) throw res.error;
+        agents = res.data || [];
+        return withTimeout(Promise.resolve(
+          supabase.from('payouts').select('*').limit(20000)
+        ), BOOT_TIMEOUT_MS, 'The payouts table');
+      })
+      .then(function (res) {
+        if (res.error) throw res.error;
+        payouts = res.data || [];
+        payoutsLoaded = true;
+        if (!agents.length && !payouts.length) return seedPayroll();
+        return { agents: agents.length, payouts: payouts.length, mode: 'cloud' };
+      })
+      .then(function (r) {
+        return r || { agents: agents.length, payouts: payouts.length, mode: 'cloud' };
+      });
+  }
+
+  // First run against empty tables: copy the bundled history up.
+  function seedPayroll() {
+    // Re-check immediately before writing. Cheap insurance against a second
+    // caller that slipped past the in-flight guard, and against two people
+    // opening the dashboard for the first time at the same moment.
+    return supabase.from('agents').select('id').limit(1).then(function (chk) {
+      if (chk.data && chk.data.length) {
+        return Promise.all([
+          supabase.from('agents').select('*'),
+          supabase.from('payouts').select('*').limit(20000)
+        ]).then(function (res) {
+          if (res[0].data) agents = res[0].data;
+          if (res[1].data) payouts = res[1].data;
+          return { agents: agents.length, payouts: payouts.length, mode: 'cloud' };
+        });
+      }
+      return doSeedPayroll();
+    });
+  }
+
+  function doSeedPayroll() {
+    var seedAgents = (window.TH_AGENTS || []).map(function (a) {
+      return { name: a.name, role: a.role, level: a.level, level_source: a.level_source,
+               first_year: a.first_year, last_year: a.last_year, active: !!a.active };
+    });
+    var seedPay = window.TH_PAYOUTS || [];
+    if (!seedAgents.length) return Promise.resolve({ agents: 0, payouts: 0, mode: 'cloud' });
+
+    // Bundled payout rows point at seed positions; resolve them to the real
+    // transaction ids by matching on year + client + price.
+    var byKey = {};
+    rows.forEach(function (t) {
+      byKey[[t.year, String(t.client || '').trim().toLowerCase(), t.sale_price].join('|')] = t.id;
+    });
+
+    return supabase.from('agents').insert(seedAgents)
+      .then(function () {
+        var payload = seedPay.map(function (p) {
+          var k = [p.year, String(p.client || '').trim().toLowerCase(), p.sale_price].join('|');
+          return { transaction_id: byKey[k] || null, agent: p.agent,
+                   amount: p.amount, role: p.role, year: p.year };
+        });
+        var chunks = [];
+        for (var i = 0; i < payload.length; i += 400) chunks.push(payload.slice(i, i + 400));
+        return chunks.reduce(function (chain, c) {
+          return chain.then(function () { return supabase.from('payouts').insert(c); });
+        }, Promise.resolve());
+      })
+      .then(function () {
+        return Promise.all([
+          supabase.from('agents').select('*'),
+          supabase.from('payouts').select('*').limit(20000)
+        ]);
+      })
+      .then(function (res) {
+        if (res[0].data) agents = res[0].data;
+        if (res[1].data) payouts = res[1].data;
+        return { agents: agents.length, payouts: payouts.length, mode: 'cloud', seeded: true };
+      });
+  }
+
+  function addPayouts(transactionId, list) {
+    var clean = (list || []).filter(function (p) { return p.agent && Number(p.amount); })
+      .map(function (p) {
+        return { transaction_id: transactionId, agent: p.agent,
+                 amount: Number(p.amount), role: p.role || 'agent', year: p.year || null };
+      });
+    if (!clean.length) return Promise.resolve([]);
+    if (!authAvailable()) {
+      clean.forEach(function (p) { payouts.push(p); });
+      return Promise.resolve(clean);
+    }
+    return supabase.from('payouts').insert(clean).select().then(function (res) {
+      if (res.error) throw res.error;
+      (res.data || []).forEach(function (p) { payouts.push(p); });
+      return res.data;
+    });
+  }
+
+  function replacePayouts(transactionId, list) {
+    if (!authAvailable()) {
+      payouts = payouts.filter(function (p) { return String(p.transaction_id) !== String(transactionId); });
+      return addPayouts(transactionId, list);
+    }
+    return supabase.from('payouts').delete().eq('transaction_id', transactionId)
+      .then(function () {
+        payouts = payouts.filter(function (p) { return String(p.transaction_id) !== String(transactionId); });
+        return addPayouts(transactionId, list);
+      });
+  }
+
   return {
     init: init, all: all, add: add, update: update,
     remove: remove, mode: getMode, resetLocal: resetLocal,
     isMemoryOnly: function () { return memoryOnly; },
+
+    // payroll surface
+    loadPayroll: loadPayroll,
+    agents: function () { return agents.slice(); },
+    payouts: function () { return payouts.slice(); },
+    payoutsLoaded: function () { return payoutsLoaded; },
+    addPayouts: addPayouts,
+    replacePayouts: replacePayouts,
+    payoutsFor: function (txId) {
+      return payouts.filter(function (p) { return String(p.transaction_id) === String(txId); });
+    },
 
     // auth surface
     initAuth: initAuth,

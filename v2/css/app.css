@@ -547,6 +547,27 @@ tr:hover .row-actions, tr:focus-within .row-actions { opacity: 1; }
 .form-field .hint { font-size: 10.5px; color: var(--ink-3); }
 .form-field.invalid .input { border-color: var(--ink); box-shadow: 0 0 0 3px var(--brand-wash-2); }
 
+/* ---------- Payout split rows in the form ---------- */
+.split-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  margin: 22px 0 10px; padding-top: 18px; border-top: 1px solid var(--line);
+  font-size: 10px; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.split-head__hint { font-weight: 500; letter-spacing: 0; text-transform: none; font-size: 11px; }
+.split-row { display: grid; grid-template-columns: 1fr 130px 30px; gap: 10px; align-items: center; margin-bottom: 8px; }
+.split-row .select, .split-row .input { width: 100%; }
+.split-del {
+  width: 28px; height: 28px; border-radius: var(--radius); display: grid; place-items: center;
+  color: var(--ink-3); transition: background-color .16s var(--ease), color .16s var(--ease);
+}
+.split-del:hover { background: var(--brand-wash-2); color: var(--ink); }
+.split-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
+.split-sum { font-size: 11.5px; color: var(--ink-3); }
+.split-sum strong { color: var(--ink); font-weight: 700; }
+.split-sum.over { color: var(--serious); }
+@media (max-width: 560px) { .split-row { grid-template-columns: 1fr 100px 28px; } }
+
 .btn-primary {
   height: 36px; padding: 0 20px; border-radius: var(--radius);
   background: var(--ink); color: var(--ink-invert);

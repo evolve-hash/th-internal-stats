@@ -15,6 +15,7 @@
     search: '', year: '', side: '', source: '',
     mixSide: '',                       // side filter for the business-mix section
     sortKey: 'date', sortDir: 'desc',
+    agentScope: 'active', agentSort: 'paid', agentDir: 'desc',
     page: 1, perPage: 25,
     editingId: null
   };
@@ -134,7 +135,18 @@
     store.signOut().then(function () { toast('Signed out. You can still read everything.'); });
   });
 
-  store.onAuthChange(function () { applyAuthState(); });
+  store.onAuthChange(function () {
+    applyAuthState();
+    // Payroll is fetched on sign-in and dropped on sign-out.
+    store.loadPayroll().then(function (info) {
+      populateAgentPicker();
+      renderAgents();
+      if (info && info.seeded) toast('Loaded ' + info.payouts.toLocaleString('en-US') + ' historical payouts.');
+    }).catch(function (e) {
+      console.warn('[Team Howe] payroll unavailable:', e.message || e);
+      renderAgents();
+    });
+  });
 
   /* ==================== TOASTS ==================== */
   function toast(msg) {
@@ -358,6 +370,174 @@
     setMixSide(state.mixSide === v ? '' : v);   // tap the active one to clear
   });
 
+  /* ==================== TEAM PRODUCTION ====================
+     Payroll. The database refuses to serve it without a session, so this whole
+     section stays collapsed until someone signs in — the UI is not the lock,
+     it just avoids showing an empty shell. */
+  var HOUSE = 'Team Howe (house)';
+
+  function agentStats() {
+    var payouts = store.payouts();
+    var roster = store.agents();
+    var rowsById = {};
+    state.rows.forEach(function (r) { rowsById[String(r.id)] = r; });
+
+    var per = {};
+    payouts.forEach(function (p) {
+      var a = per[p.agent] || (per[p.agent] = {
+        name: p.agent, role: p.role, paid: 0, years: {}, deals: {}, volume: 0
+      });
+      a.paid += Number(p.amount) || 0;
+      a.years[p.year] = (a.years[p.year] || 0) + (Number(p.amount) || 0);
+      if (p.transaction_id) {
+        var tx = rowsById[String(p.transaction_id)];
+        if (tx && !a.deals[p.transaction_id]) {
+          a.deals[p.transaction_id] = true;
+          a.volume += tx.sale_price || 0;
+        }
+      }
+    });
+
+    var meta = {};
+    roster.forEach(function (r) { meta[r.name] = r; });
+
+    return Object.keys(per).map(function (name) {
+      var a = per[name], m = meta[name] || {};
+      var ys = Object.keys(a.years).map(Number).sort(function (x, y) { return x - y; });
+      var best = ys.reduce(function (acc, y) {
+        return a.years[y] > (acc ? a.years[acc] : -1) ? y : acc;
+      }, null);
+      return {
+        name: name, role: a.role, level: m.level || null, level_source: m.level_source || '',
+        active: !!m.active, first: ys[0] || null, last: ys[ys.length - 1] || null,
+        deals: Object.keys(a.deals).length, volume: a.volume, paid: a.paid,
+        best: best, bestAmt: best ? a.years[best] : 0, byYear: a.years
+      };
+    });
+  }
+
+  // Continuous year series so a gap year reads as a dip, not as a missing point.
+  function sparkFor(a) {
+    if (!a.first || !a.last || a.first === a.last) return '';
+    var vals = [];
+    for (var y = a.first; y <= a.last; y++) vals.push(a.byYear[y] || 0);
+    return C.sparkline(vals, { width: 80, height: 22 });
+  }
+
+  function renderAgents() {
+    var locked = store.authAvailable() && !store.user();
+    $('sec-agents').hidden = locked || !store.payoutsLoaded();
+    $('agents-locked').hidden = !locked;
+    if (locked || !store.payoutsLoaded()) {
+      // Leave nothing behind on sign-out.
+      $('agents-body').innerHTML = '';
+      $('agents-tiles').innerHTML = '';
+      $('chart-payroll').innerHTML = '';
+      return;
+    }
+
+    var all = agentStats();
+    var house = all.filter(function (a) { return a.role === 'house'; })[0];
+    var people = all.filter(function (a) { return a.role !== 'house'; });
+    var shown = state.agentScope === 'all' ? people : people.filter(function (a) { return a.active; });
+    shown.sort(function (a, b) { return b.paid - a.paid; });
+
+    // ---- tiles ----
+    var totalPaid = people.reduce(function (s, a) { return s + a.paid; }, 0);
+    var housePaid = house ? house.paid : 0;
+    var everything = totalPaid + housePaid;
+    var activeCount = people.filter(function (a) { return a.active; }).length;
+    $('agents-tiles').innerHTML =
+      tile('On the team now', String(activeCount)) +
+      tile('People ever paid', String(people.length)) +
+      tile('Paid to teammates', money(totalPaid, true)) +
+      tile('Kept by the house', everything ? Math.round(housePaid / everything * 100) + '%' : '—', null, true);
+    $('agents-meta').textContent = store.payouts().length.toLocaleString('en-US') + ' payments, 2012–2026';
+
+    // ---- stacked chart: two segments only ----
+    // A single-hue ramp cannot separate six stacked identities — measured worst
+    // adjacent ΔE was 7.4 against a floor of 15, i.e. invisible even with full
+    // colour vision. So the chart answers the one question a stack is good at
+    // (house vs. team), and per-person trend rides the sparkline in each row.
+    var years = {};
+    all.forEach(function (a) {
+      Object.keys(a.byYear).forEach(function (y) {
+        var slot = years[y] || (years[y] = { house: 0, team: 0 });
+        if (a.role === 'house') slot.house += a.byYear[y];
+        else slot.team += a.byYear[y];
+      });
+    });
+    var series = [
+      { key: 'house', label: 'Team Howe (house)', color: 'var(--series-b)' },
+      { key: 'team',  label: 'Paid to teammates', color: 'var(--series-a)' }
+    ];
+    var chartYears = Object.keys(years).map(Number).sort(function (a, b) { return a - b; })
+      .map(function (y) { return { year: y, parts: years[y] }; });
+
+    C.stacked('chart-payroll', chartYears, series);
+    $('agents-legend').innerHTML = series.map(function (s) {
+      return '<div class="legend-item"><span class="legend-swatch" style="background:' + s.color + '"></span>' + esc(s.label) + '</div>';
+    }).join('');
+    $('payroll-note').textContent =
+      'Reconciles to 94–114% of each year\'s net commission depending on the year — bonuses and ' +
+      'corrections that were not tied to one sale are included in the totals but cannot be matched ' +
+      'to a specific deal. Treat it as the shape of the split, not as payroll accounting. ' +
+      'No split was recorded before 2012, or in 2014.';
+
+    // ---- table ----
+    var k = state.agentSort, dir = state.agentDir === 'asc' ? 1 : -1;
+    var sorted = shown.slice().sort(function (a, b) {
+      var av, bv;
+      if (k === 'name') { return a.name.localeCompare(b.name) * dir; }
+      if (k === 'span') { av = a.first; bv = b.first; }
+      else if (k === 'level') { av = a.level || 9; bv = b.level || 9; }
+      else if (k === 'best') { av = a.bestAmt; bv = b.bestAmt; }
+      else { av = a[k]; bv = b[k]; }
+      return ((av || 0) - (bv || 0)) * dir;
+    });
+
+    $('agents-body').innerHTML = sorted.map(function (a, i) {
+      var span = a.first === a.last ? String(a.first) : a.first + '–' + a.last;
+      var lvl = a.level
+        ? '<span class="pill pill--buyer" title="' + esc(a.level_source) + '">L' + a.level + '</span>'
+        : '<span style="color:var(--ink-3)">—</span>';
+      return '<tr class="row-in" style="animation-delay:' + Math.min(i * 22, 300) + 'ms">' +
+        '<td class="client">' + esc(a.name) + (a.active ? '' : ' <span style="color:var(--ink-3);font-weight:400">· past</span>') + '</td>' +
+        '<td>' + lvl + '</td>' +
+        '<td>' + span + '</td>' +
+        '<td class="num">' + (a.deals || '—') + '</td>' +
+        '<td class="num">' + (a.volume ? money(a.volume, true) : '—') + '</td>' +
+        '<td class="num">' + money(a.paid) + '</td>' +
+        '<td class="num">' + (a.best ? a.best + ' · ' + money(a.bestAmt, true) : '—') + '</td>' +
+        '<td>' + sparkFor(a) + '</td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  document.querySelectorAll('#agents-table th[data-asort]').forEach(function (th) {
+    th.addEventListener('click', function () {
+      var key = th.getAttribute('data-asort');
+      if (state.agentSort === key) state.agentDir = state.agentDir === 'asc' ? 'desc' : 'asc';
+      else { state.agentSort = key; state.agentDir = key === 'name' ? 'asc' : 'desc'; }
+      document.querySelectorAll('#agents-table th[data-asort]').forEach(function (o) {
+        o.classList.remove('sorted', 'sorted-desc');
+      });
+      th.classList.add('sorted');
+      if (state.agentDir === 'desc') th.classList.add('sorted-desc');
+      renderAgents();
+    });
+  });
+  $('agents-scope').addEventListener('click', function (e) {
+    var b = e.target.closest('.seg__btn');
+    if (!b) return;
+    state.agentScope = b.getAttribute('data-scope');
+    Array.prototype.forEach.call($('agents-scope').querySelectorAll('.seg__btn'), function (o) {
+      o.classList.toggle('is-on', o === b);
+    });
+    renderAgents();
+  });
+  on('agents-signin', 'click', openAuth);
+
   /* ==================== TABLE ==================== */
   function filtered() {
     var q = state.search.trim().toLowerCase();
@@ -489,6 +669,79 @@
   var backdrop = $('modal-backdrop');
   var form = $('tx-form');
 
+  /* ---- payout rows inside the Add/Edit form ---- */
+  var agentOptions = [];
+
+  function populateAgentPicker() {
+    var roster = store.agents().filter(function (a) { return a.role !== 'house'; });
+    var active = roster.filter(function (a) { return a.active; }).map(function (a) { return a.name; }).sort();
+    var past   = roster.filter(function (a) { return !a.active; }).map(function (a) { return a.name; }).sort();
+    agentOptions = active.concat(past.length ? ['—'] : [], past);
+  }
+
+  function splitRowHTML(agent, amount) {
+    var opts = '<option value="">Choose a teammate…</option>' + agentOptions.map(function (n) {
+      if (n === '—') return '<option disabled>── no longer on the team ──</option>';
+      return '<option' + (n === agent ? ' selected' : '') + '>' + esc(n) + '</option>';
+    }).join('');
+    return '<div class="split-row">' +
+      '<select class="select js-agent">' + opts + '</select>' +
+      '<input class="input js-amount" type="number" min="0" step="0.01" placeholder="Their $" value="' +
+        (amount === null || amount === undefined ? '' : amount) + '">' +
+      '<button type="button" class="split-del" aria-label="Remove"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
+    '</div>';
+  }
+
+  function refreshSplitSum() {
+    var net = Number($('i-net').value) || 0;
+    var sum = 0;
+    Array.prototype.forEach.call(document.querySelectorAll('#split-rows .js-amount'), function (i) {
+      sum += Number(i.value) || 0;
+    });
+    var el = $('split-sum');
+    if (!sum) { el.textContent = ''; el.classList.remove('over'); return; }
+    if (net) {
+      var house = net - sum;
+      el.innerHTML = 'Teammates <strong>' + money(sum) + '</strong> · house keeps <strong>' + money(house) + '</strong>';
+      el.classList.toggle('over', house < 0);
+      if (house < 0) el.innerHTML += ' — more than the net commission';
+    } else {
+      el.innerHTML = 'Teammates <strong>' + money(sum) + '</strong>';
+      el.classList.remove('over');
+    }
+  }
+
+  function setSplitRows(list) {
+    var host = $('split-rows');
+    host.innerHTML = (list && list.length ? list : [{ agent: '', amount: '' }])
+      .map(function (p) { return splitRowHTML(p.agent, p.amount); }).join('');
+    refreshSplitSum();
+  }
+
+  $('split-add').addEventListener('click', function () {
+    $('split-rows').insertAdjacentHTML('beforeend', splitRowHTML('', ''));
+  });
+  $('split-rows').addEventListener('click', function (e) {
+    var d = e.target.closest('.split-del');
+    if (!d) return;
+    var rows = $('split-rows').querySelectorAll('.split-row');
+    if (rows.length > 1) d.closest('.split-row').remove();
+    else setSplitRows(null);
+    refreshSplitSum();
+  });
+  $('split-rows').addEventListener('input', refreshSplitSum);
+  $('i-net').addEventListener('input', refreshSplitSum);
+
+  function collectSplit(year) {
+    var out = [];
+    Array.prototype.forEach.call(document.querySelectorAll('#split-rows .split-row'), function (r) {
+      var a = r.querySelector('.js-agent').value;
+      var v = Number(r.querySelector('.js-amount').value);
+      if (a && v) out.push({ agent: a, amount: v, role: 'agent', year: year || null });
+    });
+    return out;
+  }
+
   function openModal(row) {
     state.editingId = row ? row.id : null;
     $('modal-title').textContent = row ? 'Edit Sale' : 'Add a Sale';
@@ -511,6 +764,16 @@
       $('i-city').value = 'San Francisco';
       $('i-source').value = 'Referral';
     }
+
+    // The split block only appears once payroll is available (i.e. signed in).
+    var canSplit = store.payoutsLoaded() && agentOptions.length;
+    $('split-block').hidden = !canSplit;
+    if (canSplit) {
+      setSplitRows(row ? store.payoutsFor(row.id)
+        .filter(function (p) { return p.role !== 'house'; })
+        .map(function (p) { return { agent: p.agent, amount: p.amount }; }) : null);
+    }
+
     backdrop.classList.add('open');
     setTimeout(function () { $('i-date').focus(); }, 60);
   }
@@ -554,13 +817,21 @@
     var btn = $('modal-save');
     btn.disabled = true; btn.textContent = 'Saving…';
 
-    var op = state.editingId ? store.update(state.editingId, rec) : store.add(rec);
+    var wasEditing = state.editingId;
+    var split = $('split-block').hidden ? null : collectSplit(rec.year || (rec.date ? Number(String(rec.date).slice(0, 4)) : null));
+
+    var op = wasEditing ? store.update(wasEditing, rec) : store.add(rec);
     op.then(function (saved) {
+      if (!split) return saved;
+      // Replace rather than append so editing a sale does not double-count.
+      return store.replacePayouts(saved.id, split).then(function () { return saved; });
+    }).then(function (saved) {
       state.rows = store.all();
       populateFilters();
       closeModal();
       render(saved && saved.id);
-      toast(state.editingId ? 'Sale updated.' : 'Sale added — dashboard updated.');
+      renderAgents();
+      toast(wasEditing ? 'Sale updated.' : 'Sale added — dashboard updated.');
     }).catch(function (err) {
       console.error(err);
       toast('Could not save: ' + (err.message || 'unknown error'));
@@ -705,7 +976,15 @@
     th.classList.add('sorted', 'sorted-desc');
     render();
     // Restore any existing session before deciding what to show.
-    store.initAuth().then(applyAuthState);
+    store.initAuth()
+      .then(applyAuthState)
+      .then(function () { return store.loadPayroll(); })
+      .then(function (pinfo) {
+        populateAgentPicker();
+        renderAgents();
+        if (pinfo && pinfo.seeded) toast('Loaded ' + pinfo.payouts.toLocaleString('en-US') + ' historical payouts.');
+      })
+      .catch(function (e) { console.warn('[Team Howe] payroll unavailable:', e.message || e); renderAgents(); });
     if (info.seeded) toast('Database seeded with ' + state.rows.length + ' historical sales.');
     $('footer-storage').textContent = info.mode === 'cloud'
       ? 'Live data — every change is saved to the shared database.'
