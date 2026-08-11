@@ -541,20 +541,49 @@
 
   /* ==================== WHERE THE MONEY GOES ====================
      A funnel: stages of one quantity, which is ordinal, not categorical —
-     so a single-hue ramp is the right encoding here rather than a compromise. */
-  var WF = window.TH_WATERFALL || [];
+     so a single-hue ramp is the right encoding here rather than a compromise.
+
+     Computed live from the transactions themselves, so a sale you add or edit
+     moves this panel exactly like it moves every other chart. Each sale can
+     carry its own deduction lines; whatever gross minus net does not explain
+     is shown honestly as "Other deductions" instead of being hidden. */
+
+  function moneyYears() {
+    var seen = {};
+    store.all().forEach(function (r) {
+      if (r.year && Number(r.net_comm) > 0) seen[r.year] = true;
+    });
+    return Object.keys(seen).map(Number).sort(function (a, b) { return a - b; });
+  }
+
+  function moneyTotals(sel) {
+    return store.all().reduce(function (a, r) {
+      if (!r.year || !(Number(r.net_comm) > 0)) return a;
+      if (sel !== 'all' && String(r.year) !== sel) return a;
+      a.n++;
+      a.volume    += Number(r.sale_price)    || 0;
+      a.gross     += Number(r.gross_comm)    || 0;
+      a.net       += Number(r.net_comm)      || 0;
+      a.referral  += Number(r.referral_fee)  || 0;
+      a.brokerage += Number(r.brokerage_fee) || 0;
+      a.costs     += Number(r.other_costs)   || 0;
+      return a;
+    }, { n: 0, volume: 0, gross: 0, net: 0, referral: 0, brokerage: 0, costs: 0 });
+  }
 
   function renderWaterfall() {
-    if (!WF.length) { $('sec-money').hidden = true; return; }
-    var sel = $('money-year').value;
-    var rows = sel === 'all' ? WF : WF.filter(function (r) { return String(r.year) === sel; });
-    if (!rows.length) return;
+    var years = moneyYears();
+    if (!years.length) { $('sec-money').hidden = true; return; }
+    $('sec-money').hidden = false;
 
-    var t = rows.reduce(function (a, r) {
-      a.n += r.n; a.volume += r.volume; a.gross += r.gross;
-      a.referral += r.referral; a.brokerage += r.brokerage; a.costs += r.costs; a.net += r.net;
-      return a;
-    }, { n: 0, volume: 0, gross: 0, referral: 0, brokerage: 0, costs: 0, net: 0 });
+    var sel = $('money-year').value || 'all';
+    var t = moneyTotals(sel);
+    if (!t.gross) return;
+
+    // Anything the three deduction lines do not account for. Never negative on
+    // screen: in two early years the workbook's own lines slightly overshoot its
+    // stated net, and inventing a negative bar would be worse than saying so.
+    var other = Math.max(0, (t.gross - t.net) - (t.referral + t.brokerage + t.costs));
 
     // Net → house / teammates, from the payout records when we have them.
     var pay = store.payouts().filter(function (p) {
@@ -567,29 +596,34 @@
     var havePay = (house + team) > 0;
 
     var pctOfGross = function (v) { return t.gross ? (v / t.gross * 100).toFixed(1) + '% of gross' : ''; };
+    var w = function (v) { return t.gross ? v / t.gross * 100 : 0; };
+
     var steps = [
       { label: 'Sale price', sub: t.n + (t.n === 1 ? ' sale' : ' sales'), val: t.volume, w: 100, step: 6 },
       { label: 'Gross commission', sub: t.volume ? (t.gross / t.volume * 100).toFixed(2) + '% of sale price' : '',
-        val: t.gross, w: 100, step: 5, rule: true },
-      { cut: true, label: 'Referral fees out', sub: pctOfGross(t.referral), val: -t.referral,
-        w: t.gross ? t.referral / t.gross * 100 : 0, step: 3 },
-      { cut: true, label: 'Brokerage split', sub: pctOfGross(t.brokerage), val: -t.brokerage,
-        w: t.gross ? t.brokerage / t.gross * 100 : 0, step: 3 },
-      { cut: true, label: 'TC fees & home warranties', sub: pctOfGross(t.costs), val: -t.costs,
-        w: t.gross ? t.costs / t.gross * 100 : 0, step: 3 },
-      { label: 'Net commission', sub: pctOfGross(t.net) + ' survived', val: t.net,
-        w: t.gross ? t.net / t.gross * 100 : 0, step: 5, rule: true }
+        val: t.gross, w: 100, step: 5, rule: true }
     ];
+    if (t.referral)  steps.push({ cut: true, label: 'Referral fees out', sub: pctOfGross(t.referral),
+                                  val: t.referral, w: w(t.referral), step: 3 });
+    if (t.brokerage) steps.push({ cut: true, label: 'Brokerage split', sub: pctOfGross(t.brokerage),
+                                  val: t.brokerage, w: w(t.brokerage), step: 3 });
+    if (t.costs)     steps.push({ cut: true, label: 'TC fees & home warranties', sub: pctOfGross(t.costs),
+                                  val: t.costs, w: w(t.costs), step: 3 });
+    if (other > t.gross * 0.001)
+      steps.push({ cut: true, label: 'Other deductions', sub: pctOfGross(other),
+                   val: other, w: w(other), step: 3 });
+    steps.push({ label: 'Net commission', sub: pctOfGross(t.net) + ' survived',
+                 val: t.net, w: w(t.net), step: 5, rule: true });
+
     if (havePay) {
       steps.push({ label: 'Kept by the house', sub: Math.round(house / (house + team) * 100) + '% of net',
-                   val: house, w: t.gross ? house / t.gross * 100 : 0, step: 6 });
+                   val: house, w: w(house), step: 6 });
       steps.push({ label: 'Paid to teammates', sub: Math.round(team / (house + team) * 100) + '% of net',
-                   val: team, w: t.gross ? team / t.gross * 100 : 0, step: 4 });
+                   val: team, w: w(team), step: 4 });
     }
 
     $('waterfall').innerHTML = steps.map(function (s) {
-      return (s.rule ? '' : '') +
-        '<div class="wf-step' + (s.cut ? ' wf-step--cut' : '') + '">' +
+      return '<div class="wf-step' + (s.cut ? ' wf-step--cut' : '') + '">' +
           '<div class="wf-top">' +
             '<span class="wf-label">' + (s.cut ? '− ' : '') + esc(s.label) +
               (s.sub ? ' <small>' + esc(s.sub) + '</small>' : '') + '</span>' +
@@ -605,23 +639,35 @@
     });
 
     $('money-meta').textContent = sel === 'all'
-      ? WF[0].year + '–' + WF[WF.length - 1].year + ' · from the source workbook'
-      : t.n + ' sales in ' + sel;
+      ? years[0] + '–' + years[years.length - 1] + ' · every sale with a recorded net'
+      : t.n + (t.n === 1 ? ' sale in ' : ' sales in ') + sel;
+
+    var detailed = (t.referral + t.brokerage + t.costs) > 0;
     $('money-note').textContent =
-      'Deductions are read from the workbook\'s own columns and reconcile to its net commission ' +
-      'exactly in ten of the twelve years (2015 and 2016 are within 2.5%). This panel reflects the ' +
-      'workbook through August 2026 — sales you add here update the tables and charts above, but not ' +
-      'this breakdown, because the app only captures gross and net, not the individual deduction lines.' +
-      (havePay ? '' : ' Sign in to see how the net was split between the house and the team.');
+      'Built from the sales themselves, so anything you add or edit lands here too. ' +
+      (detailed
+        ? 'Each sale carries its own referral, brokerage and TC lines where the workbook broke them out; ' +
+          'whatever those lines do not explain is shown as "Other deductions" rather than hidden. '
+        : 'The workbook does not break out the individual deductions for these years, so the whole gap ' +
+          'between gross and net shows as "Other deductions". ') +
+      'Referrals Team Howe sent out and collected a fee on are not sales, so they are not counted here ' +
+      'or anywhere else in this dashboard.' +
+      (store.payoutsLoaded() ? '' : ' Sign in to see how the net was split between the house and the team.');
   }
 
-  (function initMoney() {
-    if (!WF.length) { $('sec-money').hidden = true; return; }
+  function initMoney() {
+    var years = moneyYears();
     var sel = $('money-year');
+    if (!years.length || !sel) { if ($('sec-money')) $('sec-money').hidden = true; return; }
+    var keep = sel.value;
     sel.innerHTML = '<option value="all">All years</option>' +
-      WF.slice().reverse().map(function (r) { return '<option value="' + r.year + '">' + r.year + '</option>'; }).join('');
-    sel.addEventListener('change', renderWaterfall);
-  })();
+      years.slice().reverse().map(function (y) { return '<option value="' + y + '">' + y + '</option>'; }).join('');
+    if (keep && sel.querySelector('option[value="' + keep + '"]')) sel.value = keep;
+    if (!sel.dataset.wired) {
+      sel.addEventListener('change', renderWaterfall);
+      sel.dataset.wired = '1';
+    }
+  }
 
   /* ==================== SPLIT CALCULATOR ==================== */
   var SP = window.TH_SPLITS || null;
@@ -868,6 +914,38 @@
   $('split-rows').addEventListener('input', refreshSplitSum);
   $('i-net').addEventListener('input', refreshSplitSum);
 
+  // Live read-out of what the three deduction lines do and do not explain, so
+  // nobody has to guess what "other deductions" will end up holding.
+  function refreshDeductSum() {
+    var gross = Number($('i-gross').value) || 0;
+    var net = Number($('i-net').value) || 0;
+    var named = ['i-referral', 'i-brokerage', 'i-costs']
+      .reduce(function (a, id) { return a + (Number($(id).value) || 0); }, 0);
+    var el = $('deduct-sum');
+    if (!gross || !net) {
+      el.textContent = named ? 'Accounted for ' + money(named) : '';
+      el.classList.remove('over');
+      return;
+    }
+    var gap = gross - net;
+    var other = gap - named;
+    if (other > 1) {
+      el.innerHTML = 'Gross less net is <strong>' + money(gap) + '</strong> · ' +
+                     money(other) + ' of that will show as other deductions';
+      el.classList.remove('over');
+    } else if (other < -1) {
+      el.innerHTML = 'These lines add up to <strong>' + money(named) + '</strong>, more than the ' +
+                     money(gap) + ' between gross and net';
+      el.classList.add('over');
+    } else {
+      el.innerHTML = 'Fully accounted for — <strong>' + money(named) + '</strong>';
+      el.classList.remove('over');
+    }
+  }
+  ['i-referral', 'i-brokerage', 'i-costs', 'i-gross', 'i-net'].forEach(function (id) {
+    $(id).addEventListener('input', refreshDeductSum);
+  });
+
   function collectSplit(year) {
     var out = [];
     Array.prototype.forEach.call(document.querySelectorAll('#split-rows .split-row'), function (r) {
@@ -896,6 +974,9 @@
       $('i-net').value = row.net_comm === null ? '' : row.net_comm;
       $('i-source').value = row.source || 'Referral';
       $('i-referrer').value = row.referrer || '';
+      $('i-referral').value = row.referral_fee === null || row.referral_fee === undefined ? '' : row.referral_fee;
+      $('i-brokerage').value = row.brokerage_fee === null || row.brokerage_fee === undefined ? '' : row.brokerage_fee;
+      $('i-costs').value = row.other_costs === null || row.other_costs === undefined ? '' : row.other_costs;
     } else {
       $('i-city').value = 'San Francisco';
       $('i-source').value = 'Referral';
@@ -910,6 +991,7 @@
         .map(function (p) { return { agent: p.agent, amount: p.amount }; }) : null);
     }
 
+    refreshDeductSum();
     backdrop.classList.add('open');
     setTimeout(function () { $('i-date').focus(); }, 60);
   }
@@ -930,7 +1012,8 @@
     e.preventDefault();
     var fd = new FormData(form);
     var rec = {};
-    ['date','client','side','prop_type','address','city','sale_price','gross_comm','net_comm','source','referrer']
+    ['date','client','side','prop_type','address','city','sale_price','gross_comm','net_comm','source','referrer',
+     'referral_fee','brokerage_fee','other_costs']
       .forEach(function (k) { rec[k] = fd.get(k); });
 
     if (!store.canWrite()) { closeModal(); openAuth(); return; }
@@ -1057,6 +1140,7 @@
     renderKPIs(state.rows);
     renderCharts(state.rows);
     renderTable(flashId);
+    initMoney();          // a sale in a brand-new year adds that year to the picker
     renderWaterfall();
   }
 

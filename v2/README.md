@@ -185,13 +185,15 @@ index.html              the whole UI
 css/app.css             design system — all brand tokens live at the top
 css/fonts.css           self-hosted Montserrat
 js/config.js            ← the only file you normally edit
-js/seed.js              the 521 historical sales
+js/seed.js              the 521 historical sales, with deduction lines
 js/store.js             data layer (Supabase or local, same API)
 js/charts.js            hand-built SVG charts
 js/app.js               UI wiring, table, CRUD
 assets/                 logo lockups, favicon, fonts
 supabase/schema.sql     database setup + security notes
 supabase/phase1-lock-writes.sql   makes writing require a sign-in
+supabase/phase2-agents.sql        teammates and their payouts
+supabase/phase3-deductions.sql    per-sale referral / brokerage / TC columns
 supabase/seed.csv       the 521 rows, for manual import if ever needed
 deploy.sh               one-command deploy to GitHub Pages
 ```

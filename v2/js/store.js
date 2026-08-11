@@ -21,14 +21,30 @@ window.TH_STORE = (function () {
 
   /* ---------- field whitelist (keeps local + cloud shapes identical) ---------- */
   var FIELDS = ['date','client','side','prop_type','address','city',
-                'sale_price','gross_comm','net_comm','source','referrer'];
+                'sale_price','gross_comm','net_comm','source','referrer',
+                'referral_fee','brokerage_fee','other_costs'];
+  var NUMERIC = ['sale_price','gross_comm','net_comm',
+                 'referral_fee','brokerage_fee','other_costs'];
+  var DEDUCT  = ['referral_fee','brokerage_fee','other_costs'];
+
+  // True until proven otherwise: a database that has not run phase3-deductions.sql
+  // yet would reject a write carrying these columns, so we strip them there.
+  var deductCols = true;
+
+  // Strip anything the live database cannot store, so an un-migrated project
+  // keeps working instead of erroring on every save.
+  function payload(obj) {
+    var p = clean(obj);
+    if (!deductCols) DEDUCT.forEach(function (f) { delete p[f]; });
+    return p;
+  }
 
   function clean(obj) {
     var out = {};
     FIELDS.forEach(function (f) {
       var v = obj[f];
       if (v === '' || v === undefined) v = null;
-      if (['sale_price','gross_comm','net_comm'].indexOf(f) > -1) {
+      if (NUMERIC.indexOf(f) > -1) {
         v = (v === null || v === '') ? null : Number(v);
         if (isNaN(v)) v = null;
       }
@@ -138,6 +154,11 @@ window.TH_STORE = (function () {
       })
       .then(function (res) {
         if (res.error) throw res.error;
+        // Does this database have the Phase 3b deduction columns yet? select('*')
+        // returns every column that exists, so a missing key means a missing column.
+        if (res.data && res.data.length) {
+          deductCols = Object.prototype.hasOwnProperty.call(res.data[0], 'referral_fee');
+        }
         rows = (res.data || []).map(normalize);
         mode = 'cloud';
 
@@ -160,7 +181,7 @@ window.TH_STORE = (function () {
   }
 
   function seedCloud() {
-    var seed = (window.TH_SEED || []).map(function (r) { return clean(r); });
+    var seed = (window.TH_SEED || []).map(function (r) { return payload(r); });
     if (!seed.length) return Promise.resolve();
     var chunks = [];
     for (var i = 0; i < seed.length; i += 250) chunks.push(seed.slice(i, i + 250));
@@ -181,9 +202,9 @@ window.TH_STORE = (function () {
   function getMode() { return mode; }
 
   function add(record) {
-    var payload = clean(record);
+    var body = payload(record);
     if (mode === 'cloud') {
-      return supabase.from(cfg.TABLE || 'transactions').insert(payload).select().single()
+      return supabase.from(cfg.TABLE || 'transactions').insert(body).select().single()
         .then(function (res) {
           if (res.error) throw res.error;
           var row = normalize(res.data);
@@ -191,16 +212,16 @@ window.TH_STORE = (function () {
           return row;
         });
     }
-    payload.id = nextId();
-    rows.push(payload);
+    body.id = nextId();
+    rows.push(body);
     lsWrite(rows);
-    return Promise.resolve(payload);
+    return Promise.resolve(body);
   }
 
   function update(id, record) {
-    var payload = clean(record);
+    var body = payload(record);
     if (mode === 'cloud') {
-      return supabase.from(cfg.TABLE || 'transactions').update(payload).eq('id', id).select().single()
+      return supabase.from(cfg.TABLE || 'transactions').update(body).eq('id', id).select().single()
         .then(function (res) {
           if (res.error) throw res.error;
           var row = normalize(res.data);
@@ -210,8 +231,8 @@ window.TH_STORE = (function () {
         });
     }
     var i = rows.findIndex(function (r) { return String(r.id) === String(id); });
-    if (i > -1) { payload.id = rows[i].id; rows[i] = payload; lsWrite(rows); }
-    return Promise.resolve(payload);
+    if (i > -1) { body.id = rows[i].id; rows[i] = body; lsWrite(rows); }
+    return Promise.resolve(body);
   }
 
   function remove(id) {

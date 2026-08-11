@@ -1,522 +1,522 @@
-year,date,client,side,prop_type,address,city,sale_price,gross_comm,net_comm,source,referrer
-2008,2008-04-09,Chris Olson,Buyer,,"1 Bartlett, 94110",,550000,10212.5,,Referral,Heather Hawkins
-2008,2008-04-11,Jeanette Li,Buyer,,"425 1st Street #1003, 94105",,940000,19475,,Referral,Mai Le / Jim Li
-2008,2008-05-22,"Andy Maguire , split w/Wes Freas",Buyer,,"2250 24th Street #334, 94107",,400000,4750,,Referral,Stacy Cullison
-2008,2008-06-17,Jeanette Li,Seller,,"400 Beale Street #613, 94105",,625000,11993.75,,Referral,Mai Le / Jim Li
-2008,2008-08-22,Simon & Mary Watkins,Buyer,,"330 Mission Bay Blvd #509, 94158",,819000,23341.5,,Open house,400 Beale #613 Open House
-2008,2008-11-26,David Bebee POA Kim Steiwig,Seller,,"1930 Mission Street #103, 94103",,450000,10687.5,,Sphere of influence,Neighbor that I helped with her rental
-2008,2008-12-24,Thomas Trotman,Buyer,,"115 Carl Street #3, 94117",,415000,9856.25,,Referral,Victoria Liang/Wilfred Chow
-2009,2009-01-30,Diego Sanchez & Luisa Maldonado,Buyer,,"1790 McKinnon Ave, 94124",,395000,5628.75,,Open house,1930 Mission #103
-2009,2009-02-20,Heather Barrett & Greg Bianchi,Buyer,,"1203 Guerrero Street, 94110",,640000,15200,,Sphere of influence,
-2009,2009-02-27,Melissa Cheung & Chris Kern,Buyer,,"146 Joost Avenue, 94131",,775000,18406.25,,Referral,Pam Schwartz
-2009,2009-03-31,Kevin Clarke,Seller,,"1930 Mission #303, 94103",,496000,11780,,Sphere of influence,Neighbor
-2009,2009-07-22,Kavita Raman & Baji Gobburi,Buyer,,"107 Bache Street, 94110",,825000,19593.75,,Referral,Marianna Eyzerovich
-2009,2009-08-07,Andrea & Matt Hawley,Buyer,,"420 Bay Street #A, 94133",,900000,16031.25,,Other,eteam
-2009,2009-08-14,Joseph Garvey (&Pat&Julie),Buyer,,"2208 Mission Street #403, 94110",,625000,14843.75,,Open house,400 Beale #613 Open House
-2009,2009-09-02,Michelle Hong,Buyer,,"1521 Sutter #407, 94109",,680000,16150,,Referral,Denise Bee
-2009,2009-09-28,Sanjay Pardanani,Buyer,,"727 Ellsworth Street, 94110",,546000,12967.5,,Referral,Melissa Cheung
-2009,2009-10-30,Denise & Piere Bee,Buyer,,"2283 Turk #2, 94118",,775000,18406.25,,Referral,Eecher Yee
-2009,2009-11-20,Kristiane Koontz,Buyer,,"300 Berry #1202, 94158",,528000,12540,,Other,Matt & Andrea Hawley
-2009,2009-12-09,Arnold Howe,Seller,,"1930 Mission #203, 94103",,515000,12231.25,,Sphere of influence,Sherri Howe
-2010,2010-01-21,Becky Smyth,Buyer,,"3421 25th St #2, 94110",,530000,12587.5,,Referral,Chris Kern & Melissa Cheung
-2010,2010-01-27,Denise & Pierre bee,Seller,,"400 Beale #1506, 94105",,582500,11067.5,,Referral,Eecher Yee
-2010,2010-02-05,Mimi Lai,Buyer,,"170 King #504, 94107",,575000,13656.25,,Referral,Denise Bee
-2010,2010-03-15,Devdutt Shastri,Buyer,,"2501 Harrison #4, 94110",,543000,12896.25,,Sphere of influence,Friend
-2010,2010-05-07,Sherri Howe,Seller,,"1930 Mission #305, 94103",,490000,11637.5,,Self-generated,Self
-2010,2010-06-02,Brian Johnson & Kelly Higgason,Buyer,,"2827 Noriega Street, 94122",,725000,15496.88,,Referral,Becky Smyth
-2010,2010-06-26,Andrea Contreras,Buyer,,"396 Hermann Street, 94117",,615000,14606.25,,Referral,Chris Kern
-2010,2010-09-03,Suelyn Yu,Buyer,,"1823 15th Street #1, 94103",,635000,15081.25,,Other,1930 Mission Listing
-2010,2010-10-01,Ken Lee,Buyer,,16 Waterville Street,,635000,15081.25,,Other,Liked my profile on the Zephyr Site
-2010,2010-11-22,Margaret Timbrell,Buyer,,"1800 Turk #101, 94115",,535000,15247.5,,Sphere of influence,Friend
-2010,2010-12-28,Retesh Shah,Buyer,,"400 Beale #811, 94105",,663000,15746.25,,Open house,"1930 Mission #103, 2-3 years ago."
-2011,2011-01-13,Kristin and Matt Smart (Matilda & Baby Girl),Buyer,,"1537 Pacific Avenue, 94109",,947800,16882.69,,GGMG community,Replied to her post
-2011,2011-02-04,Irene Cheng,Buyer,,"325 Berry #719, 94158",,535000,12706.25,,Referral,Former Clients (Winfred Lai)
-2011,2011-03-01,Taara Hoffman & Steve Bissinger (Tessa & Hannah),Buyer,,"201 Moultrie Street, 94110",,883150,20974.81,,Referral,Tara Donohue (in 2007)
-2011,2011-04-08,Melissa & Alex Afterman (Madison),Buyer,,"332 Marietta Drive, 94127",,725000,17218.75,,Referral,Melissa & Jacob Rannels
-2011,2011-04-11,Mark Fisher & Elisa Suetake,Buyer,,"38 Edgemar Street, DC, 94014",,775000,18406.25,,Referral,Dave Kendall
-2011,2011-06-30,Heather McCune,Buyer,,"62A Sanchez #Rear, 94117",,490000,13965,,Referral,Maryanna Southey
-2011,2011-07-01,Kevin Franklin & Keehae Park,Buyer,,"440 11th Avenue, 94118",,1949000,46288.75,,Referral,Clinton & Camille
-2011,2011-07-20,Alex Yeung,Buyer,,"400 Beale #1005, 94105",,500000,11875,,Referral,Irene Cheng
-2011,2011-07-22,Charlotte Erwin,Seller,,794-796 Moultrie,,990000,5878.12,,Sphere of influence,Charlotte Eriwn
-2011,2011-07-26,Perri Dong & Helen Chen,Buyer,,235 Berry #517,,720000,12825,,Referral,Linus Toy
-2011,2011-09-08,Kathy Tran,Buyer,,"755 Tennessee Street #1, 94107",,598000,17043,,Referral,Tracy Andreini
-2011,2011-10-07,Matthew & Sarah Adler,Buyer,,"1170 South Van Ness #3, 94110",,600000,12825,,Referral,Charlotte Erwin
-2011,2011-10-25,Raj Prasad,Seller,,300 Berry #411,,649000,15413.75,,Referral,Matt & Andrea Hawley
-2011,2011-10-27,Pat & Julie Garvey,Buyer,,"1050 North Point #1705, 94109",,615000,14606.25,,Open house,400 Beale #613 ( 3.5 years)
-2011,2011-11-16,Wayne Chang,Buyer,,"300 Berry #102, 94158",,570000,13537.5,,Referral,Irene Cheng
-2011,2011-11-30,Jean Kohler,Seller,,"199 Tiffany #309, 94110",,435000,10331.25,,Referral,Kyle Tempel
-2011,2011-12-30,Dora Yung,Buyer,,"1001 Pine #1201, 94109",,350000,8312.5,,Referral,Sanjay Pardanani
-2012,2012-02-09,Amy Bradac & Doug Speckhard,,,276 Dolores,,585000,13893.75,,GGMG community,
-2012,2012-03-30,Bill Gray & Renny Talianchich,,,"410 Justin Drive, SF, CA 94110",,749000,17788.75,,Sphere of influence,
-2012,2012-04-03,Maksim Ovsyannikov,,,"767 Corbett Street #1, SF, CA 94131",,744000,17670,,Referral,Erin Clark
-2012,2012-05-30,Pete Cooper & Brigid McCormack,,,1806 Great Highway,,1050000,24937.5,24937.5,Referral,Brian & Kelley Johnson
-2012,2012-06-07,Guy DiLella & Jamie Boatner,,,820 Minnesota Street,,926500,22004.38,22004.38,Sphere of influence,
-2012,2012-06-22,Priya Raman,,,380 14th Street #209,,655000,15556.25,15556.25,Referral,Kavita Raman
-2012,2012-08-02,Alicia Bunnell,,,65 Glover,,615000,14606.25,14606.25,Sphere of influence,
-2012,2012-08-10,Cynthia Childers (do not contact),,,469 Clementina,,333000,7908.75,7908.75,Referral,Joe Scrogham
-2012,2012-08-16,Referral Fee: Robert Scott Johnson,,,"958 28th Street #23, Oakland",,140000,3325,3325,Other,Listing next door
-2012,2012-08-23,Alex Lee,,,300 Berry #920,,599000,14226.25,14226.25,Referral,Winfred Lai
-2012,2012-08-29,Lily Stoyanovski,,,1001 Pine #1411,,306050,7268.69,5451.52,Referral,Tara Donohue
-2012,2012-09-21,Betsy & Jeff Swenerton,,,"958 28th Street #25, Oakland",,170000,4037.5,4037.5,Referral,Amy Bradac
-2012,2012-10-03,Winfred Lai,,,325 Berry #602,,702000,16672.5,16672.5,Referral,Denise Bee
-2012,2012-10-08,"Brian Pitcher, Janice Pitcher, Martha Winters",,,83 Park Street,,750000,17812.5,13359.38,Referral,Tara Donohue
-2012,2012-10-19,Winfred Lai,,,235 Berry #704,,850000,20187.5,20187.5,Referral,Mimi Lai
-2012,2012-11-21,Matthieu Corfmat & Taeko Kikuchi,,,256 Page Street,,1093500,25970.62,25970.62,Referral,Denise Bee
-2012,2012-11-29,Tim & Mollie Tunks,,,1037 York Street,,475000,11281.25,11281.25,GGMG community,
-2012,2012-11-29,Anne Aussems & Nathanael Esposito,,,69 Douglass,,890000,21137.5,21137.5,Referral,Kyle Tempel
-2012,2012-12-06,John Carroll,,,71 Sala Terrace,,543888,15500.81,10075.53,Referral,Gloria Knopke
-2012,2012-12-07,Jared & Evelyn Sulem,,,"1115 Moraga St, 94122",,800000,19000,19000,Referral,Mark Fisher & Elisa Suetake
-2013,2012-07-10,Alicia Bunnell,,,519 Webster Street,,1175000,23500,13283.38,Sphere of influence,
-2013,2013-01-18,Simon and Mary Watkins,,,330 Mission Bay Blvd N. #509,,839000,20975,16439.16,Repeat client,
-2013,2013-03-05,Tamara Monesi,,,"300 Berry #420, SF, CA 94158",,675000,16875,13225.78,Open house,Raj Prasad
-2013,2013-03-07,Rishard Bitbaba,,,1880 Steiner #405,,950000,23750,9307.03,Referral,Tara Donohue
-2013,2013-03-13,Tamara Monesi,,,5800 Third Street #1208,,485000,14550,11403.56,Other,Raj Prasad
-2013,2013-03-29,Alex Appelqvist,,,758 Haight #1,,551000,13775,10796.16,Referral,Michelle Ravn
-2013,2013-03-29,Joshua Andresen & Sara Heintzelman,,,2534 46th Ave,,805000,20125,15772.97,Networking,
-2013,2013-03-29,Kathy Sepulveda,,,5800 Third Street #2401,,465000,13800,10815.75,Open house,
-2013,2013-04-10,Mimi Lai & Allen Lam,,,2176 15th Avenue,,1370000,34250,27656.88,Repeat client,
-2013,2013-04-19,Sylviane Francou & Nicolas Delporte,,,205 Fair Oaks,,810000,20250,16351.88,Referral,Anne & Nathanael
-2013,2013-05-31,Susan Edmonds,,,1310 Minnesota #202,,598000,14950,12072.12,Referral,Vivian Lee
-2013,2013-06-04,Simon and Mary Watkins,,,246 28th Avenue,,1945000,48625,39264.69,Repeat client,
-2013,2013-06-28,Roshini Prasad,,,219 Brannan #10C,,890000,20025,16170.19,Referral,Priya Raman
-2013,2013-07-02,Mimi Lai & Allen Lam,,,170 King #504,,770000,19250,15544.38,Repeat client,
-2013,2013-07-03,Sabina & Raman Chitkara,,,333 1st Street #1802,,770000,19250,15544.38,Referral,Roshini Prasad
-2013,2013-07-12,Matt & Kristin Smart,,,1537 Pacific,,1265000,25300,20429.75,Repeat client,
-2013,2013-07-19,John Raff,,,38 Bryant #507,,879000,21975,17744.81,Referral,Alex Yeung
-2013,2013-07-23,Cheryl Lana,,,300 Berry #522,,780000,19500,15746.25,Other,
-2013,2013-08-16,Sue Simpson,,,"266 Humboldt Rd, Brisbane, CA",,960000,24000,19380,Sphere of influence,
-2013,2013-08-16,Derek & Rebecca Wright,,,3436 19th Street,,810000,20250,16351.88,Referral,Alex Yeung
-2013,2013-08-30,"Rick Arnold (s), Pasal Guinchard & Erin Clark (b)",,,"273-273A States St, SF, CA 94114",,485000,19400,15665.5,Sphere of influence,
-2013,2013-09-02,Lisa Faucher & Chris Orcutt,,,"1207 33rd Avenue, SF, CA",,1200000,30000,24225,Referral,Kathy Tran
-2013,2013-09-18,Josh Widmann,,,"224 Prague, SF, CA",,455000,11375,9185.31,Referral,Andrea Contreras
-2013,2013-09-19,Stephen McCarthy,,,355 1st #S204,,930000,23250,12203.34,Not recorded,
-2013,2013-09-24,Eurie Kim,,,695 5th Street #16,,700000,17500,14131.25,Open house,
-2013,2013-10-09,Bob Read & Lisa Anderson,,,"3885 20th Street, SF, CA 94114",,1700000,42500,36337.5,Referral,Lauren Wang
-2013,2013-11-12,Bob Read & Lisa Anderson,,,"3883 20th Street, SF, CA 94114",,2000000,50000,42750,Referral,Lauren Wang
-2013,2013-12-10,Sue Lee & Mark Chiang,,,"332 Virginia St, SF, CA 94110",,819000,20475,17506.12,Referral,Kay & Rodney Cheung
-2014,2014-01-15,Tana Sabatino,,,"738 Masonic Ave, SF, CA",,955000,23875,11126.25,Sphere of influence,
-2014,2014-03-18,Kelly Stamatis,,,"3620 19th Street #33, SF, CA",,230834,5496,2099.27,Other,
-2014,2014-03-18,Kelvin Lai,,,8200 Oceanview Terrace #115,,475000,11875,7021.87,Referral,Debbie Lai
-2014,2014-04-15,Ashray Reddy,,,451 Kansas #352,,520000,13000,8175,Referral,BajiGobburi
-2014,2014-05-08,Helen Hwang,,,"300 Berry #704, SF, CA 94158",,795000,19875,7865.55,Open house,
-2014,2014-05-30,Sonali and Rajeev Chopra,,,"153 7th Avenue, SF, CA 94121",,1710000,42750,15116.18,Referral,Chris Sprague & Karen Cheong
-2014,2014-06-11,Anthony and Jennie Birdie,,,"116 Mary Teresa, SF, CA 94134",,615000,15375,9754.38,Networking,
-2014,2014-06-12,Anna Roche & Diana Sokolove,,,"44 Hugo Street, SF, CA",,930000,23250,14651.25,Referral,Chris Kern (and Andrea Conteras?)
-2014,2014-06-19,Tim & Gabriela Yee (referral from Carlos Padilla),,,270 Valencia #206,,900000,22500,10751.87,Referral,
-2014,2014-07-15,Lauren Wang,,,"435 China Basin Street #444,SF, CA 94158",,1350000,26750,17318.75,Sphere of influence,
-2014,2014-08-01,Denis & Margaret Brown,,,199 Tiffany #304,,870000,21750,13973.75,Referral,Kyle Tempel
-2014,2014-08-06,Saran Raksincharoensak,,,1515 15th Street #402,,920000,23000,14825,Referral,Winfred Lai
-2014,2014-08-15,Jennifer and Oliver Raskin,,,1 Baker Street #2A,,932500,23312.5,14492.04,Referral,Heather Hawkins & Chris Olson
-2014,2014-08-20,Jordan and Yelena Koplowicz,,,"2425 Vicente Street, SF, CA",,875000,21875,17694.46,GGMG community,
-2014,2014-09-20,John Raff Ringwood,,,,,1670000,6262.5,5205.7,Not recorded,
-2014,2014-10-03,Tanya Nakhimovsky,,,"16 Ord Court #1, SF, CA",,756000,18900,11832.49,GGMG community,
-2014,2014-10-15,Ian and Berna Martz,,,195 25th Avenue #101,,830000,20750,10639.0,Not recorded,
-2014,2014-10-17,John and Nicole Raff,,,"38 Bryant Street #507, SF, CA 94105",,1100000,23375,10014.73,Not recorded,
-2014,2014-10-24,Tyler Hayes,,,"400 Spear Street #206, SF, CA 94105",,835000,20875,13481.87,Referral,Kevin Franklin
-2014,2014-10-31,Achyutt and Runa Bhattacharyya,,,601 Van Ness #1001,,560000,15400,4976.52,Referral,Carlos Padilla
-2014,2015-07-11,Daniel Low and Courtney Siu,,,47 Rosemont,,1111000,27775,11535.74,Referral,Gil Troutman
-2015,2015-01-22,Prashant and Nilani Murthy,Buyer,,2235 Beach Street #301,San Francisco,1650000,41250,32399.38,Referral,Rajeev Chopra
-2015,2015-03-03,Ian and Berna Martz,Buyer,,21 Woodhaven Court,San Francisco,1133000,28325,21960.44,Other,
-2015,2015-03-10,Jessie and Peter Turnbaugh,Buyer,,1607 38th Avenue,San Francisco,1118000,27950,21664.62,GGMG community,
-2015,2015-03-19,Alex and Melissa Afterman,Seller,,332 Marietta Street,San Francisco,1250000,31250,24779.38,Repeat client,
-2015,2015-04-10,Mike Osgood & Rachel Walsh,Buyer,,8 Octavia Boulevard #702,San Francisco,1125912,28147.8,22887.86,GGMG community,Emily de Arroyo
-2015,2015-04-10,Alex Yeung & Debbie Lai,Buyer,,363 Joost Avenue,San Francisco,1125000,28125,22458.91,Teammate's client,
-2015,2015-04-28,Jill Henn,Buyer,,2721 Union Street,San Francisco,2000000,50000,40622.5,Referral,Kavita & Baji
-2015,2015-04-28,Vipul Hingne & Rutuja Khanzode,Buyer,,2536 Franklin Street,San Francisco,2075000,51875,42181.09,GGMG community,
-2015,2015-05-19,Jeanette and David Barzelay,Buyer,,3272 20th Street,San Francisco,1285000,32125,25773.91,GGMG community,Emily de Arroyo
-2015,2015-05-29,Michael and Michelle Gurman,Seller,,468 42nd Avenue,San Francisco,1775000,44375,36431.72,Other,
-2015,2015-06-23,Adrian and Claudia Durbin,Seller,,1860 Page #201,San Francisco,1700000,42500,34818.12,Sphere of influence,
-2015,2015-06-29,Melissa and Jacob Rannels,Seller,,1719 Alabama Street,San Francisco,1450000,36250,29677.81,Sphere of influence,
-2015,2015-06-30,Thomas Najarian and Sue Unkel,Buyer,,153 Paris Street,San Francisco,780000,19500,15854.38,GGMG community,Sonya Abrams
-2015,2015-07-14,Raghni Khanna and Kaushick Naidu,Buyer,,1306 10th Avenue,San Francisco,2300000,57500,46876.88,GGMG community,
-2015,2015-07-24,Nick Twyman and Rachel Watson,Buyer,,2653 Post Street,San Francisco,925000,23125,18292.66,GGMG community,
-2015,2015-08-07,Jana and Michael Cook,Seller,,180 Mary Teresa,San Francisco,785000,23550,19175.94,GGMG community,Sonya Abrams
-2015,2015-09-02,Tom Najarian and Susan Unkel,Seller,,352 Shotwell Street,San Francisco,1400000,42000,34407.5,Other,
-2015,2015-09-10,Steven Reeder,Buyer,,76 Alvarado Street,San Francisco,808000,20200,12088.44,Referral,
-2015,2015-09-10,Ayako Kuroda and Ryo Eguchi,Seller,,940 Natoma #4,San Francisco,790000,23700,19195.62,Other,
-2015,2015-09-24,Irina and Arsalan Farooq,Buyer,,99 High Street #3,San Francisco,1800000,45000,36481.25,Marketing,
-2015,2015-09-29,Anastasia and Matt Robbins,Seller,,1530 12th Avenue,San Francisco,1750000,43750,36277.22,GGMG community,
-2015,2015-10-09,Ayako Kuroda and Ryo Eguchi,Buyer,,862 Moultrie Street,San Francisco,975000,24375,20390.62,Other,
-2015,2015-10-09,Claudine and Brian Emeott,Buyer,,1771 39th Avenue,San Francisco,1170000,29250,24093.75,GGMG community,
-2015,2015-10-16,Tamara Lam Plattes & Nathan Poole,Buyer,,561 14th Avenue,San Francisco,1350000,33750,27931.25,GGMG community,
-2015,2015-11-08,Jen and Trevor Hicks,Buyer,,333 Dellbrook Avenue,San Francisco,1150000,28750,23666.25,Referral,Kyle Tempel
-2015,2015-11-15,Lauren Cappelloni and Keith Welter,Buyer,,1534 44th Avenue,San Francisco,1280000,32000,26910,GGMG community,
-2015,2015-12-02,Brian Joe and Judy Vo,Buyer,,32 Yukon Street,San Francisco,1225000,30625,25679.38,Referral,Kathy Tran
-2015,2015-12-17,Michelle and James Hong,Buyer,,2076 14th Avenue,San Francisco,1280000,32000,26910,Repeat client,
-2016,2016-01-18,Kristiane Koontz and Peter Larsson,,Single Family,6848 Aitken Drive,Oakland,1160000,29000,6026.56,Teammate's client,
-2016,2016-01-22,Dave Kwon and Hyunjung Shin,Buyer,Condo,712 Dorado Terrace,San Francisco,780000,19500,14894.38,GGMG community,
-2016,2016-02-02,Josh and Becca Shapiro,Buyer,TIC,3947 17th Street,San Francisco,1250000,31250,25051.56,Referral,Mike Osgood
-2016,2016-02-25,Simon and Mary Watkins,Seller,Single Family,246 28th Avenue,San Francisco,2600000,65000,53581.25,Repeat client,
-2016,2016-02-26,Jennifer Soss,Buyer,Single Family,115 Dalewood Way,San Francisco,1550000,38750,23708.2,Referral,Rosie Papazian
-2016,2016-03-09,Celine & Que Schafer,,Single Family,910 Idylberry Road,San Rafael,1400000,8750,7273.44,Referral,Erin Guinchard
-2016,2016-03-15,Alyce Ford,Seller,Single Family,718 Athens,San Francisco,775000,23250,13078.59,Referral,Esther McClay
-2016,2016-03-25,Winfred Lai & Yao Choong,Buyer,Condo,1 South Park #402,San Francisco,1750000,43750,35407.19,Repeat client,
-2016,2016-04-06,Anne & Ryan Daugherty,Seller,Single Family,1423 16th Avenue,San Francisco,2050000,51250,42151.56,GGMG community,
-2016,2016-04-19,John Paul and Shefali Upton,Buyer,Condo,1545 Broadway #205,San Francisco,1105000,27625,22168.28,Referral,Kavita Raman
-2016,2016-05-10,Celine & Que Schafer,Seller,Condo,623 16th Avenue,San Francisco,1150000,28750,23408.44,Referral,Erin Guinchard
-2016,2016-05-11,Josina and Peter Habegger,Buyer,Single Family,65 Ina Court,San Francisco,818000,20450,16154.06,GGMG community,
-2016,2016-06-02,Nathanael Esposito & Anne Aussems (SIRVA),Seller,Condo,69 Douglass,San Francisco,1315000,39450,20825.33,Repeat client,
-2016,2016-06-03,Anthony Scott and Jennifer Lam,Buyer,Single Family,2110 17th Avenue,San Francisco,1185000,29625,23780.78,Referral,Tracy Andreini
-2016,2016-06-10,Jennifer Cotner,Seller,Condo,374 Sanchez,San Francisco,1590000,39750,32552.19,GGMG community,
-2016,2016-06-10,Nancy and Jonathan Martinez,,,2005 Forest Avenue,Belmont,1305000,8156.25,6779.88,GGMG community,
-2016,2016-06-22,Paul Zoskey & Liz Caruana,Buyer,Single Family,2179 27th Avenue,San Francisco,1200000,30000,23957.5,Referral,Jen Raskin
-2016,2016-06-23,Eden Wells,Seller,Loft,900 Minnesota #116,San Francisco,1200000,30000,24447.5,GGMG community,
-2016,2016-07-27,David Solomon & John Dzundza,Buyer,Condo,188 Beulah Street #5,San Francisco,1375000,34375,27644.22,Open house,
-2016,2016-07-28,Vincent and Joyce Vanhoucke,Buyer,Single Family,8 Kronquist Court,San Francisco,2700000,67500,55614.38,GGMG community,
-2016,2016-07-29,Eric Kubat and Jessica Kassis,Seller,Condo,128 Ripley Street,San Francisco,1680000,42000,23948.75,Referral,Carlos Padilla
-2016,2016-08-10,Eden Wells and Jason Rodman,Buyer,Single Family,1385 Portola Avenue,San Francisco,2150000,53750,43699.69,GGMG community,
-2016,2016-09-07,Juan Casillas,Seller,Condo,601 Van Ness Avenue #1030,San Francisco,690000,20700,17206.88,Referral,
-2016,2016-09-19,Alex Yeung,Seller,Condo,400 Beale #1005,San Francisco,775000,19375,16000.77,Repeat client,
-2016,2016-09-20,Karthick Sriraman & Tushita Chechani,Buyer,Single Family,245 Fowler Avenue,San Francisco,1628000,40700,33893.5,Referral,Raghni & Kaushick
-2016,2016-10-14,Joyce and Vincent Vanhoucke,Seller,Single Family,635 Detroit,San Francisco,1600000,40000,33785,Not recorded,
-2016,2016-10-25,Kamal Al-Yahya and Maha Alzayer,Seller,Condo,145 Hampshire #B,San Francisco,1875000,46875,39608.12,Referral,Jason Rodman & Eden Wells
-2016,2016-10-27,Michael Goodwin and Basma Al-Yahha,Buyer,Condo,2130 15th Street,San Francisco,2850000,71250,60448.75,Referral,Jason Rodman & Eden Wells
-2016,2016-11-18,Kalvin Wang & Monica Lee,Buyer,Condo,140 South Van Ness #522,San Francisco,941000,23525,19683.88,Referral,Suelyn Yu
-2016,2016-12-02,Keith Barry and Roseanne Munoz,Buyer,Condo,3228 Washington Street,San Francisco,2049000,51225,42927.38,Sphere of influence,
-2016,2016-12-13,Ted Logan and Gem Stone-Logan,Buyer,Single Family,357 Louisburg Street,San Francisco,1370000,34250,28418.75,GGMG community,
-2017,,Kevin Franklin and Keehae Park,Seller,Single Family,440 11th Avenue,San Francisco,3000000,75000,63675,Repeat client,
-2017,2017-01-30,Rob Cross and Katie Freeman,Buyer,Single Family,507 47th Avenue,San Francisco,1875000,46875,39138.12,Referral,Jill Henn?
-2017,2017-03-01,Brian Kutner,Buyer,Condo,564 Shotwell Street,San Francisco,1530000,38250,23672.81,Referral,Chris & Karen
-2017,2017-03-02,Young Kim and Annie Lee,Buyer,Single Family,579 34th Avenue,San Francisco,1320000,33000,27355,GGMG community,
-2017,2017-03-21,Saichand Sunkari and Ramya Mallipamula,Buyer,Single Family,519 Nevada Street,San Francisco,1375000,34375,28435.62,Referral,Kathick
-2017,2017-03-23,Kevin Franklin and Keehae Park,Buyer,Single Family,1365 Union Street,San Francisco,6995000,174875,149068.12,Repeat client,
-2017,2017-03-31,Burch Smith and Brittney Royter,Seller,TIC,332 South Van Ness,San Francisco,1160000,29000,24300,Referral,A.T. Howe
-2017,2017-04-06,Bill Gray and Renny Talianchich,Seller,Single Family,410 Justin Drive,San Francisco,1200000,30000,25200,Repeat client,
-2017,2017-04-06,Vaughn Rasberry and Tatyana Ali,Buyer,Single Family,410 Justin Drive,San Francisco,1200000,30000,24995,Referral,Sara Wright
-2017,2017-04-14,Macario Namie and Courtney Towle,Buyer,Single Family,4270 Cesar Chavez,San Francisco,3425000,85625,72069.38,GGMG community,
-2017,2017-04-18,Kathryn Morris and Jason McCarthy,Seller,Condo,2507 19th Street,San Francisco,1025000,25625,21414.38,GGMG community,
-2017,2017-04-18,Amac and Dilek Herdagdelen,Buyer,Condo,2507 19th Street,San Francisco,1025000,15375,12540.62,GGMG community,
-2017,2017-05-12,Lauren Wang,Seller,Condo,988 Fulton Street #315,San Francisco,975000,24375,20345.62,Repeat client,
-2017,2017-05-12,Lisa Leung & Jason Swierk,Buyer,Condo,195 25th Avenue #101,San Francisco,1100000,27500,22642.5,GGMG community,
-2017,2017-05-12,Emily Wilson & Joss Giddings,Buyer,Single Family,324 Joost Avenue,San Francisco,1325000,33125,27366.88,Referral,Shefali & JP
-2017,2017-05-15,Avi Cieplinski & Jenny Yelin,Buyer,Single Family,533 Vicente,San Francisco,1610000,40250,33963.75,GGMG community,
-2017,2017-05-24,Kelly and Scott McRory,Seller,Single Family,909 Bay Street,San Francisco,2100000,52500,44437.5,GGMG community,
-2017,2017-06-16,Cindy & Jay Chiang & Andrew Hwang,Seller,Condo,255 Berry Street #511,San Francisco,1225000,30625,25689.38,GGMG community,
-2017,2017-06-23,Nadine Fakhoury & Eric Briggs,Buyer,Single Family,15 Ardenwood Way,San Francisco,1950000,48750,40726.25,Referral,Eden & Jason
-2017,2017-07-10,Sibel Goksel & Hakan Arikan,Seller,Condo,1001 Pine Street #602,San Francisco,920000,23000,16670,Referral,Sara Wright
-2017,2017-07-14,Alyson & Justin La,Buyer,Single Family,735 France Avenue,San Francisco,1220000,30500,25874.72,GGMG community,
-2017,2017-07-14,Howard and Franziska Cohen,Seller,Single Family,2551 44th Avenue,San Francisco,1250000,31250,20145.7,Referral,Mark Fisher
-2017,2017-07-14,Avi Cieplinski & Jenny Yelin,Seller,Condo,189 Collingwood Street,San Francisco,1415000,35375,30590.78,GGMG community,
-2017,2017-08-07,Amy Bradac & Doug Speckhard,Buyer,Single Family,1122 Wawona Street,San Francisco,1425000,35625,30855.47,Repeat client,
-2017,2017-08-11,Duncan Barr,Seller,Condo,601 Van Ness Ave #76,San Francisco,850000,25500,21913.12,Other,
-2017,2017-08-14,Nadie Fakhoury & Eric Briggs,Seller,Single Family,19 Arago Street,San Francisco,1600000,40000,34700,GGMG community,
-2017,2017-08-18,Tyler Hayes,Seller,Condo,400 Spear Street #206,San Francisco,901000,22525,19298.84,Repeat client,
-2017,2017-08-21,Cathy Tran & Peter Klos,Seller,Single Family,2162 26th Avenue,San Francisco,1550000,38750,33601.56,GGMG community,
-2017,2017-08-21,Sonia & Raj Kapoor,Buyer,Single Family,1430 Diamond Street,San Francisco,3195000,79875,71048.72,Referral,Roseanne/Jami
-2017,2017-09-06,Jake & Talya Sanders,Seller,Single Family,1718 12th Avenue,San Francisco,1750000,43750,39034.38,GGMG community,
-2017,2017-09-11,Lisa Mandle and Christopher Hu,Buyer,Condo,116 Connecticut Street #3,San Francisco,1175000,29375,26055.94,GGMG community,
-2017,2017-09-13,Winfred Lai,Seller,Condo,325 Berry Street #602,San Francisco,1318000,32950,29242.38,Repeat client,
-2017,2017-09-28,Emma and Tom Morris,Seller,Single Family,620 2nd Avenue,San Francisco,2525000,63125,56520.31,Referral,Kevin Franklin
-2017,2017-10-12,Kyle Tempel & Don Howerton,Seller,Condo,199 Tiffany #402,San Francisco,1100000,27500,24323.75,Sphere of influence,
-2017,2017-10-31,Lauren and Mike Sparandara,Seller,Single Family,2587 18th Avenue,San Francisco,1750000,43750,39034.38,Referral,Jenny & Avi
-2017,2017-11-14,Anjana Sharma & Bhavjot Bindra,Buyer,Single Family,43 Edinburgh Street,San Francisco,1500000,37500,32888.75,Referral,Basma Al-Yahya
-2017,2017-11-22,Don Howerton & Kyle Tempel,Buyer,Single Family,175 Brewster Street,San Francisco,2200000,55000,49187.5,Sphere of influence,
-2017,2017-11-30,Vivienne Chua & Kelvin Yip,Buyer,Single Family,2016 Pacific Avenue #401,San Francisco,1450000,36250,31765.62,Referral,Winfred Lai
-2017,2017-12-07,Mariana & Dan Schiffner,Buyer,Single Family,160 Gold Mine Drive,San Francisco,2950000,73750,66109.38,Referral,Jami/Ana
-2018,2018-01-11,Sophie Chiang and Yuwen Fang,Buyer,Single Family,2655 Alemany Boulevard,San Francisco,1320000,33000,28215,Referral,Alyson La
-2018,2018-01-19,Prashant and Nilani Murthy,Seller,Condo,2235 Beach Street #301,San Francisco,2000000,50000,42255,Repeat client,
-2018,2018-03-05,Sophie Chiang and Yuwen Fang,Seller,Condo,2125 Bryant Street #402,San Francisco,1466000,36650,30840.75,Repeat client,
-2018,2018-03-08,Dana Olsborg & Olivier L'Abbe,Seller,Single Family,28 Sequioa Way,San Francisco,1900000,47500,40162.5,Marketing,
-2018,2018-03-16,Kara & Tyler Snellings,Buyer,Single Family,449 Melrose,San Francisco,1420000,21300,17256.5,Marketing,
-2018,2018-04-03,Meenaxi & Dhaivat Pandit,Seller,Condo,1424 18th Avenue,San Francisco,1310000,32750,27506.25,Marketing,
-2018,2018-04-05,Alisha Roeder & Avinash Valsarajan,Buyer,Condo,211 Pelican Cove,San Francisco,1000000,25000,20425,Referral,Raghni
-2018,2018-04-09,Anna Morozovsky & Benjamin Murphy,Seller,Condo,2529 Post Street,San Francisco,1410000,35250,29643.75,GGMG community,
-2018,2018-04-09,Macario Namie & Courtney Towle,Seller,Single Family,986 Burnett Avenue,San Francisco,1612000,40300,34006.5,GGMG community,
-2018,2018-04-13,Heidi & Martin Sweeney,Buyer,Condo,1941 O'Farrell Street,San Francisco,1350000,33750,27986.25,GGMG community,
-2018,2018-05-02,Andrew and Laura Martinez-Fonts,Seller,Condo,2208 SutterStreet #1,San Francisco,1805000,45125,38086.88,GGMG community,
-2018,2018-05-15,Brian Chaikelson & Adina Rauchwerger,Buyer,Single Family,720 Junipero Serra Blvd,San Francisco,1841500,46037.5,38407.06,Open house,
-2018,2018-05-22,Nina Tseng & Kevin Kehl,Buyer,Single Family,12 Littlefield Terrace,San Francisco,1085000,27125,22236.88,Referral,Sophie Chiang
-2018,2018-05-25,Parul Yadav & Ankit Srivastava,Buyer,Condo,103 Randall Street,San Francisco,1800000,45000,37525,Referral,Kelvin Yip
-2018,2018-07-10,Matthew Nixon (and Amy Nixon),Seller,Condo,1057 Haight Street,San Francisco,1320000,33000,20666.25,Referral,Padilla Group
-2018,2018-07-23,Brian & Claudine Emeott,Buyer,Single Family,124 Forest Side,San Francisco,2220000,55500,46497.5,Not recorded,
-2018,2018-07-26,Kaoru Kobayashi & Christopher Stockton,Seller,Condo,199 Tiffany Avenue #406,San Francisco,1150000,28750,24086.25,Referral,Kyle & Don
-2018,2018-08-01,Sarah Palmer & Marcus Martins,Buyer,Single Family,1337 Felton,San Francisco,1084000,27100,22215.5,Marketing,
-2018,2018-08-06,Helen & Chris Lim,Buyer,Single Family,384 Santa Ana Avenue,San Francisco,2300000,57500,48207.5,GGMG community,
-2018,2018-08-13,Brian & Claudine Emeott,Seller,Single Family,1771 39th Avenue,San Francisco,1500000,37500,31612.5,Repeat client,
-2018,2018-08-16,Meghana RaoRane,Buyer,Single Family,401 Anderson Street,San Francisco,1330000,33250,27473.75,Referral,Kelvin Yip
-2018,2018-08-20,Collin Whitehead & Joylyn Tanner,Buyer,Single Family,5517 Diamond Heights Blvd,San Francisco,1880000,47000,39230,Referral,Rebecca Wright
-2018,2018-08-27,Chris Prince & Emma Sullivan,Buyer,Condo,14 Divisadero Street,San Francisco,2850000,71250,59968.75,Referral,Jeanette Barzelay
-2018,2018-08-29,Jacqueline & Clayton Scott,Seller,Single Family,4146 Fulton Street,San Francisco,1994146,49853.65,42174.87,Repeat client,
-2018,2018-09-04,Carli Oster,Buyer,Single Family,625 Moultrie Street,San Francisco,1400000,35000,29265.93,Referral,Alex Yeung
-2018,2018-09-19,Marina Psaros,Buyer,Single Family,2027 32nd Avenue,San Francisco,1112027,27800.68,23474.84,Referral,Brigitte & Pete
-2018,2018-09-20,Ted Logan & Gem Stone-Logan,Seller,Single Family,357 Louisburg Street,San Francisco,1600000,40000,34700,Repeat client,
-2018,2018-09-27,Camilla Souza & Deepak Karandikar,Buyer,Condo,135 Cook Street,San Francisco,1675000,41875,35847.66,Open house,
-2018,2018-10-08,Gina & Eric Mao,Seller,Single Family,209 Hazelwood Avenue,San Francisco,2200000,55000,47881.25,Referral,Vicky Keston
-2018,2018-10-19,Barry Cassidy,Seller,Condo,3380 20th Street #303,San Francisco,901000,22525,19298.84,Referral,Kevin Clarke
-2018,2018-11-02,Lindsay & Ludovic Thomasson,Seller,Condo,109 19th Avenue,San Francisco,1355000,33875,30122.19,Marketing,
-2018,2018-11-13,Adam & Jia Rogal,Buyer,Condo,1727 Grove Street,San Francisco,1460000,36500,32541.25,GGMG community,
-2018,2018-11-20,Priya Raman Kumar & Vipul Kumar,Buyer,Condo,204 Hoffman #1,San Francisco,1998000,49950,44224.88,Repeat client,
-2018,2018-11-26,Sara & Sean (Kristin's Listing),Seller,Single Family,667 Orange Avenue,Novato,780000,19500,12749.06,Sphere of influence,
-2018,2018-11-30,Bijan Vakili,Buyer,Condo,369 18th Avenue #105,San Francisco,1045500,26137.5,23094.09,Referral,Liz Caruana
-2018,2018-12-07,Kaz & Mark Field,Buyer,Condo,1166 Green Street,San Francisco,1400000,35000,30732.5,Referral,Tracy Andreini
-2019,2019-01-08,Curtis Yarvin & Jen Kollmer,Seller,Condo,4 Museum way,San Francisco,1850000,46250,39093.75,Referral,Wendy Harris
-2019,2019-01-09,Heather and Jonah Meacham,Seller,Condo,1203 Guerrero Street,San Francisco,1300000,32500,27337.5,Repeat client,
-2019,2019-02-06,Priya Raman Kumar,Seller,Condo,380 14th Street,San Francisco,1024000,20480,17060.4,Repeat client,
-2019,2019-02-11,Caleb & Tracey Porter,Seller,Condo,103 19th Avenue,San Francisco,1350000,33750,28361.25,Open house,
-2019,2019-02-13,Victoria & Joseph Frambach,Buyer,Single Family,15 Hollywood Court,San Francisco,1200000,30000,24650,Referral,Melissa Cheung & Chris Kern
-2019,2019-03-18,Jeanette & David Barzelay,Buyer,Single Family,225 Edgehill Way,San Francisco,2185000,54625,45704.38,Repeat client,
-2019,2019-03-22,Hari & Eric Simons,Buyer,Single Family,563 Munich Street,San Francisco,1170000,29250,24008.75,Marketing,
-2019,2019-03-26,Iris Orriss,Buyer,Single Family,17 Newburg Street,San Francisco,1965000,49125,40831.88,Referral,Gautier deMarci
-2019,2019-04-12,Fazal Majid and Shaheen Bilgrami,Seller,Single Family,2614 26th Avenue,San Francisco,2000000,50000,42255,Not recorded,
-2019,2019-04-15,Jason Rodman & Eden Wells,Seller,Single Family,1385 Portola Drive,San Francisco,2750000,96250.0,48881.25,Repeat client,
-2019,2019-04-16,Connie Sardo,Seller,Single Family,757 North Point Street #2,San Francisco,1810000,45250,38193.75,Not recorded,
-2019,2019-04-29,Jason & Kerri Terk,Buyer,Single Family,1651 Burrows,San Francisco,1210000,30250,24853.75,Not recorded,
-2019,2019-04-30,Ram Woo & Kirsten Linder,Buyer,Condo,750 2nd Street #301,San Francisco,1795000,49362.5,41329.94,Not recorded,
-2019,2019-05-01,Ashley & Aaron Stern,Buyer,Single Family,126 Bronte Street,San Francisco,1500000,37500,31052.5,Not recorded,
-2019,2019-05-06,Stephanie Tang & Winston Wolff,Seller,Condo,233 Noe Street,San Francisco,1850000,46250,39048.75,Marketing,
-2019,2019-05-24,Michael & Peri Hughes (KR),Buyer,Single Family,2782 Pine Street,San Francisco,4125000,103125,87161.88,Other,
-2019,2019-05-28,Hari & Eric Simons,Seller,Condo,442 30th Street,San Francisco,1200000,30000,25155,Marketing,
-2019,2019-05-30,David & Jeanette Barzelay,Seller,Condo,3272 20th Street,San Francisco,1600000,40000,33705,Repeat client,
-2019,2019-06-07,Heather & Jeff Beck,Buyer,Single Family,1890 43rd Avenue,San Francisco,1250000,31250,25788.75,Marketing,
-2019,2019-06-10,Kelly & Erik Larson,Seller,Condo,165 Octavia Street,San Francisco,1370000,34250,28788.75,Marketing,
-2019,2019-06-20,Beth & Todd Fox,Buyer,Single Family,595 44th Avenue,San Francisco,2225000,55625,46549.38,Marketing,
-2019,2019-07-05,Laura Frost & Chris Bregler,Buyer,Single Family,32A Elsie Street,San Francisco,3000000,75000,63115,Marketing,
-2019,2019-07-10,Paul Zoskey & Elizabeth Caruana,Seller,Single Family,2179 27th Avenue,San Francisco,1700000,42500,35842.5,Repeat client,
-2019,2019-07-22,Sean & Dawn Linden (LEWIS),Buyer,Single Family,514 Molimo Drive,San Francisco,1725000,43125,35861.88,Sphere of influence,
-2019,2019-08-01,Carmen Contreras & Andrea Contreras,Buyer,Condo,4627 25th Street,San Francisco,1950000,48750,40726.25,Teammate's client,
-2019,2019-08-05,Beth & Todd Fox,Seller,Condo,301 Gough #7/G,San Francisco,1590000,39750,33491.25,Marketing,
-2019,2019-08-12,Aravind Ramanathan & Bhavya Thyagarajan,Buyer,Condo,208 28th Street #201,San Francisco,1455000,36375,30145.62,Marketing,
-2019,2019-08-16,Priya & Neil Pai,Seller,Condo,141 Willard North,San Francisco,2400000,60000,50805,Referral,Connie Sardo
-2019,2019-09-04,Niklas Nordlof & Gwen Roberts (KR),Buyer,Condo,850 Minnesota Street #158,San Francisco,1060000,26500,22961.25,Sphere of influence,
-2019,2019-09-13,Lisa Leung & Jason Swierk,Seller,Condo,195 25th Avenue #101,San Francisco,1300000,32500,28836.25,Repeat client,
-2019,2019-10-11,Dave Kwon & Hyunjung Shin,Seller,Condo,712 Dorado Terrace #53,San Francisco,1050000,26250,23195.62,Repeat client,
-2019,2019-10-28,Leah & PJ Onori,Seller,Condo,49-B Miguel Street,San Francisco,955000,23875,20587.19,Marketing,
-2019,2019-10-29,Doug Strickland & Laura Edwards (KR),Buyer,Condo,47 Chickasaw Court,Corte Madera,1175000,29375,25580.94,Sphere of influence,
-2019,2019-11-12,Syrus & Farnaz Madavi (SL),Buyer,Single Family,2083 29th  Avenue,San Francisco,1575000,47250,41633.12,Open house,
-2019,2019-11-22,Kirsten & Karl Pfleger,Seller,2-Unit,487-489 Noe Street,San Francisco,3100000,77500,69448.75,Marketing,
-2019,2019-12-02,Keith Williams,Buyer,Condo,375 Crestmont Drive,San Francisco,1049900,26247.5,22813.37,Open house,
-2019,2019-12-18,Vaughn & Tatyana Rasberry,Seller,Single Family,410 Justin Drive,San Francisco,1850000,46250,41245.62,Repeat client,
-2020,2020-01-30,Erika Buenrostro & Alex Couric,Buyer,Condo,125 Steiner Street,San Francisco,2250000,56250,45802.81,Marketing,
-2020,2020-02-12,Nicole Ryan & Guy Burdick,Buyer,Single Family,139 Gladeview Way,San Francisco,2150000,53750,43669.69,Marketing,
-2020,2020-02-17,Sandeep Pandey & Shikha Sharma,Buyer,Condo,1880 Steiner Street #409,San Francisco,1261000,31525,25250.16,Marketing,
-2020,2020-03-02,Akhila Ananthram & Naman Agarwal,Buyer,Condo,4339 California Street #3,San Francisco,1749000,43725,35391.41,Other,
-2020,2020-03-02,Karthick Sriraman & Tushita Chechani,Seller,Single Family,254 Fowler Avenue,San Francisco,2235000,55875,45951.09,Repeat client,
-2020,2020-03-04,Jared & Evelyn Sulem,Buyer,Single Family,1259 Lattie Lane,Mill Valley,1638000,40950,33039.69,Repeat client,
-2020,2020-03-11,Pam and Brian Zeiger,Seller,Condo,452 Corbett Avenue,San Francisco,1875000,46875,38469.84,Marketing,
-2020,2020-03-27,Eric and Alana Guggenbiller,Seller,Condo,3731 Fillmore Street #4,San Francisco,1010000,25250,20494.06,Referral,Connie Sardo
-2020,2020-04-09,Renee diResta & Justin Hileman,Buyer,Condo,600-A Missouri Street,San Francisco,1650000,41250,33334.06,Referral,Vicky Keston
-2020,2020-04-13,Laurel & Andy Kellam,Seller,Single Family,61 Seminole Avenue,San Francisco,1580000,39500,32339.38,Referral,Cathy Tran
-2020,2020-05-27,Maya Kanzaria & Mayur Rao,Buyer,Single Family,2475 23rd Avenue,San Francisco,1800000,45000,36396.25,Marketing,
-2020,2020-06-01,Nicole Ryan & Guy Burdick,Seller,Single Family,54 Sussex Street,San Francisco,1760000,44000,36080,Marketing,
-2020,2020-06-08,Sergei Prutkin,Seller,Condo,3731 Fillmore Street #5,San Francisco,1115000,27875,22676.09,Self-generated,
-2020,2020-06-29,Keith Barry & Roseanne Munoz,Buyer,Single Family,507 4th Avenue,San Francisco,3000000,75000,61333.75,Repeat client,
-2020,2020-07-01,Erin & Francisco Ramirez,Buyer,Single Family,227 Byxbee Street,San Francisco,1170000,29250,23384.06,Other,
-2020,2020-08-11,Martin Rydder,Seller,Condo,3731 Fillmore #6,San Francisco,960000,24000,19455,Referral,
-2020,2020-08-14,Jen and Trevor Hicks,Seller,Single Family,333 Dellbrook Avenue,San Francisco,1515000,37875,30988.59,Repeat client,
-2020,2020-08-21,Daniel LaGrotta and Christine Lin,Seller,Condo,2200 Market Street #401,San Francisco,1725000,43125,35352.66,Marketing,
-2020,2020-08-21,Peter Gross,Seller,Single Family,1608 Felton Street,San Francisco,1050000,26250,21325.31,Marketing,
-2020,2020-08-24,Roseanne & Keith Barry,Seller,Condo,3228 Washington Street,San Francisco,2450000,61250,50572.69,Repeat client,
-2020,2020-09-11,Marion & Emmett Stanton,Seller,Single Family,258 Diamond Street,San Francisco,2645000,66125,41907.66,Referral,Bill Drypolcher
-2020,2020-09-28,Loren Mooney & Audra Farrell,Buyer,Single Family,123 Vienna Street,San Francisco,1157120,28928,23723.44,Open house,
-2020,2020-09-29,Chi Lam To & Tiffany To,Seller,Single Family,1711 47th Avenue,San Francisco,1350000,33750,28361.25,Yelp,
-2020,2020-10-13,Michael Goodwin & Basma Al-Yahya,Seller,Condo,2130 15th Street,San Francisco,3000000,75000,63737.62,Repeat client,
-2020,2020-10-15,Karuna Garg & Amit Bansal,Seller,Single Family,75 Lunado Way,San Francisco,2000000,50000,43442.5,Marketing,
-2020,2020-10-23,Michael Goodwin & Basma Al-Yahya,Buyer,Single Family,306 Holly Street,Mill Valley,3750000,93750,81887.81,Repeat client,
-2020,2020-10-30,Chickasaw Owners (?),Seller,Single Family,47 Chickasaw Court,Corte Madera,1355000,33875,29612.35,Teammate's client,
-2020,2020-10-30,McGilloway Family Trust,Buyer,Condo,330 Arguello Blvd #2,San Francisco,1125000,28125,24507.81,Sphere of influence,
-2020,2020-11-06,Heather Marlow,Seller,Condo,461 Capp Street,San Francisco,1325000,33125,29400.31,Marketing,
-2020,2020-11-12,John and Katy DeWeese,Buyer,Single Family,101 Poppy Lane,San Francisco,2800000,70000,62165,Referral,Hari Simons (sister)
-2020,2020-11-16,Leonel Quinteros & Irina Knopova,Buyer,Single Family,43 Warren Drive,San Francisco,1525000,38125,11192.7,Sphere of influence,
-2020,2020-11-17,Quynh-An Phan & Edward Fong,Buyer,Single Family,2551 39th Avenue,San Francisco,1610000,40250,35315.62,Marketing,
-2020,2020-11-17,Steve and Tyee Dugan,Seller,Single Family,26 Mizpah Street,San Francisco,2000000,50000,44630,Yelp,
-2020,2020-12-17,Megan Keane (Kristin),Buyer,Condo,65 Glover Street,San Francisco,910000,22750,19576.88,Other,
-2020,2020-12-18,Chris and Alexa Halloran (Ceily),Seller,Single Family,69 Cragmont,San Francisco,1840000,55200,49323,Teammate's client,
-2020,2020-12-18,Jennifer Oh & Sam Hong,Buyer,Single Family,104 Lunado Way,San Francisco,1975000,49375,43630.94,Marketing,
-2020,2020-12-22,Clark Skidmore,Seller,Condo,380 14th Street #402,San Francisco,1050000,26250,23195.62,Sphere of influence,
-2020,2020-12-30,Lisa Faucher & Chris Orcutt,Seller,Single Family,1207  33rd Avenue,San Francisco,2155000,53875,48127.19,Repeat client,
-2021,2021-01-25,Forrest Miller & Chelsea Tabart,Buyer,TIC,1836A Mason Street,San Francisco,1240000,31000,27022.5,Teammate's client,
-2021,2021-01-26,Don Howerton & Kelvin Temple,Seller,Single Family,175 Brewster Street,San Francisco,2150000,53750,48014.38,Teammate's client,
-2021,2021-02-02,Samuel Hong & Jennifer Oh,Seller,Single Family,126 Encline Court,San Francisco,2178000,54450,48646.12,Marketing,
-2021,2021-02-22,Jackie & David Pelavin,Seller,Single Family,590 Oak Park Drive,San Francisco,1960000,58800,52422,Referral,Heather Marlow
-2021,2021-02-23,Louise Warren,Seller,Condo,1371A Dolores Street,San Francisco,1100000,27500,22364.38,Referral,Lisa Ells
-2021,2021-02-24,Kaz Field,Seller,Condo,1166 Green Street,San Francisco,1450000,36250,29637.81,Repeat client,
-2021,2021-03-02,Peter & Barbara Marsh,Seller,Condo,283 2nd Avenue,San Francisco,1225000,30625,27144.06,Referral,Cathy Tran/Kristin Marsh
-2021,2021-03-08,Chris Huynh,Buyer,Condo,139 Stillman Street #7,San Francisco,725000,18125,14121.41,Referral,Judy Vo
-2021,2021-03-25,Louise Warren & Mark LeClerc,Buyer,Single Family,3880 Cesar Chavez,San Francisco,2000000,50000,41067.5,Referral,Lisa Ells
-2021,2021-03-29,Emmett & Marion Stanton,Buyer,Condo,1650 Broadway #101,San Francisco,2090000,52250,42457.81,Repeat client,
-2021,2021-03-29,Cathy Tran & Pete Klos,Buyer,Condo,2764 Pine Street,San Francisco,2200000,55000,44468.75,Repeat client,
-2021,2021-03-30,Michelle Martens and Ted Metzger,Buyer,Condo,105 Palm Avenue #7,San Francisco,1020000,25500,20251.88,Referral,Sonya Abrams
-2021,2021-04-02,Kaushick Naidu & Raghni Khanna,Seller,Single Family,1306 10th Avenue,San Francisco,3200000,80000,66005,Repeat client,
-2021,2021-04-05,Lissa Arnold and Ben Quinn,Buyer,Condo,975 York Street,San Francisco,960000,24000,19055,Referral,Heather McCune
-2021,2021-04-26,Ilene Milne,Buyer,Single Family,4633 19th Street,San Francisco,2500000,62500,50728.12,Referral,
-2021,2021-05-06,Ursula Cateriano & Paul Antaki,Seller,Single Family,345 Molimo Drive,San Francisco,1818000,45450,37285.31,Referral,
-2021,2021-05-07,Rusty & Julie Larner,Buyer,Single Family,428 Cayuga Avenue,San Francisco,1250000,31250,24976.56,Referral,Hari/Eric
-2021,2021-05-13,Brandon Leahy & Meredith Hitchcock,Buyer,Single Family,607 Texas Street,San Francisco,1750000,43750,35297.19,Teammate's client,
-2021,2021-05-18,Rosaclaire Baisinger,Buyer,Condo,515 Masonic Avenue #3,San Francisco,830000,20750,17775,Referral,Marina Psaros
-2021,2021-05-20,Renee Carano,Buyer,Condo,1584 Fulton,San Francisco,875000,21875,18757.5,Sphere of influence,
-2021,2021-05-24,Louse Warren & Mark LeClerc,Seller,Condo,1371 Dolores Street,San Francisco,1775000,44375,39487.5,Repeat client,
-2021,2021-05-24,Josh Wallaert & Jelena Obradovic,Seller,Condo,3884 23rd Street,San Francisco,1405000,35125,31162.5,Marketing,
-2021,2021-06-09,James Seay,Seller,Condo,107 19th Avenue,San Francisco,1600000,40000,35550,Referral,Others in the building
-2021,2021-06-18,Josh Wallaert & Jelena Obradovic,Buyer,Condo,895 Hayes Street,San Francisco,2170000,54250,47895,Repeat client,
-2021,2021-06-23,Grant & Laura Bruursema,Seller,Single Family,318 Louisburg Street,San Francisco,1405000,35125,31162.5,Marketing,
-2021,2021-06-25,Kunal Bajaj,Buyer,Condo,350 Broderick #319,San Francisco,1600000,40000,35070,Referral,Meenaxi & Dhaivat
-2021,2021-06-29,Savinie Lam & Dave Voong,Buyer,Condo,Bayani Way,Daly City,1126102.9,32654.1,26648.72,Self-generated,
-2021,2021-06-30,Carli Oster,Seller,Single Family,625 Moultrie Street,San Francisco,1700000,42500,37850,Repeat client,
-2021,2021-07-06,Vivienne Chua & Kelvin Yip,Seller,Condo,2016 Pacific Ave #401,San Francisco,1600000,40000,35550,Repeat client,
-2021,2021-07-06,Shreya Kothaneth & Eric Luk,Buyer,Condo,30 Nido Avenue,San Francisco,1675000,41875,36757.5,Referral,Erika Couric
-2021,2021-07-06,Jeanne Tsan,Buyer,Single Family,1510 7th Avenue,San Francisco,2400000,60000,53055,Referral,Sarah Adler
-2021,2021-07-12,"Barry Wallach, SVP (Lisa Ells & Brett Kingsbury)",Seller,Single Family,35 Valley Street,San Francisco,1800000,45000,40100,Repeat client,
-2021,2021-07-12,Thaomi & Paolo,Buyer,Condo,726 33rd Avenue,San Francisco,1450000,36250,32175,Marketing,
-2021,2021-07-19,Manish Gayalod & Archana Singh,Seller,Condo,3622 Broderick Street #1,San Francisco,2330000,58250,51975,Marketing,
-2021,2021-08-02,Iris Orriss & Cliff Orriss,Seller,Single Family,17 Newburg Street,San Francisco,2250000,56250,50375,Repeat client,
-2021,2021-08-02,Nathan Cressman,Buyer,Single Family,17 Newburg Street,San Francisco,2250000,56250,49830,Open house,
-2021,2021-08-03,Jake & Steffi McNeill,Buyer,Single Family,1308 McAllister Street,San Francisco,1900000,47500,46570,Sphere of influence,
-2021,2021-08-09,Lana Lan & Greg Weiner,Buyer,Single Family,627 39th Avenue,San Francisco,2300000,57500,54766.11,Marketing,
-2021,2021-08-16,Rex & Valeria McLean,Seller,Condo,379 Church Street #201,San Francisco,1105000,27625,26254.17,Sphere of influence,
-2021,2021-08-25,The Duplex Gang,Buyer,Duplex,1219-1221 Clayton Street,San Francisco,2800700,70017.5,57776.42,Referral,Leah Tracy (referred 1/2 of the gang)
-2021,2021-09-01,Michael and Phoebe Good,Seller,Single Family,39 Warren Drive,San Francisco,2100000,52500,50466.67,Referral,Leonel Quintereos
-2021,2021-09-10,Ashmita Vishwanathan & Anand Mahadevan,Buyer,Single Family,413 Dellbrook,San Francisco,1900000,47500,45077.22,Marketing,
-2021,2021-09-27,Patrick Fleisch & Connie Lin,Buyer,Single Family,120 Merced Avenue,San Francisco,3550000,106500,105555,Marketing,
-2021,2021-10-06,Justin Hileman & Renee DiResta,Seller,Condo,600A Missouri Street,San Francisco,1838000,45950,45500,Repeat client,
-2021,2021-10-15,Oliver & Jen Raskin,Seller,Condo,1 Baker Street #2A,San Francisco,1330000,33250,32676,Repeat client,
-2021,2021-10-18,Sofie VanCreveld & Scott Argyres,Buyer,Single Family,62 Natick Street,San Francisco,1920000,48000,47055,Other,
-2021,2021-10-22,Christina & Steve Lemanski,Buyer,Single Family,1559 18th Ave,San Francisco,1975000,49375,48306,Marketing,
-2021,2021-10-25,Erika Misaki,Seller,Single Family,2613 Post Street,San Francisco,1500000,37500,36976,Other,
-2021,2021-11-10,Janet Ryu & Jeff Diehl,Seller,Single Family,15 Hazelwood,San Francisco,2015000,50375,49851,Repeat client,
-2021,2021-11-23,Lana Lan & Greg Weiner,Seller,Condo,6020 California Street,San Francisco,1250000,31250,30576,Repeat client,
-2021,2021-11-29,Jennifer Lee,Seller,Condo,379 Church Street #302,San Francisco,1228000,42980.0,42206.0,Referral,Rex & Valeria
-2021,2021-12-02,Olya & Drago Anguelov,Seller,Condo,1229 Potrero Ave,San Francisco,1461000,43830,43056,Referral,Joyce Vanhoucke
-2021,2021-12-07,Michelle Clum,Seller,Condo,2600 18th Street #16,San Francisco,749000,22470,21846,Referral,Lauren Cappellino
-2021,2021-12-09,Lily Yap & John Yap,Seller,Condo,979 Duncan Street,San Francisco,1675000,41875,41101,Marketing,
-2021,2021-12-09,Sumi & Chris Yap,Seller,Condo,977 Duncan Street,San Francisco,1625000,40625,40001,Marketing,
-2021,2021-12-13,Vivian and Terry Lee,Buyer,Single Family,360 Hazelwood Avenue,San Francisco,1850000,46250,45036,Marketing,
-2021,2021-12-21,Patrick Fleisch & Connie Lin,Seller,Condo,1160 Mission Street #1408,San Francisco,1210000,30250,29626,Marketing,
-2021,2021-12-23,Robin Ahn & Nathan Witthoft,Buyer,TIC,117A Sutro Heights Ave,San Francisco,800000,20000,18886,Marketing,
-2022,2021-02-25,Namhee Koo & Inigo Quilez Les,Buyer,Single Family,160 Anderson Street,San Francisco,3200000,80000,78786,Marketing,
-2022,2022-01-13,Derek & Rebecca Wright,Buyer,Single Family,3934 18th Street,San Francisco,2750000,68750,67536,Repeat client,
-2022,2022-01-28,Brian & Kelley Johnson,Seller,Single Family,2827 Noriega Street,San Francisco,1900000,47500,46726,Repeat client,
-2022,2022-02-14,Sherri & AT Howe,Buyer,Single Family,452 Ulloa Street,San Francisco,2754375,,,Self-generated,
-2022,2022-02-18,Xiao He (and Michael Faucher),Buyer,TIC,3328 19th Street,San Francisco,825000,20625,20001,Not recorded,
-2022,2022-03-11,James Meeks,Seller,Single Family,1151 Rhode Island Street,San Francisco,1340000,33500,32876,Referral,Lauren Cappelloni
-2022,2022-03-29,Anuja & Landon Clark,Buyer,Single Family,52 Chenery Street,San Francisco,2000000,50000,48786,Sphere of influence,
-2022,2022-04-01,Aric Johnstone,Buyer,Condo,631 Folsom Street #2E,San Francisco,1070000,26750,25606,Referral,
-2022,2022-04-07,Karen Stephens,Seller,Condo,623 Dolores Street,San Francisco,925000,23125,22501,Teammate's client,
-2022,2022-04-12,Jeremy Rosen & Jodi Kruger,Buyer,Condo,280 Spear Street #12A,San Francisco,1740000,43500,42876,Referral,Christopher Hu
-2022,2022-04-14,Wendy Neikirk Rhodes & Adrian Rhodes,Buyer,Single Family,165 Rolph Street,San Francisco,1300000,32500,31286,Networking,
-2022,2022-04-22,Alex Youn,Buyer,TIC,30 Cunningham Place,San Francisco,1624000,40600,36532.8,Referral,Michael Faucher
-2022,2022-04-28,Rachelle Schoo,Seller,Single Family,290 Sussex Street,San Francisco,1875000,46875,41563.5,Referral,Aida Hadzibegovic
-2022,2022-05-05,Angelique & Victor (Savinie Clients),Buyer,Condo,3241 25th Street,San Francisco,1200000,30000,25856,Open house,
-2022,2022-05-06,Jessica & Kapil Pundir,Buyer,Single Family,2500 Leavenworth Street,San Francisco,4100000,102500,101286,Referral,Maya & Mayur Rao
-2022,2022-06-03,Dilek Barlow & Kevin Albert,Buyer,Single Family,50 Willard North,San Francisco,2450000,61250,53911,Networking,
-2022,2022-06-07,Patrick Chin & Gregory Chin,Seller,Single Family,2362 44th Ave,San Francisco,1818000,45450,40281,Referral,Perri Dong
-2022,2022-06-08,Stephen O'Driscoll & Hattie Dong,Buyer,Single Family,341 Dorantes,San Francisco,3350000,83750,74161,Networking,
-2022,2022-06-08,Tiffany & Carl Bindoo,Buyer,Single Family,427 27th Ave,San Francisco,2700000,67500,59536,Referral,Cathy Tran
-2022,2022-06-13,Vince Rosso & Yin Li,Seller,Condo,668 Elizabeth Street,San Francisco,2050000,51250,46577.25,Referral,
-2022,2022-06-13,Ashley & Jordan Caviness,Buyer,Single Family,225 Congdon Street,San Francisco,1555600,38890,25853.44,Referral,Krista Miller
-2022,2022-06-21,Bret Walburg & Marie Plouviez,Seller,Single Family,330 Louisburg Street,San Francisco,1545000,38625,34138.5,Referral,Grant on Louisburg Street
-2022,2022-06-22,"Arthur Esswein, Jr.",Seller,Condo,1930 Grove Street #4,San Francisco,1050000,26250,23001,Referral,Dilek Barlow
-2022,2022-06-24,Sharon and Andrew Persson,Buyer,Single Family,2167 30th Avenue,San Francisco,2200000,55000,48779.26,Networking,
-2022,2022-06-27,Ada & Daniel Phang,Seller,TIC,2 Fair Oaks Street #2,San Francisco,1115000,27875,27251,Networking,
-2022,2022-07-06,Monica Pech & Brian Chan,Buyer,Single Family,236 8th Avenue,San Francisco,2830000,70750,69536,Networking,
-2022,2022-07-20,Ayako Kuroda & Ryo Eguchi,Buyer,Single Family,140 Richland Avenue,San Francisco,2000000,50000,48786,Repeat client,
-2022,2022-07-25,Kaushick Naidu & Raghni Khanna,Seller,Condo,1388 Gough Street #406,San Francisco,1025000,25625,25001,Repeat client,
-2022,2022-08-11,Dilek Barlow & Kevin Albert,Seller,Condo,1930 Grove Street #3,San Francisco,950333,23758.33,23134.33,Repeat client,
-2022,2022-08-19,Brie Falkard,Buyer,Condo,751 Corbett Ave,San Francisco,866872,21671.8,20607.8,Referral,Bijan Vakili
-2022,2022-08-19,Kineret and Aaron Stanley,Buyer,Single Family,184 Aptos,San Francisco,1900000,57000,56376,Networking,
-2022,2022-08-22,Lawrence and Christina Booth,Buyer,Single Family,1326 Guerrero,San Francisco,3000000,75000,74376,Networking,
-2022,2022-09-02,Sunmin & Woo Tae Park,Buyer,Single Family,362 Jusdson Ave,San Francisco,2050000,51250,50036,Networking,
-2022,2022-09-29,Hossein Moradi & Pauline Beusoleil,Buyer,Condo,2040 Fell Street,San Francisco,740000,22200,21086,Other,
-2022,2022-10-10,Chad & Kim,Seller,Duplex,1378-1380 16th Ave,San Francisco,2605000,65125,64625,Other,
-2022,2022-11-01,Priya & Vipul Raman Kumar,Seller,Condo,204 Hoffman #1,San Francisco,1950000,48750,48250,Repeat client,
-2022,2022-11-02,Dora Yung,Seller,Condo,1001 Pine Street #1201,San Francisco,645000,16125,15625,Repeat client,
-2022,2022-11-07,Ayako Kuroda & Ryo Eguchi,Seller,Single Family,862 Moultrie Street,San Francisco,1430000,35750,35250,Repeat client,
-2022,2022-11-18,Aravind Ramanathan & Bhavya Thy…,Seller,Condo,208 28th Street #201,San Francisco,1375000,34375,33875,Repeat client,
-2022,2022-11-22,Mohita Mohan & Ethan Fingerman,Seller,Condo,1363 16th Avenue,San Francisco,1500000,37500,37000,Networking,
-2022,2022-12-14,Stephen O'Driscoll & Hattie Dong,Seller,Single Family,121 Joost Avenue,San Francisco,1750000,43750,43250,Not recorded,
-2022,2022-12-15,Yan Zhu,Seller,TIC,1345 16th Ave #2,San Francisco,670000,16750,12062.5,Referral,Krista Miller
-2023,2012-01-04,Bindu Krishna,Buyer,Single Family,801 Moultrie Street,San Francisco,1805000,45125,44625,Referral,Kavita & Baji
-2023,2022-02-06,Lianne & Daniel Gonsalves,Buyer,Condo,852 29th Avenue,San Francisco,1772000,44300,43250,Networking,
-2023,2022-02-16,Maria & Steven Bellman,Buyer,Condo,146 Lower Terrace,San Francisco,1650000,41250,40220,Teammate's client,
-2023,2022-05-18,Gauri Bhardwaj & Sumit Das Gupta,Buyer,Condo,677 4th Ave,San Francisco,1300000,32500,26710,Referral,Dilek Barlow
-2023,2023-02-21,Adam & Jia Rogal,Seller,Condo,1727 Grove Street,San Francisco,1405000,35125,34625,Repeat client,
-2023,2023-03-23,Sara Hall & Caelum Shove,Buyer,Condo,645 Masonic Ave,San Francisco,1400000,35000,33970,Teammate's client,
-2023,2023-05-01,Kay & Louise,Seller,Single Family,1455 5th Ave,San Francisco,2200000,55000,46250,Teammate's client,
-2023,2023-06-07,Iris & Clifford Orriss,Buyer,Condo,246 2nd St #1104,San Francisco,710000,21300,17605,Repeat client,
-2023,2023-06-13,Jennifer & Andy Bellamy,Seller,Single Family,115 Dalewood Way,San Francisco,1975000,49375,41468.75,Repeat client,
-2023,2023-06-14,Maya Nair,Seller,Single Family,446 Paris Street,San Francisco,1535000,38375,32118.75,Marketing,
-2023,2023-06-20,Kay,Buyer,Co-op,1420 Webster Street,San Francisco,640000,16000,12685,Teammate's client,
-2023,2023-06-26,Chloe & Chong Chung,Buyer,Single Family,639 17th Ave,San Francisco,1925000,48125,39891.25,Open house,
-2023,2023-07-21,Tanya & Dmitriy Dorosh,Buyer,Single Family,55 Rosewood Drive,San Francisco,3200000,80000,66985,Referral,Vicky Keston
-2023,2023-07-25,John & Katy DeWeese,Seller,Single Family,101 Poppy Lane,San Francisco,3200000,80000,67500,Not recorded,
-2023,2023-09-22,Kristin & Mike Ryker,Seller,Condo,1123 Lincoln Way,San Francisco,1420000,35500,29675,Marketing,
-2023,2023-10-11,Daniel & Yasmin Veidlinger,Buyer,TIC,1134 Noe Street,San Francisco,1185000,29625,24681.25,Referral,
-2023,2023-10-11,Chris Prince & Emma Sullivan,Buyer,Single Family,79 Divisadero Street,San Francisco,4200000,105000,88750,Repeat client,
-2023,2023-10-24,Krystal Koop,Seller,TIC,521 4th Avenue,San Francisco,950000,23750,19687.5,Self-generated,
-2023,2023-10-24,Krystal Koop,Seller,TIC,519 4th Avenue,San Francisco,1600000,40000,33500,Self-generated,
-2023,2023-10-27,Bob & Carol Kossler,Seller,Single Family,444 Ulloa Street,San Francisco,1800000,45000,37750,Sphere of influence,
-2023,2023-11-27,Alyson & Justin La,Seller,Single Family,735 France Ave,San Francisco,1210000,30250,25212.5,Repeat client,
-2023,2023-12-05,Olga Dorosh & Michael Xing,Seller,Single Family,175 Farnum Street,San Francisco,1370000,34250,28612.5,Referral,Tanya Dorosh
-2024,2024-02-12,Helen Wong,Buyer,Condo,300 Berry Street #1505,San Francisco,803000,20075,16028.75,Referral,Denise Bee
-2024,2024-02-20,Sheila McElroy,Seller,Condo,62 Pleasant Street,San Francisco,1010000,20200,16670,Repeat client,
-2024,2024-02-22,Eric & Annie Gross,Seller,Condo,1715 Lyon Street,San Francisco,2150000,53750,45187.5,Repeat client,
-2024,2024-02-26,Angela Phillips & Kenny Kang,Buyer,Condo,336 Point Lobos,San Francisco,1450000,36250,29677.5,Referral,Peter Turnbaugh
-2024,2024-03-15,Chris Prince & Emma Sullivan,Seller,Condo,14 Divisadero Street,San Francisco,2500000,50000,42000,Repeat client,
-2024,2024-04-30,Laura Gill,Buyer,Condo,574 26th Avenue,San Francisco,1270000,31750,26072.5,Other,
-2024,2024-05-29,Judy Martens,Buyer,Condo,81 Frank Norris St #702,San Francisco,615777,15394.43,12170.26,Referral,Michelle Martens
-2024,2024-06-07,Karen Uyenco & Cateaux Vrakelos,Buyer,Condo,334 Yale Street,San Francisco,1160000,20000,16500,Sphere of influence,
-2024,2024-06-24,Gerald Kanapathy & Erin Sweeney,Buyer,Condo,2720 Sutter Street,San Francisco,1150000,31625,25846.25,Networking,
-2024,2024-07-01,Craig Herigon & Jessica Ronco,Buyer,Single Family,66 Martha,San Francisco,1600000,48000,39665,Sphere of influence,
-2024,2024-07-03,Bob Read & Lisa Anderson,Seller,Condo,3883 20th Street,San Francisco,1850000,46250,38812.5,Other,
-2024,2024-07-05,Bob Read & Lisa Anderson,Seller,Condo,3885 20th Street,San Francisco,1550000,38750,33716.25,Repeat client,
-2024,2024-07-08,Monica & Jason Lee,Seller,Single Family,1849 23rd Ave,San Francisco,2050000,51250,43062.5,Yelp,
-2024,2024-07-23,Chau Vu & Quy Phan,Buyer,Single Family,886 39th Avenue,San Francisco,1750000,43750,36172.5,Teammate's client,
-2024,2024-07-24,Aravind Ramathan & Bhavya Thyangarajan,Buyer,Single Family,2850 Noriega Street,San Francisco,1810000,45250,37327.5,Repeat client,
-2024,2024-08-13,Gabriel Listek,Buyer,Condo,30 Kent Street,San Francisco,849000,21225,17136.25,Not recorded,
-2024,2024-08-19,Sam & Doreen Zaarour,Seller,Single Family,500 Ellington Avenue,San Francisco,1175000,29375,24468.75,Self-generated,
-2024,2024-09-26,Tamara Lam-Plattes & Nathan Poole,Seller,Condo,561 14th Avenue,San Francisco,1850000,18500,15225,Repeat client,
-2024,2024-10-02,David Solomon & John Dzundza,Seller,Condo,188 Beulah #5,San Francisco,1410000,35250,30713.87,Repeat client,
-2024,2024-10-04,Abirami Kandasamy & Alfred Sivathondan,Buyer,Single Family,47 Sotelo,San Francisco,3415000,85375,71433.75,Referral,Joyce Noah-Vanhoucke
-2024,2024-10-23,Erica Lee,Buyer,Condo,999 16th Street #17,San Francisco,840000,21000,17350,Sphere of influence,
-2024,2024-10-25,Steven Seto (and Sophia),Seller,Condo,1660 20th Avenue,San Francisco,1525000,38125,31906.25,Yelp,
-2024,2024-11-01,Johanna Bernabe & Donna Tiocao,Buyer,Condo,450 Hayes #1,San Francisco,950000,,,Self-generated,
-2024,2024-11-18,Melissa Faucher & Chris Orcutt,Buyer,Condo,460 Francisco Street #203,San Francisco,760000,19000,15713.5,Repeat client,
-2024,2024-12-02,Ashley & David Scatena,Buyer,Single Family,2155 Turk Boulevard,San Francisco,2150000,53750,44267.5,Networking,
-2024,2024-12-02,Nick Twyman & Rachel Watson,Seller,Condo,2653 Post Street,San Francisco,1041000,26025,21621.25,Repeat client,
-2025,2024-02-12,Kristin & Mike Ryker,Buyer,Single Family,1446 30th Avenue,San Francisco,2112000,52800,43745,Not recorded,
-2025,2025-02-03,Krystal Koop,Seller,Single Family,94 Sussex Street,San Francisco,1500000,37500,31375,Repeat client,
-2025,2025-02-13,Jacob & Anne Bartel,Buyer,Single Family,1375 25th Avenue,San Francisco,1630000,40750,33502.5,Not recorded,
-2025,2025-02-24,Catherine Labrado,Seller,Single Family,538 Paris Street,San Francisco,999999,24999.98,20749.98,Other,
-2025,2025-02-28,Joseph Garvey,Seller,Condo,3345 17th Street #5,San Francisco,775000,15500,12675,Repeat client,
-2025,2025-03-24,Morgan Fabian & Dominic Molinari,Buyer,Condo,973 14th Street,San Francisco,1200000,30000,24471,Not recorded,
-2025,2025-04-16,Manisha Mishra & Vijit Nair,Buyer,Single Family,3726 21st Street,San Francisco,3050000,76250,63677.5,Not recorded,
-2025,2025-05-07,Christina & Lawrence Booth,Seller,Single Family,714 Chenery Street,San Francisco,2758000,68950,62934,Not recorded,
-2025,2025-05-13,Matthew Montez,Buyer,Condo,231 Clinton Park,San Francisco,1225000,30625,27140,Sphere of influence,
-2025,2025-05-15,Alexandria & Zefram,Buyer,Single Family,1124 Judah Street,San Francisco,1650000,41250,36815,Open house,
-2025,2025-05-30,Emily Lawrence & Chuck Heilig,Seller,Single Family,1767 40th Avenue,San Francisco,1925000,48125,32706.25,Referral,
-2025,2025-06-02,Han Pham,Buyer,Single Family,1030 Sanchez Stret,San Francisco,1900000,47500,42565,Sphere of influence,
-2025,2025-06-02,Mary Koenig,Seller,Single Family,457 Ulloa Street,San Francisco,1418000,35450,32114,Other,
-2025,2025-06-05,Julie Chao,Buyer,Single Family,535 Lakeview Avenue,San Francisco,1560000,39000,34745,Not recorded,
-2025,2025-06-09,Jeff Moss & Robb Rico,Seller,Single Family,3250 Moraga Street,San Francisco,1225000,30625,26450,Yelp,
-2025,2025-07-03,Kyle & Kim Cascade,Seller,Single Family,258 Sussex,San Francisco,1462500,36562.5,31675,Not recorded,
-2025,2025-07-11,Veronica & James,Buyer,Single Family,220 Point Lobos,San Francisco,1450000,36250,30770,Not recorded,
-2025,2025-07-31,John Mangini & Ann Stanton,Seller,Duplex,1371-1373 16th Avenue,San Francisco,2505000,62625,54610,Self-generated,
-2025,2025-08-14,Nicolas Delporte & Sylvianne Francou,Buyer,Single Family,2 Ora Way,San Francisco,2156000,53900,46397,Repeat client,
-2025,2025-09-29,Julie Chao,Seller,Condo,364 Shotwell Street #101,San Francisco,1100000,27500,23700,Marketing,
-2025,2025-10-14,David Afolabi,Buyer,Condo,1288 Howard Street #514,San Francisco,1325000,32457.57,28062.66,Open house,
-2025,2025-10-16,Tana Sabatino,Seller,Condo,738 Masonic Avenue,San Francisco,1410000,35250,30520,Repeat client,
-2025,2025-10-23,Alex Wolff & Alyna,Buyer,Condo,223 Waller Street,San Francisco,1550000,38750,33065,Open house,
-2025,2025-10-27,Angie Lam & Andy Murphy,Buyer,Single Family,2021 14th Avenue,San Francisco,2575000,64375,56150,Other,
-2025,2025-11-12,Josh Ford,Seller,Condo,163 Octavia Street,San Francisco,1188000,29700,25636,Sphere of influence,
-2025,2025-11-13,Jessica & Patrick Dillon,Buyer,Single Family,701 Quintara,San Francisco,2015000,50375,43195,Not recorded,
-2025,2025-11-20,Irina Farooq,Buyer,Single Family,154 Maywood Drive,San Francisco,3706000,92650,80397,Repeat client,
-2025,2025-12-03,Erik Luk & Shreya Kothaneth,Seller,Condo,30 Nido Ave,San Francisco,1675000,41875,36350,Not recorded,
-2025,2025-12-04,"Sarah ""Liz"" Enochs",Seller,Condo,39 Hartford St,San Francisco,1705000,42625,27632.5,Not recorded,
-2025,2025-12-04,Kieran Crean & Cheryl Guerrero,Buyer,Duplex,1584-1586 11th Avenue,San Francisco,1750000,43750,37410,Not recorded,
-2025,2025-12-12,Phil Chen & Tiffany Ng,Buyer,Single Family,2271 40th Avenue,San Francisco,2100000,52500,45065,Not recorded,
-2026,2025-02-24,Robin Verduijn & Junghwa Choi,Buyer,,497 Dellbrook,San Francisco,1550000,38750,24393,Teammate's client,
-2026,2025-03-09,Thuy Nguyen,Seller,,1461 6th Ave,San Francisco,2478000,61950,54016,Teammate's client,
-2026,2026-02-23,Donald Gu,Buyer,,533 Alto Ave,Half Moon Bay,975000,24375,20950,Teammate's client,
-2026,2026-03-16,Andrew Shi and Megan Chen,Buyer,,2530 27th Ave,San Francisco,2710000,67750,58485,Marketing,
-2026,2026-04-06,Adrienne Sum & Ryan McDonald,Seller,,1278 23rd Ave,San Francisco,3226000,80650,70247,Other,
-2026,2026-04-07,Bert Van Der Meeren & Y Pham,Buyer,Condo,305 Castro #100,San Francisco,1470000,29400,24937,Open house,
-2026,2026-04-23,Brigitte Bogert,Seller,Condo,4901 17th Street,San Francisco,1800000,45000,39100,Referral,Maya Kanzaria
-2026,2026-05-12,Won Yung Choi & Christopher Camacho,Buyer,Single Family,29 Concord Street,San Francisco,1160000,29000,24485,Referral,Robin Ahn
-2026,2026-05-28,Brent and Grace Allard,Buyer,Condo,874 14th Street,San Francisco,2160000,54000,34605,Not recorded,
-2026,2026-06-01,Rene Kim,Buyer,Condo,1177 California #809,San Francisco,760000,19000,10868,Other,
-2026,2026-06-02,Andrew Shi and Megan Chen,Seller,Condo,2061 10th Avenue,San Francisco,1248000,31200,26956,Repeat client,
-2026,2026-06-02,Bert Van Der Meeren & Y Pham,Seller,Condo,3620 Cesar Chavez #404,San Francisco,1185000,29625,25570,Repeat client,39 Hartford Open House
-2026,2026-06-05,Lisa & Matt Wongchenko,Buyer,Single Family,2618 21st Ave,San Francisco,1560850,39021.25,33203.7,Not recorded,
-2026,2026-06-15,Rosie & Bobby Hicks,Seller,Single Family,1701 40th Ave,San Francisco,2200000,55000,47900,Referral,sellers at 1767 40th ave
-2026,2026-07-06,Katie Boyce,Buyer,Condo,2051 10th Ave,San Francisco,1050000,26250,22065,Other,
-2026,2026-07-09,Lauren Fendel & Patrick Assini,Seller,Condo,571 14th Avenue,San Francisco,2050000,51250,22550,Other,
-2026,2026-07-20,Matthew Harris,Seller,Condo,757 North Point St #3,San Francisco,1320000,33000,28540,Referral,Connie & Hakan
+year,date,client,side,prop_type,address,city,sale_price,gross_comm,net_comm,source,referrer,referral_fee,brokerage_fee,other_costs
+2008,2008-04-09,Chris Olson,Buyer,,"1 Bartlett, 94110",,550000,10212.5,,Referral,Heather Hawkins,,,
+2008,2008-04-11,Jeanette Li,Buyer,,"425 1st Street #1003, 94105",,940000,19475,,Referral,Mai Le / Jim Li,,,
+2008,2008-05-22,"Andy Maguire , split w/Wes Freas",Buyer,,"2250 24th Street #334, 94107",,400000,4750,,Referral,Stacy Cullison,,,
+2008,2008-06-17,Jeanette Li,Seller,,"400 Beale Street #613, 94105",,625000,11993.75,,Referral,Mai Le / Jim Li,,,
+2008,2008-08-22,Simon & Mary Watkins,Buyer,,"330 Mission Bay Blvd #509, 94158",,819000,23341.5,,Open house,400 Beale #613 Open House,,,
+2008,2008-11-26,David Bebee POA Kim Steiwig,Seller,,"1930 Mission Street #103, 94103",,450000,10687.5,,Sphere of influence,Neighbor that I helped with her rental,,,
+2008,2008-12-24,Thomas Trotman,Buyer,,"115 Carl Street #3, 94117",,415000,9856.25,,Referral,Victoria Liang/Wilfred Chow,,,
+2009,2009-01-30,Diego Sanchez & Luisa Maldonado,Buyer,,"1790 McKinnon Ave, 94124",,395000,5628.75,,Open house,1930 Mission #103,,,
+2009,2009-02-20,Heather Barrett & Greg Bianchi,Buyer,,"1203 Guerrero Street, 94110",,640000,15200,,Sphere of influence,,,,
+2009,2009-02-27,Melissa Cheung & Chris Kern,Buyer,,"146 Joost Avenue, 94131",,775000,18406.25,,Referral,Pam Schwartz,,,
+2009,2009-03-31,Kevin Clarke,Seller,,"1930 Mission #303, 94103",,496000,11780,,Sphere of influence,Neighbor,,,
+2009,2009-07-22,Kavita Raman & Baji Gobburi,Buyer,,"107 Bache Street, 94110",,825000,19593.75,,Referral,Marianna Eyzerovich,,,
+2009,2009-08-07,Andrea & Matt Hawley,Buyer,,"420 Bay Street #A, 94133",,900000,16031.25,,Other,eteam,,,
+2009,2009-08-14,Joseph Garvey (&Pat&Julie),Buyer,,"2208 Mission Street #403, 94110",,625000,14843.75,,Open house,400 Beale #613 Open House,,,
+2009,2009-09-02,Michelle Hong,Buyer,,"1521 Sutter #407, 94109",,680000,16150,,Referral,Denise Bee,,,
+2009,2009-09-28,Sanjay Pardanani,Buyer,,"727 Ellsworth Street, 94110",,546000,12967.5,,Referral,Melissa Cheung,,,
+2009,2009-10-30,Denise & Piere Bee,Buyer,,"2283 Turk #2, 94118",,775000,18406.25,,Referral,Eecher Yee,,,
+2009,2009-11-20,Kristiane Koontz,Buyer,,"300 Berry #1202, 94158",,528000,12540,,Other,Matt & Andrea Hawley,,,
+2009,2009-12-09,Arnold Howe,Seller,,"1930 Mission #203, 94103",,515000,12231.25,,Sphere of influence,Sherri Howe,,,
+2010,2010-01-21,Becky Smyth,Buyer,,"3421 25th St #2, 94110",,530000,12587.5,,Referral,Chris Kern & Melissa Cheung,,,
+2010,2010-01-27,Denise & Pierre bee,Seller,,"400 Beale #1506, 94105",,582500,11067.5,,Referral,Eecher Yee,,,
+2010,2010-02-05,Mimi Lai,Buyer,,"170 King #504, 94107",,575000,13656.25,,Referral,Denise Bee,,,
+2010,2010-03-15,Devdutt Shastri,Buyer,,"2501 Harrison #4, 94110",,543000,12896.25,,Sphere of influence,Friend,,,
+2010,2010-05-07,Sherri Howe,Seller,,"1930 Mission #305, 94103",,490000,11637.5,,Self-generated,Self,,,
+2010,2010-06-02,Brian Johnson & Kelly Higgason,Buyer,,"2827 Noriega Street, 94122",,725000,15496.88,,Referral,Becky Smyth,,,
+2010,2010-06-26,Andrea Contreras,Buyer,,"396 Hermann Street, 94117",,615000,14606.25,,Referral,Chris Kern,,,
+2010,2010-09-03,Suelyn Yu,Buyer,,"1823 15th Street #1, 94103",,635000,15081.25,,Other,1930 Mission Listing,,,
+2010,2010-10-01,Ken Lee,Buyer,,16 Waterville Street,,635000,15081.25,,Other,Liked my profile on the Zephyr Site,,,
+2010,2010-11-22,Margaret Timbrell,Buyer,,"1800 Turk #101, 94115",,535000,15247.5,,Sphere of influence,Friend,,,
+2010,2010-12-28,Retesh Shah,Buyer,,"400 Beale #811, 94105",,663000,15746.25,,Open house,"1930 Mission #103, 2-3 years ago.",,,
+2011,2011-01-13,Kristin and Matt Smart (Matilda & Baby Girl),Buyer,,"1537 Pacific Avenue, 94109",,947800,16882.69,,GGMG community,Replied to her post,,,
+2011,2011-02-04,Irene Cheng,Buyer,,"325 Berry #719, 94158",,535000,12706.25,,Referral,Former Clients (Winfred Lai),,,
+2011,2011-03-01,Taara Hoffman & Steve Bissinger (Tessa & Hannah),Buyer,,"201 Moultrie Street, 94110",,883150,20974.81,,Referral,Tara Donohue (in 2007),,,
+2011,2011-04-08,Melissa & Alex Afterman (Madison),Buyer,,"332 Marietta Drive, 94127",,725000,17218.75,,Referral,Melissa & Jacob Rannels,,,
+2011,2011-04-11,Mark Fisher & Elisa Suetake,Buyer,,"38 Edgemar Street, DC, 94014",,775000,18406.25,,Referral,Dave Kendall,,,
+2011,2011-06-30,Heather McCune,Buyer,,"62A Sanchez #Rear, 94117",,490000,13965,,Referral,Maryanna Southey,,,
+2011,2011-07-01,Kevin Franklin & Keehae Park,Buyer,,"440 11th Avenue, 94118",,1949000,46288.75,,Referral,Clinton & Camille,,,
+2011,2011-07-20,Alex Yeung,Buyer,,"400 Beale #1005, 94105",,500000,11875,,Referral,Irene Cheng,,,
+2011,2011-07-22,Charlotte Erwin,Seller,,794-796 Moultrie,,990000,5878.12,,Sphere of influence,Charlotte Eriwn,,,
+2011,2011-07-26,Perri Dong & Helen Chen,Buyer,,235 Berry #517,,720000,12825,,Referral,Linus Toy,,,
+2011,2011-09-08,Kathy Tran,Buyer,,"755 Tennessee Street #1, 94107",,598000,17043,,Referral,Tracy Andreini,,,
+2011,2011-10-07,Matthew & Sarah Adler,Buyer,,"1170 South Van Ness #3, 94110",,600000,12825,,Referral,Charlotte Erwin,,,
+2011,2011-10-25,Raj Prasad,Seller,,300 Berry #411,,649000,15413.75,,Referral,Matt & Andrea Hawley,,,
+2011,2011-10-27,Pat & Julie Garvey,Buyer,,"1050 North Point #1705, 94109",,615000,14606.25,,Open house,400 Beale #613 ( 3.5 years),,,
+2011,2011-11-16,Wayne Chang,Buyer,,"300 Berry #102, 94158",,570000,13537.5,,Referral,Irene Cheng,,,
+2011,2011-11-30,Jean Kohler,Seller,,"199 Tiffany #309, 94110",,435000,10331.25,,Referral,Kyle Tempel,,,
+2011,2011-12-30,Dora Yung,Buyer,,"1001 Pine #1201, 94109",,350000,8312.5,,Referral,Sanjay Pardanani,,,
+2012,2012-02-09,Amy Bradac & Doug Speckhard,,,276 Dolores,,585000,13893.75,,GGMG community,,,,
+2012,2012-03-30,Bill Gray & Renny Talianchich,,,"410 Justin Drive, SF, CA 94110",,749000,17788.75,,Sphere of influence,,,,
+2012,2012-04-03,Maksim Ovsyannikov,,,"767 Corbett Street #1, SF, CA 94131",,744000,17670,,Referral,Erin Clark,,,
+2012,2012-05-30,Pete Cooper & Brigid McCormack,,,1806 Great Highway,,1050000,24937.5,24937.5,Referral,Brian & Kelley Johnson,,,
+2012,2012-06-07,Guy DiLella & Jamie Boatner,,,820 Minnesota Street,,926500,22004.38,22004.38,Sphere of influence,,,,
+2012,2012-06-22,Priya Raman,,,380 14th Street #209,,655000,15556.25,15556.25,Referral,Kavita Raman,,,
+2012,2012-08-02,Alicia Bunnell,,,65 Glover,,615000,14606.25,14606.25,Sphere of influence,,,,
+2012,2012-08-10,Cynthia Childers (do not contact),,,469 Clementina,,333000,7908.75,7908.75,Referral,Joe Scrogham,,,
+2012,2012-08-16,Referral Fee: Robert Scott Johnson,,,"958 28th Street #23, Oakland",,140000,3325,3325,Other,Listing next door,,,
+2012,2012-08-23,Alex Lee,,,300 Berry #920,,599000,14226.25,14226.25,Referral,Winfred Lai,,,
+2012,2012-08-29,Lily Stoyanovski,,,1001 Pine #1411,,306050,7268.69,5451.52,Referral,Tara Donohue,,,
+2012,2012-09-21,Betsy & Jeff Swenerton,,,"958 28th Street #25, Oakland",,170000,4037.5,4037.5,Referral,Amy Bradac,,,
+2012,2012-10-03,Winfred Lai,,,325 Berry #602,,702000,16672.5,16672.5,Referral,Denise Bee,,,
+2012,2012-10-08,"Brian Pitcher, Janice Pitcher, Martha Winters",,,83 Park Street,,750000,17812.5,13359.38,Referral,Tara Donohue,,,
+2012,2012-10-19,Winfred Lai,,,235 Berry #704,,850000,20187.5,20187.5,Referral,Mimi Lai,,,
+2012,2012-11-21,Matthieu Corfmat & Taeko Kikuchi,,,256 Page Street,,1093500,25970.62,25970.62,Referral,Denise Bee,,,
+2012,2012-11-29,Tim & Mollie Tunks,,,1037 York Street,,475000,11281.25,11281.25,GGMG community,,,,
+2012,2012-11-29,Anne Aussems & Nathanael Esposito,,,69 Douglass,,890000,21137.5,21137.5,Referral,Kyle Tempel,,,
+2012,2012-12-06,John Carroll,,,71 Sala Terrace,,543888,15500.81,10075.53,Referral,Gloria Knopke,,,
+2012,2012-12-07,Jared & Evelyn Sulem,,,"1115 Moraga St, 94122",,800000,19000,19000,Referral,Mark Fisher & Elisa Suetake,,,
+2013,2012-07-10,Alicia Bunnell,,,519 Webster Street,,1175000,23500,13283.38,Sphere of influence,,,,
+2013,2013-01-18,Simon and Mary Watkins,,,330 Mission Bay Blvd N. #509,,839000,20975,16439.16,Repeat client,,,,
+2013,2013-03-05,Tamara Monesi,,,"300 Berry #420, SF, CA 94158",,675000,16875,13225.78,Open house,Raj Prasad,,,
+2013,2013-03-07,Rishard Bitbaba,,,1880 Steiner #405,,950000,23750,9307.03,Referral,Tara Donohue,,,
+2013,2013-03-13,Tamara Monesi,,,5800 Third Street #1208,,485000,14550,11403.56,Other,Raj Prasad,,,
+2013,2013-03-29,Alex Appelqvist,,,758 Haight #1,,551000,13775,10796.16,Referral,Michelle Ravn,,,
+2013,2013-03-29,Joshua Andresen & Sara Heintzelman,,,2534 46th Ave,,805000,20125,15772.97,Networking,,,,
+2013,2013-03-29,Kathy Sepulveda,,,5800 Third Street #2401,,465000,13800,10815.75,Open house,,,,
+2013,2013-04-10,Mimi Lai & Allen Lam,,,2176 15th Avenue,,1370000,34250,27656.88,Repeat client,,,,
+2013,2013-04-19,Sylviane Francou & Nicolas Delporte,,,205 Fair Oaks,,810000,20250,16351.88,Referral,Anne & Nathanael,,,
+2013,2013-05-31,Susan Edmonds,,,1310 Minnesota #202,,598000,14950,12072.12,Referral,Vivian Lee,,,
+2013,2013-06-04,Simon and Mary Watkins,,,246 28th Avenue,,1945000,48625,39264.69,Repeat client,,,,
+2013,2013-06-28,Roshini Prasad,,,219 Brannan #10C,,890000,20025,16170.19,Referral,Priya Raman,,,
+2013,2013-07-02,Mimi Lai & Allen Lam,,,170 King #504,,770000,19250,15544.38,Repeat client,,,,
+2013,2013-07-03,Sabina & Raman Chitkara,,,333 1st Street #1802,,770000,19250,15544.38,Referral,Roshini Prasad,,,
+2013,2013-07-12,Matt & Kristin Smart,,,1537 Pacific,,1265000,25300,20429.75,Repeat client,,,,
+2013,2013-07-19,John Raff,,,38 Bryant #507,,879000,21975,17744.81,Referral,Alex Yeung,,,
+2013,2013-07-23,Cheryl Lana,,,300 Berry #522,,780000,19500,15746.25,Other,,,,
+2013,2013-08-16,Sue Simpson,,,"266 Humboldt Rd, Brisbane, CA",,960000,24000,19380,Sphere of influence,,,,
+2013,2013-08-16,Derek & Rebecca Wright,,,3436 19th Street,,810000,20250,16351.88,Referral,Alex Yeung,,,
+2013,2013-08-30,"Rick Arnold (s), Pasal Guinchard & Erin Clark (b)",,,"273-273A States St, SF, CA 94114",,485000,19400,15665.5,Sphere of influence,,,,
+2013,2013-09-02,Lisa Faucher & Chris Orcutt,,,"1207 33rd Avenue, SF, CA",,1200000,30000,24225,Referral,Kathy Tran,,,
+2013,2013-09-18,Josh Widmann,,,"224 Prague, SF, CA",,455000,11375,9185.31,Referral,Andrea Contreras,,,
+2013,2013-09-19,Stephen McCarthy,,,355 1st #S204,,930000,23250,12203.34,Not recorded,,,,
+2013,2013-09-24,Eurie Kim,,,695 5th Street #16,,700000,17500,14131.25,Open house,,,,
+2013,2013-10-09,Bob Read & Lisa Anderson,,,"3885 20th Street, SF, CA 94114",,1700000,42500,36337.5,Referral,Lauren Wang,,,
+2013,2013-11-12,Bob Read & Lisa Anderson,,,"3883 20th Street, SF, CA 94114",,2000000,50000,42750,Referral,Lauren Wang,,,
+2013,2013-12-10,Sue Lee & Mark Chiang,,,"332 Virginia St, SF, CA 94110",,819000,20475,17506.12,Referral,Kay & Rodney Cheung,,,
+2014,2014-01-15,Tana Sabatino,,,"738 Masonic Ave, SF, CA",,955000,23875,11126.25,Sphere of influence,,,,
+2014,2014-03-18,Kelly Stamatis,,,"3620 19th Street #33, SF, CA",,230834,5496,2099.27,Other,,,,
+2014,2014-03-18,Kelvin Lai,,,8200 Oceanview Terrace #115,,475000,11875,7021.87,Referral,Debbie Lai,,,
+2014,2014-04-15,Ashray Reddy,,,451 Kansas #352,,520000,13000,8175,Referral,BajiGobburi,,,
+2014,2014-05-08,Helen Hwang,,,"300 Berry #704, SF, CA 94158",,795000,19875,7865.55,Open house,,,,
+2014,2014-05-30,Sonali and Rajeev Chopra,,,"153 7th Avenue, SF, CA 94121",,1710000,42750,15116.18,Referral,Chris Sprague & Karen Cheong,,,
+2014,2014-06-11,Anthony and Jennie Birdie,,,"116 Mary Teresa, SF, CA 94134",,615000,15375,9754.38,Networking,,,,
+2014,2014-06-12,Anna Roche & Diana Sokolove,,,"44 Hugo Street, SF, CA",,930000,23250,14651.25,Referral,Chris Kern (and Andrea Conteras?),,,
+2014,2014-06-19,Tim & Gabriela Yee (referral from Carlos Padilla),,,270 Valencia #206,,900000,22500,10751.87,Referral,,,,
+2014,2014-07-15,Lauren Wang,,,"435 China Basin Street #444,SF, CA 94158",,1350000,26750,17318.75,Sphere of influence,,,,
+2014,2014-08-01,Denis & Margaret Brown,,,199 Tiffany #304,,870000,21750,13973.75,Referral,Kyle Tempel,,,
+2014,2014-08-06,Saran Raksincharoensak,,,1515 15th Street #402,,920000,23000,14825,Referral,Winfred Lai,,,
+2014,2014-08-15,Jennifer and Oliver Raskin,,,1 Baker Street #2A,,932500,23312.5,14492.04,Referral,Heather Hawkins & Chris Olson,,,
+2014,2014-08-20,Jordan and Yelena Koplowicz,,,"2425 Vicente Street, SF, CA",,875000,21875,17694.46,GGMG community,,,,
+2014,2014-09-20,John Raff Ringwood,,,,,1670000,6262.5,5205.7,Not recorded,,,,
+2014,2014-10-03,Tanya Nakhimovsky,,,"16 Ord Court #1, SF, CA",,756000,18900,11832.49,GGMG community,,,,
+2014,2014-10-15,Ian and Berna Martz,,,195 25th Avenue #101,,830000,20750,10639.0,Not recorded,,,,
+2014,2014-10-17,John and Nicole Raff,,,"38 Bryant Street #507, SF, CA 94105",,1100000,23375,10014.73,Not recorded,,,,
+2014,2014-10-24,Tyler Hayes,,,"400 Spear Street #206, SF, CA 94105",,835000,20875,13481.87,Referral,Kevin Franklin,,,
+2014,2014-10-31,Achyutt and Runa Bhattacharyya,,,601 Van Ness #1001,,560000,15400,4976.52,Referral,Carlos Padilla,,,
+2014,2015-07-11,Daniel Low and Courtney Siu,,,47 Rosemont,,1111000,27775,11535.74,Referral,Gil Troutman,,,
+2015,2015-01-22,Prashant and Nilani Murthy,Buyer,,2235 Beach Street #301,San Francisco,1650000,41250,32399.38,Referral,Rajeev Chopra,,7940.62,1820.0
+2015,2015-03-03,Ian and Berna Martz,Buyer,,21 Woodhaven Court,San Francisco,1133000,28325,21960.44,Other,,,5452.56,1810.0
+2015,2015-03-10,Jessie and Peter Turnbaugh,Buyer,,1607 38th Avenue,San Francisco,1118000,27950,21664.62,GGMG community,,,5380.38,1810.0
+2015,2015-03-19,Alex and Melissa Afterman,Seller,,332 Marietta Street,San Francisco,1250000,31250,24779.38,Repeat client,,,6015.62,910.0
+2015,2015-04-10,Mike Osgood & Rachel Walsh,Buyer,,8 Octavia Boulevard #702,San Francisco,1125912,28147.8,22887.86,GGMG community,Emily de Arroyo,,4749.94,1020.0
+2015,2015-04-10,Alex Yeung & Debbie Lai,Buyer,,363 Joost Avenue,San Francisco,1125000,28125,22458.91,Teammate's client,,,4746.09,1840.0
+2015,2015-04-28,Jill Henn,Buyer,,2721 Union Street,San Francisco,2000000,50000,40622.5,Referral,Kavita & Baji,,8437.5,1880.0
+2015,2015-04-28,Vipul Hingne & Rutuja Khanzode,Buyer,,2536 Franklin Street,San Francisco,2075000,51875,42181.09,GGMG community,,,8753.91,1880.0
+2015,2015-05-19,Jeanette and David Barzelay,Buyer,,3272 20th Street,San Francisco,1285000,32125,25773.91,GGMG community,Emily de Arroyo,,5421.09,1860.0
+2015,2015-05-29,Michael and Michelle Gurman,Seller,,468 42nd Avenue,San Francisco,1775000,44375,36431.72,Other,,,7488.28,910.0
+2015,2015-06-23,Adrian and Claudia Durbin,Seller,,1860 Page #201,San Francisco,1700000,42500,34818.12,Sphere of influence,,,7171.88,1020.0
+2015,2015-06-29,Melissa and Jacob Rannels,Seller,,1719 Alabama Street,San Francisco,1450000,36250,29677.81,Sphere of influence,,,6117.19,910.0
+2015,2015-06-30,Thomas Najarian and Sue Unkel,Buyer,,153 Paris Street,San Francisco,780000,19500,15854.38,GGMG community,Sonya Abrams,,3290.62,710.0
+2015,2015-07-14,Raghni Khanna and Kaushick Naidu,Buyer,,1306 10th Avenue,San Francisco,2300000,57500,46876.88,GGMG community,,,9703.12,1840.0
+2015,2015-07-24,Nick Twyman and Rachel Watson,Buyer,,2653 Post Street,San Francisco,925000,23125,18292.66,GGMG community,,,3902.34,1860.0
+2015,2015-08-07,Jana and Michael Cook,Seller,,180 Mary Teresa,San Francisco,785000,23550,19175.94,GGMG community,Sonya Abrams,,3974.06,800.0
+2015,2015-09-02,Tom Najarian and Susan Unkel,Seller,,352 Shotwell Street,San Francisco,1400000,42000,34407.5,Other,,,7087.5,1010.0
+2015,2015-09-10,Steven Reeder,Buyer,,76 Alvarado Street,San Francisco,808000,20200,12088.44,Referral,,5050.0,2556.56,1010.0
+2015,2015-09-10,Ayako Kuroda and Ryo Eguchi,Seller,,940 Natoma #4,San Francisco,790000,23700,19195.62,Other,,,3999.38,1010.0
+2015,2015-09-24,Irina and Arsalan Farooq,Buyer,,99 High Street #3,San Francisco,1800000,45000,36481.25,Marketing,,,7593.75,1850.0
+2015,2015-09-29,Anastasia and Matt Robbins,Seller,,1530 12th Avenue,San Francisco,1750000,43750,36277.22,GGMG community,,,7022.78,900.0
+2015,2015-10-09,Ayako Kuroda and Ryo Eguchi,Buyer,,862 Moultrie Street,San Francisco,975000,24375,20390.62,Other,,,3534.38,900.0
+2015,2015-10-09,Claudine and Brian Emeott,Buyer,,1771 39th Avenue,San Francisco,1170000,29250,24093.75,GGMG community,,,4241.25,1830.0
+2015,2015-10-16,Tamara Lam Plattes & Nathan Poole,Buyer,,561 14th Avenue,San Francisco,1350000,33750,27931.25,GGMG community,,,4893.75,1850.0
+2015,2015-11-08,Jen and Trevor Hicks,Buyer,,333 Dellbrook Avenue,San Francisco,1150000,28750,23666.25,Referral,Kyle Tempel,,4168.75,1830.0
+2015,2015-11-15,Lauren Cappelloni and Keith Welter,Buyer,,1534 44th Avenue,San Francisco,1280000,32000,26910,GGMG community,,,4640.0,900.0
+2015,2015-12-02,Brian Joe and Judy Vo,Buyer,,32 Yukon Street,San Francisco,1225000,30625,25679.38,Referral,Kathy Tran,,4440.62,1010.0
+2015,2015-12-17,Michelle and James Hong,Buyer,,2076 14th Avenue,San Francisco,1280000,32000,26910,Repeat client,,,4640.0,900.0
+2016,2016-01-18,Kristiane Koontz and Peter Larsson,,Single Family,6848 Aitken Drive,Oakland,1160000,29000,6026.56,Teammate's client,,7250.0,1223.44,
+2016,2016-01-22,Dave Kwon and Hyunjung Shin,Buyer,Condo,712 Dorado Terrace,San Francisco,780000,19500,14894.38,GGMG community,,,3290.62,2240.0
+2016,2016-02-02,Josh and Becca Shapiro,Buyer,TIC,3947 17th Street,San Francisco,1250000,31250,25051.56,Referral,Mike Osgood,,5273.44,1850.0
+2016,2016-02-25,Simon and Mary Watkins,Seller,Single Family,246 28th Avenue,San Francisco,2600000,65000,53581.25,Repeat client,,,10968.75,900.0
+2016,2016-02-26,Jennifer Soss,Buyer,Single Family,115 Dalewood Way,San Francisco,1550000,38750,23708.2,Referral,Rosie Papazian,9687.5,4904.3,900.0
+2016,2016-03-09,Celine & Que Schafer,,Single Family,910 Idylberry Road,San Rafael,1400000,8750,7273.44,Referral,Erin Guinchard,,1476.56,
+2016,2016-03-15,Alyce Ford,Seller,Single Family,718 Athens,San Francisco,775000,23250,13078.59,Referral,Esther McClay,6975.0,2746.41,900.0
+2016,2016-03-25,Winfred Lai & Yao Choong,Buyer,Condo,1 South Park #402,San Francisco,1750000,43750,35407.19,Repeat client,,,7382.81,1920.0
+2016,2016-04-06,Anne & Ryan Daugherty,Seller,Single Family,1423 16th Avenue,San Francisco,2050000,51250,42151.56,GGMG community,,,8648.44,900.0
+2016,2016-04-19,John Paul and Shefali Upton,Buyer,Condo,1545 Broadway #205,San Francisco,1105000,27625,22168.28,Referral,Kavita Raman,,4661.72,1590.0
+2016,2016-05-10,Celine & Que Schafer,Seller,Condo,623 16th Avenue,San Francisco,1150000,28750,23408.44,Referral,Erin Guinchard,,4851.56,980.0
+2016,2016-05-11,Josina and Peter Habegger,Buyer,Single Family,65 Ina Court,San Francisco,818000,20450,16154.06,GGMG community,,,3450.94,1690.0
+2016,2016-06-02,Nathanael Esposito & Anne Aussems (SIRVA),Seller,Condo,69 Douglass,San Francisco,1315000,39450,20825.33,Repeat client,,13807.5,4327.17,980.0
+2016,2016-06-03,Anthony Scott and Jennifer Lam,Buyer,Single Family,2110 17th Avenue,San Francisco,1185000,29625,23780.78,Referral,Tracy Andreini,,4999.22,1690.0
+2016,2016-06-10,Jennifer Cotner,Seller,Condo,374 Sanchez,San Francisco,1590000,39750,32552.19,GGMG community,,,6707.81,980.0
+2016,2016-06-10,Nancy and Jonathan Martinez,,,2005 Forest Avenue,Belmont,1305000,8156.25,6779.88,GGMG community,,,1376.37,
+2016,2016-06-22,Paul Zoskey & Liz Caruana,Buyer,Single Family,2179 27th Avenue,San Francisco,1200000,30000,23957.5,Referral,Jen Raskin,,5062.5,1960.0
+2016,2016-06-23,Eden Wells,Seller,Loft,900 Minnesota #116,San Francisco,1200000,30000,24447.5,GGMG community,,,5062.5,980.0
+2016,2016-07-27,David Solomon & John Dzundza,Buyer,Condo,188 Beulah Street #5,San Francisco,1375000,34375,27644.22,Open house,,,5800.78,1860.0
+2016,2016-07-28,Vincent and Joyce Vanhoucke,Buyer,Single Family,8 Kronquist Court,San Francisco,2700000,67500,55614.38,GGMG community,,,11390.62,990.0
+2016,2016-07-29,Eric Kubat and Jessica Kassis,Seller,Condo,128 Ripley Street,San Francisco,1680000,42000,23948.75,Referral,Carlos Padilla,12600.0,4961.25,980.0
+2016,2016-08-10,Eden Wells and Jason Rodman,Buyer,Single Family,1385 Portola Avenue,San Francisco,2150000,53750,43699.69,GGMG community,,,9070.31,1960.0
+2016,2016-09-07,Juan Casillas,Seller,Condo,601 Van Ness Avenue #1030,San Francisco,690000,20700,17206.88,Referral,,,3493.12,
+2016,2016-09-19,Alex Yeung,Seller,Condo,400 Beale #1005,San Francisco,775000,19375,16000.77,Repeat client,,,2904.23,940.0
+2016,2016-09-20,Karthick Sriraman & Tushita Chechani,Buyer,Single Family,245 Fowler Avenue,San Francisco,1628000,40700,33893.5,Referral,Raghni & Kaushick,,5901.5,1810.0
+2016,2016-10-14,Joyce and Vincent Vanhoucke,Seller,Single Family,635 Detroit,San Francisco,1600000,40000,33785,Not recorded,,,5800.0,830.0
+2016,2016-10-25,Kamal Al-Yahya and Maha Alzayer,Seller,Condo,145 Hampshire #B,San Francisco,1875000,46875,39608.12,Referral,Jason Rodman & Eden Wells,,6796.88,940.0
+2016,2016-10-27,Michael Goodwin and Basma Al-Yahha,Buyer,Condo,2130 15th Street,San Francisco,2850000,71250,60448.75,Referral,Jason Rodman & Eden Wells,,10331.25,940.0
+2016,2016-11-18,Kalvin Wang & Monica Lee,Buyer,Condo,140 South Van Ness #522,San Francisco,941000,23525,19683.88,Referral,Suelyn Yu,,3411.12,860.0
+2016,2016-12-02,Keith Barry and Roseanne Munoz,Buyer,Condo,3228 Washington Street,San Francisco,2049000,51225,42927.38,Sphere of influence,,,7427.62,1740.0
+2016,2016-12-13,Ted Logan and Gem Stone-Logan,Buyer,Single Family,357 Louisburg Street,San Francisco,1370000,34250,28418.75,GGMG community,,,4966.25,1730.0
+2017,,Kevin Franklin and Keehae Park,Seller,Single Family,440 11th Avenue,San Francisco,3000000,75000,63675,Repeat client,,,10875.0,450.0
+2017,2017-01-30,Rob Cross and Katie Freeman,Buyer,Single Family,507 47th Avenue,San Francisco,1875000,46875,39138.12,Referral,Jill Henn?,,6796.88,940.0
+2017,2017-03-01,Brian Kutner,Buyer,Condo,564 Shotwell Street,San Francisco,1530000,38250,23672.81,Referral,Chris & Karen,9562.5,4159.69,855.0
+2017,2017-03-02,Young Kim and Annie Lee,Buyer,Single Family,579 34th Avenue,San Francisco,1320000,33000,27355,GGMG community,,,4785.0,860.0
+2017,2017-03-21,Saichand Sunkari and Ramya Mallipamula,Buyer,Single Family,519 Nevada Street,San Francisco,1375000,34375,28435.62,Referral,Kathick,,4984.38,955.0
+2017,2017-03-23,Kevin Franklin and Keehae Park,Buyer,Single Family,1365 Union Street,San Francisco,6995000,174875,149068.12,Repeat client,,,25356.88,450.0
+2017,2017-03-31,Burch Smith and Brittney Royter,Seller,TIC,332 South Van Ness,San Francisco,1160000,29000,24300,Referral,A.T. Howe,,4205.0,495.0
+2017,2017-04-06,Bill Gray and Renny Talianchich,Seller,Single Family,410 Justin Drive,San Francisco,1200000,30000,25200,Repeat client,,,4350.0,450.0
+2017,2017-04-06,Vaughn Rasberry and Tatyana Ali,Buyer,Single Family,410 Justin Drive,San Francisco,1200000,30000,24995,Referral,Sara Wright,,4350.0,655.0
+2017,2017-04-14,Macario Namie and Courtney Towle,Buyer,Single Family,4270 Cesar Chavez,San Francisco,3425000,85625,72069.38,GGMG community,,,12415.62,1140.0
+2017,2017-04-18,Kathryn Morris and Jason McCarthy,Seller,Condo,2507 19th Street,San Francisco,1025000,25625,21414.38,GGMG community,,,3715.62,495.0
+2017,2017-04-18,Amac and Dilek Herdagdelen,Buyer,Condo,2507 19th Street,San Francisco,1025000,15375,12540.62,GGMG community,,,2229.38,605.0
+2017,2017-05-12,Lauren Wang,Seller,Condo,988 Fulton Street #315,San Francisco,975000,24375,20345.62,Repeat client,,,3534.38,495.0
+2017,2017-05-12,Lisa Leung & Jason Swierk,Buyer,Condo,195 25th Avenue #101,San Francisco,1100000,27500,22642.5,GGMG community,,,3987.5,870.0
+2017,2017-05-12,Emily Wilson & Joss Giddings,Buyer,Single Family,324 Joost Avenue,San Francisco,1325000,33125,27366.88,Referral,Shefali & JP,,4803.12,955.0
+2017,2017-05-15,Avi Cieplinski & Jenny Yelin,Buyer,Single Family,533 Vicente,San Francisco,1610000,40250,33963.75,GGMG community,,,5836.25,450.0
+2017,2017-05-24,Kelly and Scott McRory,Seller,Single Family,909 Bay Street,San Francisco,2100000,52500,44437.5,GGMG community,,,7612.5,450.0
+2017,2017-06-16,Cindy & Jay Chiang & Andrew Hwang,Seller,Condo,255 Berry Street #511,San Francisco,1225000,30625,25689.38,GGMG community,,,4440.62,495.0
+2017,2017-06-23,Nadine Fakhoury & Eric Briggs,Buyer,Single Family,15 Ardenwood Way,San Francisco,1950000,48750,40726.25,Referral,Eden & Jason,,7068.75,955.0
+2017,2017-07-10,Sibel Goksel & Hakan Arikan,Seller,Condo,1001 Pine Street #602,San Francisco,920000,23000,16670,Referral,Sara Wright,,3335.0,2995.0
+2017,2017-07-14,Alyson & Justin La,Buyer,Single Family,735 France Avenue,San Francisco,1220000,30500,25874.72,GGMG community,,,3750.28,875.0
+2017,2017-07-14,Howard and Franziska Cohen,Seller,Single Family,2551 44th Avenue,San Francisco,1250000,31250,20145.7,Referral,Mark Fisher,7812.5,2841.8,450.0
+2017,2017-07-14,Avi Cieplinski & Jenny Yelin,Seller,Condo,189 Collingwood Street,San Francisco,1415000,35375,30590.78,GGMG community,,,4289.22,495.0
+2017,2017-08-07,Amy Bradac & Doug Speckhard,Buyer,Single Family,1122 Wawona Street,San Francisco,1425000,35625,30855.47,Repeat client,,,4319.53,450.0
+2017,2017-08-11,Duncan Barr,Seller,Condo,601 Van Ness Ave #76,San Francisco,850000,25500,21913.12,Other,,,3091.88,495.0
+2017,2017-08-14,Nadie Fakhoury & Eric Briggs,Seller,Single Family,19 Arago Street,San Francisco,1600000,40000,34700,GGMG community,,,4850.0,450.0
+2017,2017-08-18,Tyler Hayes,Seller,Condo,400 Spear Street #206,San Francisco,901000,22525,19298.84,Repeat client,,,2731.16,495.0
+2017,2017-08-21,Cathy Tran & Peter Klos,Seller,Single Family,2162 26th Avenue,San Francisco,1550000,38750,33601.56,GGMG community,,,4698.44,450.0
+2017,2017-08-21,Sonia & Raj Kapoor,Buyer,Single Family,1430 Diamond Street,San Francisco,3195000,79875,71048.72,Referral,Roseanne/Jami,,7871.28,955.0
+2017,2017-09-06,Jake & Talya Sanders,Seller,Single Family,1718 12th Avenue,San Francisco,1750000,43750,39034.38,GGMG community,,,4265.62,450.0
+2017,2017-09-11,Lisa Mandle and Christopher Hu,Buyer,Condo,116 Connecticut Street #3,San Francisco,1175000,29375,26055.94,GGMG community,,,2864.06,455.0
+2017,2017-09-13,Winfred Lai,Seller,Condo,325 Berry Street #602,San Francisco,1318000,32950,29242.38,Repeat client,,,3212.62,495.0
+2017,2017-09-28,Emma and Tom Morris,Seller,Single Family,620 2nd Avenue,San Francisco,2525000,63125,56520.31,Referral,Kevin Franklin,,6154.69,450.0
+2017,2017-10-12,Kyle Tempel & Don Howerton,Seller,Condo,199 Tiffany #402,San Francisco,1100000,27500,24323.75,Sphere of influence,,,2681.25,495.0
+2017,2017-10-31,Lauren and Mike Sparandara,Seller,Single Family,2587 18th Avenue,San Francisco,1750000,43750,39034.38,Referral,Jenny & Avi,,4265.62,450.0
+2017,2017-11-14,Anjana Sharma & Bhavjot Bindra,Buyer,Single Family,43 Edinburgh Street,San Francisco,1500000,37500,32888.75,Referral,Basma Al-Yahya,,3656.25,955.0
+2017,2017-11-22,Don Howerton & Kyle Tempel,Buyer,Single Family,175 Brewster Street,San Francisco,2200000,55000,49187.5,Sphere of influence,,,5362.5,450.0
+2017,2017-11-30,Vivienne Chua & Kelvin Yip,Buyer,Single Family,2016 Pacific Avenue #401,San Francisco,1450000,36250,31765.62,Referral,Winfred Lai,,3534.38,950.0
+2017,2017-12-07,Mariana & Dan Schiffner,Buyer,Single Family,160 Gold Mine Drive,San Francisco,2950000,73750,66109.38,Referral,Jami/Ana,,7190.62,450.0
+2018,2018-01-11,Sophie Chiang and Yuwen Fang,Buyer,Single Family,2655 Alemany Boulevard,San Francisco,1320000,33000,28215,Referral,Alyson La,,4785.0,
+2018,2018-01-19,Prashant and Nilani Murthy,Seller,Condo,2235 Beach Street #301,San Francisco,2000000,50000,42255,Repeat client,,,7250.0,495.0
+2018,2018-03-05,Sophie Chiang and Yuwen Fang,Seller,Condo,2125 Bryant Street #402,San Francisco,1466000,36650,30840.75,Repeat client,,,5314.25,495.0
+2018,2018-03-08,Dana Olsborg & Olivier L'Abbe,Seller,Single Family,28 Sequioa Way,San Francisco,1900000,47500,40162.5,Marketing,,,6887.5,450.0
+2018,2018-03-16,Kara & Tyler Snellings,Buyer,Single Family,449 Melrose,San Francisco,1420000,21300,17256.5,Marketing,,,3088.5,955.0
+2018,2018-04-03,Meenaxi & Dhaivat Pandit,Seller,Condo,1424 18th Avenue,San Francisco,1310000,32750,27506.25,Marketing,,,4748.75,495.0
+2018,2018-04-05,Alisha Roeder & Avinash Valsarajan,Buyer,Condo,211 Pelican Cove,San Francisco,1000000,25000,20425,Referral,Raghni,,3625.0,950.0
+2018,2018-04-09,Anna Morozovsky & Benjamin Murphy,Seller,Condo,2529 Post Street,San Francisco,1410000,35250,29643.75,GGMG community,,,5111.25,495.0
+2018,2018-04-09,Macario Namie & Courtney Towle,Seller,Single Family,986 Burnett Avenue,San Francisco,1612000,40300,34006.5,GGMG community,,,5843.5,450.0
+2018,2018-04-13,Heidi & Martin Sweeney,Buyer,Condo,1941 O'Farrell Street,San Francisco,1350000,33750,27986.25,GGMG community,,,4893.75,870.0
+2018,2018-05-02,Andrew and Laura Martinez-Fonts,Seller,Condo,2208 SutterStreet #1,San Francisco,1805000,45125,38086.88,GGMG community,,,6543.12,495.0
+2018,2018-05-15,Brian Chaikelson & Adina Rauchwerger,Buyer,Single Family,720 Junipero Serra Blvd,San Francisco,1841500,46037.5,38407.06,Open house,,,6675.44,955.0
+2018,2018-05-22,Nina Tseng & Kevin Kehl,Buyer,Single Family,12 Littlefield Terrace,San Francisco,1085000,27125,22236.88,Referral,Sophie Chiang,,3933.12,955.0
+2018,2018-05-25,Parul Yadav & Ankit Srivastava,Buyer,Condo,103 Randall Street,San Francisco,1800000,45000,37525,Referral,Kelvin Yip,,6525.0,950.0
+2018,2018-07-10,Matthew Nixon (and Amy Nixon),Seller,Condo,1057 Haight Street,San Francisco,1320000,33000,20666.25,Referral,Padilla Group,8250.0,3588.75,495.0
+2018,2018-07-23,Brian & Claudine Emeott,Buyer,Single Family,124 Forest Side,San Francisco,2220000,55500,46497.5,Not recorded,,,8047.5,955.0
+2018,2018-07-26,Kaoru Kobayashi & Christopher Stockton,Seller,Condo,199 Tiffany Avenue #406,San Francisco,1150000,28750,24086.25,Referral,Kyle & Don,,4168.75,495.0
+2018,2018-08-01,Sarah Palmer & Marcus Martins,Buyer,Single Family,1337 Felton,San Francisco,1084000,27100,22215.5,Marketing,,,3929.5,955.0
+2018,2018-08-06,Helen & Chris Lim,Buyer,Single Family,384 Santa Ana Avenue,San Francisco,2300000,57500,48207.5,GGMG community,,,8337.5,955.0
+2018,2018-08-13,Brian & Claudine Emeott,Seller,Single Family,1771 39th Avenue,San Francisco,1500000,37500,31612.5,Repeat client,,,5437.5,450.0
+2018,2018-08-16,Meghana RaoRane,Buyer,Single Family,401 Anderson Street,San Francisco,1330000,33250,27473.75,Referral,Kelvin Yip,,4821.25,955.0
+2018,2018-08-20,Collin Whitehead & Joylyn Tanner,Buyer,Single Family,5517 Diamond Heights Blvd,San Francisco,1880000,47000,39230,Referral,Rebecca Wright,,6815.0,955.0
+2018,2018-08-27,Chris Prince & Emma Sullivan,Buyer,Condo,14 Divisadero Street,San Francisco,2850000,71250,59968.75,Referral,Jeanette Barzelay,,10331.25,950.0
+2018,2018-08-29,Jacqueline & Clayton Scott,Seller,Single Family,4146 Fulton Street,San Francisco,1994146,49853.65,42174.87,Repeat client,,,7228.78,450.0
+2018,2018-09-04,Carli Oster,Buyer,Single Family,625 Moultrie Street,San Francisco,1400000,35000,29265.93,Referral,Alex Yeung,,4779.07,955.0
+2018,2018-09-19,Marina Psaros,Buyer,Single Family,2027 32nd Avenue,San Francisco,1112027,27800.68,23474.84,Referral,Brigitte & Pete,,3370.83,955.0
+2018,2018-09-20,Ted Logan & Gem Stone-Logan,Seller,Single Family,357 Louisburg Street,San Francisco,1600000,40000,34700,Repeat client,,,4850.0,450.0
+2018,2018-09-27,Camilla Souza & Deepak Karandikar,Buyer,Condo,135 Cook Street,San Francisco,1675000,41875,35847.66,Open house,,,5077.34,950.0
+2018,2018-10-08,Gina & Eric Mao,Seller,Single Family,209 Hazelwood Avenue,San Francisco,2200000,55000,47881.25,Referral,Vicky Keston,,6668.75,450.0
+2018,2018-10-19,Barry Cassidy,Seller,Condo,3380 20th Street #303,San Francisco,901000,22525,19298.84,Referral,Kevin Clarke,,2731.16,495.0
+2018,2018-11-02,Lindsay & Ludovic Thomasson,Seller,Condo,109 19th Avenue,San Francisco,1355000,33875,30122.19,Marketing,,,3302.81,450.0
+2018,2018-11-13,Adam & Jia Rogal,Buyer,Condo,1727 Grove Street,San Francisco,1460000,36500,32541.25,GGMG community,,,3558.75,400.0
+2018,2018-11-20,Priya Raman Kumar & Vipul Kumar,Buyer,Condo,204 Hoffman #1,San Francisco,1998000,49950,44224.88,Repeat client,,,4870.12,855.0
+2018,2018-11-26,Sara & Sean (Kristin's Listing),Seller,Single Family,667 Orange Avenue,Novato,780000,19500,12749.06,Sphere of influence,,4875.0,1425.94,450.0
+2018,2018-11-30,Bijan Vakili,Buyer,Condo,369 18th Avenue #105,San Francisco,1045500,26137.5,23094.09,Referral,Liz Caruana,,2548.41,495.0
+2018,2018-12-07,Kaz & Mark Field,Buyer,Condo,1166 Green Street,San Francisco,1400000,35000,30732.5,Referral,Tracy Andreini,,3412.5,855.0
+2019,2019-01-08,Curtis Yarvin & Jen Kollmer,Seller,Condo,4 Museum way,San Francisco,1850000,46250,39093.75,Referral,Wendy Harris,,6706.25,450.0
+2019,2019-01-09,Heather and Jonah Meacham,Seller,Condo,1203 Guerrero Street,San Francisco,1300000,32500,27337.5,Repeat client,,,4712.5,450.0
+2019,2019-02-06,Priya Raman Kumar,Seller,Condo,380 14th Street,San Francisco,1024000,20480,17060.4,Repeat client,,,2969.6,450.0
+2019,2019-02-11,Caleb & Tracey Porter,Seller,Condo,103 19th Avenue,San Francisco,1350000,33750,28361.25,Open house,,,4893.75,495.0
+2019,2019-02-13,Victoria & Joseph Frambach,Buyer,Single Family,15 Hollywood Court,San Francisco,1200000,30000,24650,Referral,Melissa Cheung & Chris Kern,,4350.0,1000.0
+2019,2019-03-18,Jeanette & David Barzelay,Buyer,Single Family,225 Edgehill Way,San Francisco,2185000,54625,45704.38,Repeat client,,,7920.62,1000.0
+2019,2019-03-22,Hari & Eric Simons,Buyer,Single Family,563 Munich Street,San Francisco,1170000,29250,24008.75,Marketing,,,4241.25,1000.0
+2019,2019-03-26,Iris Orriss,Buyer,Single Family,17 Newburg Street,San Francisco,1965000,49125,40831.88,Referral,Gautier deMarci,,7123.12,1170.0
+2019,2019-04-12,Fazal Majid and Shaheen Bilgrami,Seller,Single Family,2614 26th Avenue,San Francisco,2000000,50000,42255,Not recorded,,,7250.0,495.0
+2019,2019-04-15,Jason Rodman & Eden Wells,Seller,Single Family,1385 Portola Drive,San Francisco,2750000,96250.0,48881.25,Repeat client,,38500.0,8373.75,495.0
+2019,2019-04-16,Connie Sardo,Seller,Single Family,757 North Point Street #2,San Francisco,1810000,45250,38193.75,Not recorded,,,6561.25,495.0
+2019,2019-04-29,Jason & Kerri Terk,Buyer,Single Family,1651 Burrows,San Francisco,1210000,30250,24853.75,Not recorded,,,4386.25,1010.0
+2019,2019-04-30,Ram Woo & Kirsten Linder,Buyer,Condo,750 2nd Street #301,San Francisco,1795000,49362.5,41329.94,Not recorded,,,7157.56,875.0
+2019,2019-05-01,Ashley & Aaron Stern,Buyer,Single Family,126 Bronte Street,San Francisco,1500000,37500,31052.5,Not recorded,,,5437.5,1010.0
+2019,2019-05-06,Stephanie Tang & Winston Wolff,Seller,Condo,233 Noe Street,San Francisco,1850000,46250,39048.75,Marketing,,,6706.25,495.0
+2019,2019-05-24,Michael & Peri Hughes (KR),Buyer,Single Family,2782 Pine Street,San Francisco,4125000,103125,87161.88,Other,,,14953.12,1010.0
+2019,2019-05-28,Hari & Eric Simons,Seller,Condo,442 30th Street,San Francisco,1200000,30000,25155,Marketing,,,4350.0,495.0
+2019,2019-05-30,David & Jeanette Barzelay,Seller,Condo,3272 20th Street,San Francisco,1600000,40000,33705,Repeat client,,,5800.0,495.0
+2019,2019-06-07,Heather & Jeff Beck,Buyer,Single Family,1890 43rd Avenue,San Francisco,1250000,31250,25788.75,Marketing,,,4531.25,930.0
+2019,2019-06-10,Kelly & Erik Larson,Seller,Condo,165 Octavia Street,San Francisco,1370000,34250,28788.75,Marketing,,,4966.25,495.0
+2019,2019-06-20,Beth & Todd Fox,Buyer,Single Family,595 44th Avenue,San Francisco,2225000,55625,46549.38,Marketing,,,8065.62,1010.0
+2019,2019-07-05,Laura Frost & Chris Bregler,Buyer,Single Family,32A Elsie Street,San Francisco,3000000,75000,63115,Marketing,,,10875.0,1010.0
+2019,2019-07-10,Paul Zoskey & Elizabeth Caruana,Seller,Single Family,2179 27th Avenue,San Francisco,1700000,42500,35842.5,Repeat client,,,6162.5,495.0
+2019,2019-07-22,Sean & Dawn Linden (LEWIS),Buyer,Single Family,514 Molimo Drive,San Francisco,1725000,43125,35861.88,Sphere of influence,,,6253.12,1010.0
+2019,2019-08-01,Carmen Contreras & Andrea Contreras,Buyer,Condo,4627 25th Street,San Francisco,1950000,48750,40726.25,Teammate's client,,,7068.75,955.0
+2019,2019-08-05,Beth & Todd Fox,Seller,Condo,301 Gough #7/G,San Francisco,1590000,39750,33491.25,Marketing,,,5763.75,495.0
+2019,2019-08-12,Aravind Ramanathan & Bhavya Thyagarajan,Buyer,Condo,208 28th Street #201,San Francisco,1455000,36375,30145.62,Marketing,,,5274.38,955.0
+2019,2019-08-16,Priya & Neil Pai,Seller,Condo,141 Willard North,San Francisco,2400000,60000,50805,Referral,Connie Sardo,,8700.0,495.0
+2019,2019-09-04,Niklas Nordlof & Gwen Roberts (KR),Buyer,Condo,850 Minnesota Street #158,San Francisco,1060000,26500,22961.25,Sphere of influence,,,2583.75,955.0
+2019,2019-09-13,Lisa Leung & Jason Swierk,Seller,Condo,195 25th Avenue #101,San Francisco,1300000,32500,28836.25,Repeat client,,,3168.75,495.0
+2019,2019-10-11,Dave Kwon & Hyunjung Shin,Seller,Condo,712 Dorado Terrace #53,San Francisco,1050000,26250,23195.62,Repeat client,,,2559.38,495.0
+2019,2019-10-28,Leah & PJ Onori,Seller,Condo,49-B Miguel Street,San Francisco,955000,23875,20587.19,Marketing,,,2327.81,960.0
+2019,2019-10-29,Doug Strickland & Laura Edwards (KR),Buyer,Condo,47 Chickasaw Court,Corte Madera,1175000,29375,25580.94,Sphere of influence,,,2864.06,930.0
+2019,2019-11-12,Syrus & Farnaz Madavi (SL),Buyer,Single Family,2083 29th  Avenue,San Francisco,1575000,47250,41633.12,Open house,,,4606.88,1010.0
+2019,2019-11-22,Kirsten & Karl Pfleger,Seller,2-Unit,487-489 Noe Street,San Francisco,3100000,77500,69448.75,Marketing,,,7556.25,495.0
+2019,2019-12-02,Keith Williams,Buyer,Condo,375 Crestmont Drive,San Francisco,1049900,26247.5,22813.37,Open house,,,2559.13,875.0
+2019,2019-12-18,Vaughn & Tatyana Rasberry,Seller,Single Family,410 Justin Drive,San Francisco,1850000,46250,41245.62,Repeat client,,,4509.38,495.0
+2020,2020-01-30,Erika Buenrostro & Alex Couric,Buyer,Condo,125 Steiner Street,San Francisco,2250000,56250,45802.81,Marketing,,,9492.19,955.0
+2020,2020-02-12,Nicole Ryan & Guy Burdick,Buyer,Single Family,139 Gladeview Way,San Francisco,2150000,53750,43669.69,Marketing,,,9070.31,1010.0
+2020,2020-02-17,Sandeep Pandey & Shikha Sharma,Buyer,Condo,1880 Steiner Street #409,San Francisco,1261000,31525,25250.16,Marketing,,,5319.84,955.0
+2020,2020-03-02,Akhila Ananthram & Naman Agarwal,Buyer,Condo,4339 California Street #3,San Francisco,1749000,43725,35391.41,Other,,,7378.59,955.0
+2020,2020-03-02,Karthick Sriraman & Tushita Chechani,Seller,Single Family,254 Fowler Avenue,San Francisco,2235000,55875,45951.09,Repeat client,,,9428.91,495.0
+2020,2020-03-04,Jared & Evelyn Sulem,Buyer,Single Family,1259 Lattie Lane,Mill Valley,1638000,40950,33039.69,Repeat client,,,6910.31,1000.0
+2020,2020-03-11,Pam and Brian Zeiger,Seller,Condo,452 Corbett Avenue,San Francisco,1875000,46875,38469.84,Marketing,,,7910.16,495.0
+2020,2020-03-27,Eric and Alana Guggenbiller,Seller,Condo,3731 Fillmore Street #4,San Francisco,1010000,25250,20494.06,Referral,Connie Sardo,,4260.94,495.0
+2020,2020-04-09,Renee diResta & Justin Hileman,Buyer,Condo,600-A Missouri Street,San Francisco,1650000,41250,33334.06,Referral,Vicky Keston,,6960.94,955.0
+2020,2020-04-13,Laurel & Andy Kellam,Seller,Single Family,61 Seminole Avenue,San Francisco,1580000,39500,32339.38,Referral,Cathy Tran,,6665.62,495.0
+2020,2020-05-27,Maya Kanzaria & Mayur Rao,Buyer,Single Family,2475 23rd Avenue,San Francisco,1800000,45000,36396.25,Marketing,,,7593.75,1010.0
+2020,2020-06-01,Nicole Ryan & Guy Burdick,Seller,Single Family,54 Sussex Street,San Francisco,1760000,44000,36080,Marketing,,,7425.0,495.0
+2020,2020-06-08,Sergei Prutkin,Seller,Condo,3731 Fillmore Street #5,San Francisco,1115000,27875,22676.09,Self-generated,,,4703.91,495.0
+2020,2020-06-29,Keith Barry & Roseanne Munoz,Buyer,Single Family,507 4th Avenue,San Francisco,3000000,75000,61333.75,Repeat client,,,12656.25,1010.0
+2020,2020-07-01,Erin & Francisco Ramirez,Buyer,Single Family,227 Byxbee Street,San Francisco,1170000,29250,23384.06,Other,,,4935.94,930.0
+2020,2020-08-11,Martin Rydder,Seller,Condo,3731 Fillmore #6,San Francisco,960000,24000,19455,Referral,,,4050.0,495.0
+2020,2020-08-14,Jen and Trevor Hicks,Seller,Single Family,333 Dellbrook Avenue,San Francisco,1515000,37875,30988.59,Repeat client,,,6391.41,495.0
+2020,2020-08-21,Daniel LaGrotta and Christine Lin,Seller,Condo,2200 Market Street #401,San Francisco,1725000,43125,35352.66,Marketing,,,7277.34,495.0
+2020,2020-08-21,Peter Gross,Seller,Single Family,1608 Felton Street,San Francisco,1050000,26250,21325.31,Marketing,,,4429.69,495.0
+2020,2020-08-24,Roseanne & Keith Barry,Seller,Condo,3228 Washington Street,San Francisco,2450000,61250,50572.69,Repeat client,,,10182.31,495.0
+2020,2020-09-11,Marion & Emmett Stanton,Seller,Single Family,258 Diamond Street,San Francisco,2645000,66125,41907.66,Referral,Bill Drypolcher,16531.25,7191.09,495.0
+2020,2020-09-28,Loren Mooney & Audra Farrell,Buyer,Single Family,123 Vienna Street,San Francisco,1157120,28928,23723.44,Open house,,,4194.56,1010.0
+2020,2020-09-29,Chi Lam To & Tiffany To,Seller,Single Family,1711 47th Avenue,San Francisco,1350000,33750,28361.25,Yelp,,,4893.75,495.0
+2020,2020-10-13,Michael Goodwin & Basma Al-Yahya,Seller,Condo,2130 15th Street,San Francisco,3000000,75000,63737.62,Repeat client,,,10767.38,495.0
+2020,2020-10-15,Karuna Garg & Amit Bansal,Seller,Single Family,75 Lunado Way,San Francisco,2000000,50000,43442.5,Marketing,,,6062.5,495.0
+2020,2020-10-23,Michael Goodwin & Basma Al-Yahya,Buyer,Single Family,306 Holly Street,Mill Valley,3750000,93750,81887.81,Repeat client,,,11367.19,495.0
+2020,2020-10-30,Chickasaw Owners (?),Seller,Single Family,47 Chickasaw Court,Corte Madera,1355000,33875,29612.35,Teammate's client,,,3767.65,495.0
+2020,2020-10-30,McGilloway Family Trust,Buyer,Condo,330 Arguello Blvd #2,San Francisco,1125000,28125,24507.81,Sphere of influence,,,2742.19,875.0
+2020,2020-11-06,Heather Marlow,Seller,Condo,461 Capp Street,San Francisco,1325000,33125,29400.31,Marketing,,,3229.69,495.0
+2020,2020-11-12,John and Katy DeWeese,Buyer,Single Family,101 Poppy Lane,San Francisco,2800000,70000,62165,Referral,Hari Simons (sister),,6825.0,1010.0
+2020,2020-11-16,Leonel Quinteros & Irina Knopova,Buyer,Single Family,43 Warren Drive,San Francisco,1525000,38125,11192.7,Sphere of influence,,24604.0,1318.3,1010.0
+2020,2020-11-17,Quynh-An Phan & Edward Fong,Buyer,Single Family,2551 39th Avenue,San Francisco,1610000,40250,35315.62,Marketing,,,3924.38,1010.0
+2020,2020-11-17,Steve and Tyee Dugan,Seller,Single Family,26 Mizpah Street,San Francisco,2000000,50000,44630,Yelp,,,4875.0,495.0
+2020,2020-12-17,Megan Keane (Kristin),Buyer,Condo,65 Glover Street,San Francisco,910000,22750,19576.88,Other,,,2218.12,955.0
+2020,2020-12-18,Chris and Alexa Halloran (Ceily),Seller,Single Family,69 Cragmont,San Francisco,1840000,55200,49323,Teammate's client,,,5382.0,495.0
+2020,2020-12-18,Jennifer Oh & Sam Hong,Buyer,Single Family,104 Lunado Way,San Francisco,1975000,49375,43630.94,Marketing,,,4814.06,930.0
+2020,2020-12-22,Clark Skidmore,Seller,Condo,380 14th Street #402,San Francisco,1050000,26250,23195.62,Sphere of influence,,,2559.38,495.0
+2020,2020-12-30,Lisa Faucher & Chris Orcutt,Seller,Single Family,1207  33rd Avenue,San Francisco,2155000,53875,48127.19,Repeat client,,,5252.81,495.0
+2021,2021-01-25,Forrest Miller & Chelsea Tabart,Buyer,TIC,1836A Mason Street,San Francisco,1240000,31000,27022.5,Teammate's client,,,3022.55,955.0
+2021,2021-01-26,Don Howerton & Kelvin Temple,Seller,Single Family,175 Brewster Street,San Francisco,2150000,53750,48014.38,Teammate's client,,,5240.68,495.0
+2021,2021-02-02,Samuel Hong & Jennifer Oh,Seller,Single Family,126 Encline Court,San Francisco,2178000,54450,48646.12,Marketing,,,5308.93,495.0
+2021,2021-02-22,Jackie & David Pelavin,Seller,Single Family,590 Oak Park Drive,San Francisco,1960000,58800,52422,Referral,Heather Marlow,,5733.05,495.0
+2021,2021-02-23,Louise Warren,Seller,Condo,1371A Dolores Street,San Francisco,1100000,27500,22364.38,Referral,Lisa Ells,,4640.75,495.0
+2021,2021-02-24,Kaz Field,Seller,Condo,1166 Green Street,San Francisco,1450000,36250,29637.81,Repeat client,,,6117.31,495.0
+2021,2021-03-02,Peter & Barbara Marsh,Seller,Condo,283 2nd Avenue,San Francisco,1225000,30625,27144.06,Referral,Cathy Tran/Kristin Marsh,,2985.99,495.0
+2021,2021-03-08,Chris Huynh,Buyer,Condo,139 Stillman Street #7,San Francisco,725000,18125,14121.41,Referral,Judy Vo,,3058.72,945.0
+2021,2021-03-25,Louise Warren & Mark LeClerc,Buyer,Single Family,3880 Cesar Chavez,San Francisco,2000000,50000,41067.5,Referral,Lisa Ells,,8437.62,495.0
+2021,2021-03-29,Emmett & Marion Stanton,Buyer,Condo,1650 Broadway #101,San Francisco,2090000,52250,42457.81,Repeat client,,,8817.31,975.0
+2021,2021-03-29,Cathy Tran & Pete Klos,Buyer,Condo,2764 Pine Street,San Francisco,2200000,55000,44468.75,Repeat client,,,9281.38,1250.0
+2021,2021-03-30,Michelle Martens and Ted Metzger,Buyer,Condo,105 Palm Avenue #7,San Francisco,1020000,25500,20251.88,Referral,Sonya Abrams,,4303.25,945.0
+2021,2021-04-02,Kaushick Naidu & Raghni Khanna,Seller,Single Family,1306 10th Avenue,San Francisco,3200000,80000,66005,Repeat client,,,13500.12,495.0
+2021,2021-04-05,Lissa Arnold and Ben Quinn,Buyer,Condo,975 York Street,San Francisco,960000,24000,19055,Referral,Heather McCune,,4050.12,895.0
+2021,2021-04-26,Ilene Milne,Buyer,Single Family,4633 19th Street,San Francisco,2500000,62500,50728.12,Referral,,,10547.0,1225.0
+2021,2021-05-06,Ursula Cateriano & Paul Antaki,Seller,Single Family,345 Molimo Drive,San Francisco,1818000,45450,37285.31,Referral,,,7669.81,495.0
+2021,2021-05-07,Rusty & Julie Larner,Buyer,Single Family,428 Cayuga Avenue,San Francisco,1250000,31250,24976.56,Referral,Hari/Eric,,5273.56,1000.0
+2021,2021-05-13,Brandon Leahy & Meredith Hitchcock,Buyer,Single Family,607 Texas Street,San Francisco,1750000,43750,35297.19,Teammate's client,,,7382.94,1070.0
+2021,2021-05-18,Rosaclaire Baisinger,Buyer,Condo,515 Masonic Avenue #3,San Francisco,830000,20750,17775,Referral,Marina Psaros,,2075.1,900.0
+2021,2021-05-20,Renee Carano,Buyer,Condo,1584 Fulton,San Francisco,875000,21875,18757.5,Sphere of influence,,,2187.6,930.0
+2021,2021-05-24,Louse Warren & Mark LeClerc,Seller,Condo,1371 Dolores Street,San Francisco,1775000,44375,39487.5,Repeat client,,,4437.6,450.0
+2021,2021-05-24,Josh Wallaert & Jelena Obradovic,Seller,Condo,3884 23rd Street,San Francisco,1405000,35125,31162.5,Marketing,,,3512.6,450.0
+2021,2021-06-09,James Seay,Seller,Condo,107 19th Avenue,San Francisco,1600000,40000,35550,Referral,Others in the building,,4000.1,450.0
+2021,2021-06-18,Josh Wallaert & Jelena Obradovic,Buyer,Condo,895 Hayes Street,San Francisco,2170000,54250,47895,Repeat client,,,5425.1,930.0
+2021,2021-06-23,Grant & Laura Bruursema,Seller,Single Family,318 Louisburg Street,San Francisco,1405000,35125,31162.5,Marketing,,,3512.6,450.0
+2021,2021-06-25,Kunal Bajaj,Buyer,Condo,350 Broderick #319,San Francisco,1600000,40000,35070,Referral,Meenaxi & Dhaivat,,4000.1,930.0
+2021,2021-06-29,Savinie Lam & Dave Voong,Buyer,Condo,Bayani Way,Daly City,1126102.9,32654.1,26648.72,Self-generated,,,5510.5,495.0
+2021,2021-06-30,Carli Oster,Seller,Single Family,625 Moultrie Street,San Francisco,1700000,42500,37850,Repeat client,,,4250.1,400.0
+2021,2021-07-06,Vivienne Chua & Kelvin Yip,Seller,Condo,2016 Pacific Ave #401,San Francisco,1600000,40000,35550,Repeat client,,,4000.1,450.0
+2021,2021-07-06,Shreya Kothaneth & Eric Luk,Buyer,Condo,30 Nido Avenue,San Francisco,1675000,41875,36757.5,Referral,Erika Couric,,4187.6,930.0
+2021,2021-07-06,Jeanne Tsan,Buyer,Single Family,1510 7th Avenue,San Francisco,2400000,60000,53055,Referral,Sarah Adler,,6000.1,945.0
+2021,2021-07-12,"Barry Wallach, SVP (Lisa Ells & Brett Kingsbury)",Seller,Single Family,35 Valley Street,San Francisco,1800000,45000,40100,Repeat client,,,4500.1,400.0
+2021,2021-07-12,Thaomi & Paolo,Buyer,Condo,726 33rd Avenue,San Francisco,1450000,36250,32175,Marketing,,,3625.1,450.0
+2021,2021-07-19,Manish Gayalod & Archana Singh,Seller,Condo,3622 Broderick Street #1,San Francisco,2330000,58250,51975,Marketing,,,5825.1,450.0
+2021,2021-08-02,Iris Orriss & Cliff Orriss,Seller,Single Family,17 Newburg Street,San Francisco,2250000,56250,50375,Repeat client,,,5625.1,250.0
+2021,2021-08-02,Nathan Cressman,Buyer,Single Family,17 Newburg Street,San Francisco,2250000,56250,49830,Open house,,,5625.1,795.0
+2021,2021-08-03,Jake & Steffi McNeill,Buyer,Single Family,1308 McAllister Street,San Francisco,1900000,47500,46570,Sphere of influence,,,0.1,930.0
+2021,2021-08-09,Lana Lan & Greg Weiner,Buyer,Single Family,627 39th Avenue,San Francisco,2300000,57500,54766.11,Marketing,,,1788.92,945.0
+2021,2021-08-16,Rex & Valeria McLean,Seller,Condo,379 Church Street #201,San Francisco,1105000,27625,26254.17,Sphere of influence,,,920.87,450.0
+2021,2021-08-25,The Duplex Gang,Buyer,Duplex,1219-1221 Clayton Street,San Francisco,2800700,70017.5,57776.42,Referral,Leah Tracy (referred 1/2 of the gang),9064.77,1896.34,1280.0
+2021,2021-09-01,Michael and Phoebe Good,Seller,Single Family,39 Warren Drive,San Francisco,2100000,52500,50466.67,Referral,Leonel Quintereos,,1633.36,400.0
+2021,2021-09-10,Ashmita Vishwanathan & Anand Mahadevan,Buyer,Single Family,413 Dellbrook,San Francisco,1900000,47500,45077.22,Marketing,,,1477.81,945.0
+2021,2021-09-27,Patrick Fleisch & Connie Lin,Buyer,Single Family,120 Merced Avenue,San Francisco,3550000,106500,105555,Marketing,,,,945.0
+2021,2021-10-06,Justin Hileman & Renee DiResta,Seller,Condo,600A Missouri Street,San Francisco,1838000,45950,45500,Repeat client,,,,450.0
+2021,2021-10-15,Oliver & Jen Raskin,Seller,Condo,1 Baker Street #2A,San Francisco,1330000,33250,32676,Repeat client,,,,574.0
+2021,2021-10-18,Sofie VanCreveld & Scott Argyres,Buyer,Single Family,62 Natick Street,San Francisco,1920000,48000,47055,Other,,,,945.0
+2021,2021-10-22,Christina & Steve Lemanski,Buyer,Single Family,1559 18th Ave,San Francisco,1975000,49375,48306,Marketing,,,,1069.0
+2021,2021-10-25,Erika Misaki,Seller,Single Family,2613 Post Street,San Francisco,1500000,37500,36976,Other,,,,524.0
+2021,2021-11-10,Janet Ryu & Jeff Diehl,Seller,Single Family,15 Hazelwood,San Francisco,2015000,50375,49851,Repeat client,,,,524.0
+2021,2021-11-23,Lana Lan & Greg Weiner,Seller,Condo,6020 California Street,San Francisco,1250000,31250,30576,Repeat client,,,,674.0
+2021,2021-11-29,Jennifer Lee,Seller,Condo,379 Church Street #302,San Francisco,1228000,42980.0,42206.0,Referral,Rex & Valeria,,,774.0
+2021,2021-12-02,Olya & Drago Anguelov,Seller,Condo,1229 Potrero Ave,San Francisco,1461000,43830,43056,Referral,Joyce Vanhoucke,,,774.0
+2021,2021-12-07,Michelle Clum,Seller,Condo,2600 18th Street #16,San Francisco,749000,22470,21846,Referral,Lauren Cappellino,,,624.0
+2021,2021-12-09,Lily Yap & John Yap,Seller,Condo,979 Duncan Street,San Francisco,1675000,41875,41101,Marketing,,,,774.0
+2021,2021-12-09,Sumi & Chris Yap,Seller,Condo,977 Duncan Street,San Francisco,1625000,40625,40001,Marketing,,,,624.0
+2021,2021-12-13,Vivian and Terry Lee,Buyer,Single Family,360 Hazelwood Avenue,San Francisco,1850000,46250,45036,Marketing,,,,1214.0
+2021,2021-12-21,Patrick Fleisch & Connie Lin,Seller,Condo,1160 Mission Street #1408,San Francisco,1210000,30250,29626,Marketing,,,,624.0
+2021,2021-12-23,Robin Ahn & Nathan Witthoft,Buyer,TIC,117A Sutro Heights Ave,San Francisco,800000,20000,18886,Marketing,,,,1114.0
+2022,2021-02-25,Namhee Koo & Inigo Quilez Les,Buyer,Single Family,160 Anderson Street,San Francisco,3200000,80000,78786,Marketing,,,,1214.0
+2022,2022-01-13,Derek & Rebecca Wright,Buyer,Single Family,3934 18th Street,San Francisco,2750000,68750,67536,Repeat client,,,,1214.0
+2022,2022-01-28,Brian & Kelley Johnson,Seller,Single Family,2827 Noriega Street,San Francisco,1900000,47500,46726,Repeat client,,,,774.0
+2022,2022-02-14,Sherri & AT Howe,Buyer,Single Family,452 Ulloa Street,San Francisco,2754375,,,Self-generated,,,,
+2022,2022-02-18,Xiao He (and Michael Faucher),Buyer,TIC,3328 19th Street,San Francisco,825000,20625,20001,Not recorded,,,,624.0
+2022,2022-03-11,James Meeks,Seller,Single Family,1151 Rhode Island Street,San Francisco,1340000,33500,32876,Referral,Lauren Cappelloni,,,624.0
+2022,2022-03-29,Anuja & Landon Clark,Buyer,Single Family,52 Chenery Street,San Francisco,2000000,50000,48786,Sphere of influence,,,,1214.0
+2022,2022-04-01,Aric Johnstone,Buyer,Condo,631 Folsom Street #2E,San Francisco,1070000,26750,25606,Referral,,,,1144.0
+2022,2022-04-07,Karen Stephens,Seller,Condo,623 Dolores Street,San Francisco,925000,23125,22501,Teammate's client,,,,624.0
+2022,2022-04-12,Jeremy Rosen & Jodi Kruger,Buyer,Condo,280 Spear Street #12A,San Francisco,1740000,43500,42876,Referral,Christopher Hu,,,624.0
+2022,2022-04-14,Wendy Neikirk Rhodes & Adrian Rhodes,Buyer,Single Family,165 Rolph Street,San Francisco,1300000,32500,31286,Networking,,,,1214.0
+2022,2022-04-22,Alex Youn,Buyer,TIC,30 Cunningham Place,San Francisco,1624000,40600,36532.8,Referral,Michael Faucher,,2923.2,1144.0
+2022,2022-04-28,Rachelle Schoo,Seller,Single Family,290 Sussex Street,San Francisco,1875000,46875,41563.5,Referral,Aida Hadzibegovic,,4687.5,624.0
+2022,2022-05-05,Angelique & Victor (Savinie Clients),Buyer,Condo,3241 25th Street,San Francisco,1200000,30000,25856,Open house,,,3000.0,1144.0
+2022,2022-05-06,Jessica & Kapil Pundir,Buyer,Single Family,2500 Leavenworth Street,San Francisco,4100000,102500,101286,Referral,Maya & Mayur Rao,,,1214.0
+2022,2022-06-03,Dilek Barlow & Kevin Albert,Buyer,Single Family,50 Willard North,San Francisco,2450000,61250,53911,Networking,,,6125.0,1214.0
+2022,2022-06-07,Patrick Chin & Gregory Chin,Seller,Single Family,2362 44th Ave,San Francisco,1818000,45450,40281,Referral,Perri Dong,,4545.0,624.0
+2022,2022-06-08,Stephen O'Driscoll & Hattie Dong,Buyer,Single Family,341 Dorantes,San Francisco,3350000,83750,74161,Networking,,,8375.0,1214.0
+2022,2022-06-08,Tiffany & Carl Bindoo,Buyer,Single Family,427 27th Ave,San Francisco,2700000,67500,59536,Referral,Cathy Tran,,6750.0,1214.0
+2022,2022-06-13,Vince Rosso & Yin Li,Seller,Condo,668 Elizabeth Street,San Francisco,2050000,51250,46577.25,Referral,,,4048.75,624.0
+2022,2022-06-13,Ashley & Jordan Caviness,Buyer,Single Family,225 Congdon Street,San Francisco,1555600,38890,25853.44,Referral,Krista Miller,9722.5,2100.06,1214.0
+2022,2022-06-21,Bret Walburg & Marie Plouviez,Seller,Single Family,330 Louisburg Street,San Francisco,1545000,38625,34138.5,Referral,Grant on Louisburg Street,,3862.5,624.0
+2022,2022-06-22,"Arthur Esswein, Jr.",Seller,Condo,1930 Grove Street #4,San Francisco,1050000,26250,23001,Referral,Dilek Barlow,,2625.0,624.0
+2022,2022-06-24,Sharon and Andrew Persson,Buyer,Single Family,2167 30th Avenue,San Francisco,2200000,55000,48779.26,Networking,,,5006.74,1214.0
+2022,2022-06-27,Ada & Daniel Phang,Seller,TIC,2 Fair Oaks Street #2,San Francisco,1115000,27875,27251,Networking,,,,624.0
+2022,2022-07-06,Monica Pech & Brian Chan,Buyer,Single Family,236 8th Avenue,San Francisco,2830000,70750,69536,Networking,,,,1214.0
+2022,2022-07-20,Ayako Kuroda & Ryo Eguchi,Buyer,Single Family,140 Richland Avenue,San Francisco,2000000,50000,48786,Repeat client,,,,1214.0
+2022,2022-07-25,Kaushick Naidu & Raghni Khanna,Seller,Condo,1388 Gough Street #406,San Francisco,1025000,25625,25001,Repeat client,,,,624.0
+2022,2022-08-11,Dilek Barlow & Kevin Albert,Seller,Condo,1930 Grove Street #3,San Francisco,950333,23758.33,23134.33,Repeat client,,,,624.0
+2022,2022-08-19,Brie Falkard,Buyer,Condo,751 Corbett Ave,San Francisco,866872,21671.8,20607.8,Referral,Bijan Vakili,,,1064.0
+2022,2022-08-19,Kineret and Aaron Stanley,Buyer,Single Family,184 Aptos,San Francisco,1900000,57000,56376,Networking,,,,624.0
+2022,2022-08-22,Lawrence and Christina Booth,Buyer,Single Family,1326 Guerrero,San Francisco,3000000,75000,74376,Networking,,,,624.0
+2022,2022-09-02,Sunmin & Woo Tae Park,Buyer,Single Family,362 Jusdson Ave,San Francisco,2050000,51250,50036,Networking,,,,1214.0
+2022,2022-09-29,Hossein Moradi & Pauline Beusoleil,Buyer,Condo,2040 Fell Street,San Francisco,740000,22200,21086,Other,,,,1114.0
+2022,2022-10-10,Chad & Kim,Seller,Duplex,1378-1380 16th Ave,San Francisco,2605000,65125,64625,Other,,,,500.0
+2022,2022-11-01,Priya & Vipul Raman Kumar,Seller,Condo,204 Hoffman #1,San Francisco,1950000,48750,48250,Repeat client,,,,500.0
+2022,2022-11-02,Dora Yung,Seller,Condo,1001 Pine Street #1201,San Francisco,645000,16125,15625,Repeat client,,,,500.0
+2022,2022-11-07,Ayako Kuroda & Ryo Eguchi,Seller,Single Family,862 Moultrie Street,San Francisco,1430000,35750,35250,Repeat client,,,,500.0
+2022,2022-11-18,Aravind Ramanathan & Bhavya Thy…,Seller,Condo,208 28th Street #201,San Francisco,1375000,34375,33875,Repeat client,,,,500.0
+2022,2022-11-22,Mohita Mohan & Ethan Fingerman,Seller,Condo,1363 16th Avenue,San Francisco,1500000,37500,37000,Networking,,,,500.0
+2022,2022-12-14,Stephen O'Driscoll & Hattie Dong,Seller,Single Family,121 Joost Avenue,San Francisco,1750000,43750,43250,Not recorded,,,,500.0
+2022,2022-12-15,Yan Zhu,Seller,TIC,1345 16th Ave #2,San Francisco,670000,16750,12062.5,Referral,Krista Miller,4187.5,,500.0
+2023,2012-01-04,Bindu Krishna,Buyer,Single Family,801 Moultrie Street,San Francisco,1805000,45125,44625,Referral,Kavita & Baji,,,500.0
+2023,2022-02-06,Lianne & Daniel Gonsalves,Buyer,Condo,852 29th Avenue,San Francisco,1772000,44300,43250,Networking,,,,1050.0
+2023,2022-02-16,Maria & Steven Bellman,Buyer,Condo,146 Lower Terrace,San Francisco,1650000,41250,40220,Teammate's client,,,,1030.0
+2023,2022-05-18,Gauri Bhardwaj & Sumit Das Gupta,Buyer,Condo,677 4th Ave,San Francisco,1300000,32500,26710,Referral,Dilek Barlow,,4875.0,915.0
+2023,2023-02-21,Adam & Jia Rogal,Seller,Condo,1727 Grove Street,San Francisco,1405000,35125,34625,Repeat client,,,,500.0
+2023,2023-03-23,Sara Hall & Caelum Shove,Buyer,Condo,645 Masonic Ave,San Francisco,1400000,35000,33970,Teammate's client,,,,1030.0
+2023,2023-05-01,Kay & Louise,Seller,Single Family,1455 5th Ave,San Francisco,2200000,55000,46250,Teammate's client,,,8250.0,500.0
+2023,2023-06-07,Iris & Clifford Orriss,Buyer,Condo,246 2nd St #1104,San Francisco,710000,21300,17605,Repeat client,,,3195.0,500.0
+2023,2023-06-13,Jennifer & Andy Bellamy,Seller,Single Family,115 Dalewood Way,San Francisco,1975000,49375,41468.75,Repeat client,,,7406.25,500.0
+2023,2023-06-14,Maya Nair,Seller,Single Family,446 Paris Street,San Francisco,1535000,38375,32118.75,Marketing,,,5756.25,500.0
+2023,2023-06-20,Kay,Buyer,Co-op,1420 Webster Street,San Francisco,640000,16000,12685,Teammate's client,,,2400.0,915.0
+2023,2023-06-26,Chloe & Chong Chung,Buyer,Single Family,639 17th Ave,San Francisco,1925000,48125,39891.25,Open house,,,7218.75,1015.0
+2023,2023-07-21,Tanya & Dmitriy Dorosh,Buyer,Single Family,55 Rosewood Drive,San Francisco,3200000,80000,66985,Referral,Vicky Keston,,12000.0,1015.0
+2023,2023-07-25,John & Katy DeWeese,Seller,Single Family,101 Poppy Lane,San Francisco,3200000,80000,67500,Not recorded,,,12000.0,500.0
+2023,2023-09-22,Kristin & Mike Ryker,Seller,Condo,1123 Lincoln Way,San Francisco,1420000,35500,29675,Marketing,,,5325.0,500.0
+2023,2023-10-11,Daniel & Yasmin Veidlinger,Buyer,TIC,1134 Noe Street,San Francisco,1185000,29625,24681.25,Referral,,,4443.75,500.0
+2023,2023-10-11,Chris Prince & Emma Sullivan,Buyer,Single Family,79 Divisadero Street,San Francisco,4200000,105000,88750,Repeat client,,,15750.0,500.0
+2023,2023-10-24,Krystal Koop,Seller,TIC,521 4th Avenue,San Francisco,950000,23750,19687.5,Self-generated,,,3562.5,500.0
+2023,2023-10-24,Krystal Koop,Seller,TIC,519 4th Avenue,San Francisco,1600000,40000,33500,Self-generated,,,6000.0,500.0
+2023,2023-10-27,Bob & Carol Kossler,Seller,Single Family,444 Ulloa Street,San Francisco,1800000,45000,37750,Sphere of influence,,,6750.0,500.0
+2023,2023-11-27,Alyson & Justin La,Seller,Single Family,735 France Ave,San Francisco,1210000,30250,25212.5,Repeat client,,,4537.5,500.0
+2023,2023-12-05,Olga Dorosh & Michael Xing,Seller,Single Family,175 Farnum Street,San Francisco,1370000,34250,28612.5,Referral,Tanya Dorosh,,5137.5,500.0
+2024,2024-02-12,Helen Wong,Buyer,Condo,300 Berry Street #1505,San Francisco,803000,20075,16028.75,Referral,Denise Bee,,3011.25,1035.0
+2024,2024-02-20,Sheila McElroy,Seller,Condo,62 Pleasant Street,San Francisco,1010000,20200,16670,Repeat client,,,3030.0,500.0
+2024,2024-02-22,Eric & Annie Gross,Seller,Condo,1715 Lyon Street,San Francisco,2150000,53750,45187.5,Repeat client,,,8062.5,500.0
+2024,2024-02-26,Angela Phillips & Kenny Kang,Buyer,Condo,336 Point Lobos,San Francisco,1450000,36250,29677.5,Referral,Peter Turnbaugh,,5437.5,1135.0
+2024,2024-03-15,Chris Prince & Emma Sullivan,Seller,Condo,14 Divisadero Street,San Francisco,2500000,50000,42000,Repeat client,,,7500.0,500.0
+2024,2024-04-30,Laura Gill,Buyer,Condo,574 26th Avenue,San Francisco,1270000,31750,26072.5,Other,,,4762.5,915.0
+2024,2024-05-29,Judy Martens,Buyer,Condo,81 Frank Norris St #702,San Francisco,615777,15394.43,12170.26,Referral,Michelle Martens,,2309.16,915.0
+2024,2024-06-07,Karen Uyenco & Cateaux Vrakelos,Buyer,Condo,334 Yale Street,San Francisco,1160000,20000,16500,Sphere of influence,,,3000.0,500.0
+2024,2024-06-24,Gerald Kanapathy & Erin Sweeney,Buyer,Condo,2720 Sutter Street,San Francisco,1150000,31625,25846.25,Networking,,,4743.75,1035.0
+2024,2024-07-01,Craig Herigon & Jessica Ronco,Buyer,Single Family,66 Martha,San Francisco,1600000,48000,39665,Sphere of influence,,,7200.0,1135.0
+2024,2024-07-03,Bob Read & Lisa Anderson,Seller,Condo,3883 20th Street,San Francisco,1850000,46250,38812.5,Other,,,6937.5,500.0
+2024,2024-07-05,Bob Read & Lisa Anderson,Seller,Condo,3885 20th Street,San Francisco,1550000,38750,33716.25,Repeat client,,,4533.75,500.0
+2024,2024-07-08,Monica & Jason Lee,Seller,Single Family,1849 23rd Ave,San Francisco,2050000,51250,43062.5,Yelp,,,7687.5,500.0
+2024,2024-07-23,Chau Vu & Quy Phan,Buyer,Single Family,886 39th Avenue,San Francisco,1750000,43750,36172.5,Teammate's client,,,6562.5,1015.0
+2024,2024-07-24,Aravind Ramathan & Bhavya Thyangarajan,Buyer,Single Family,2850 Noriega Street,San Francisco,1810000,45250,37327.5,Repeat client,,,6787.5,1135.0
+2024,2024-08-13,Gabriel Listek,Buyer,Condo,30 Kent Street,San Francisco,849000,21225,17136.25,Not recorded,,,3183.75,905.0
+2024,2024-08-19,Sam & Doreen Zaarour,Seller,Single Family,500 Ellington Avenue,San Francisco,1175000,29375,24468.75,Self-generated,,,4406.25,500.0
+2024,2024-09-26,Tamara Lam-Plattes & Nathan Poole,Seller,Condo,561 14th Avenue,San Francisco,1850000,18500,15225,Repeat client,,,2775.0,500.0
+2024,2024-10-02,David Solomon & John Dzundza,Seller,Condo,188 Beulah #5,San Francisco,1410000,35250,30713.87,Repeat client,,,4036.13,500.0
+2024,2024-10-04,Abirami Kandasamy & Alfred Sivathondan,Buyer,Single Family,47 Sotelo,San Francisco,3415000,85375,71433.75,Referral,Joyce Noah-Vanhoucke,,12806.25,1135.0
+2024,2024-10-23,Erica Lee,Buyer,Condo,999 16th Street #17,San Francisco,840000,21000,17350,Sphere of influence,,,3150.0,500.0
+2024,2024-10-25,Steven Seto (and Sophia),Seller,Condo,1660 20th Avenue,San Francisco,1525000,38125,31906.25,Yelp,,,5718.75,500.0
+2024,2024-11-01,Johanna Bernabe & Donna Tiocao,Buyer,Condo,450 Hayes #1,San Francisco,950000,,,Self-generated,,,,
+2024,2024-11-18,Melissa Faucher & Chris Orcutt,Buyer,Condo,460 Francisco Street #203,San Francisco,760000,19000,15713.5,Repeat client,,,2251.5,1035.0
+2024,2024-12-02,Ashley & David Scatena,Buyer,Single Family,2155 Turk Boulevard,San Francisco,2150000,53750,44267.5,Networking,,,8062.5,1420.0
+2024,2024-12-02,Nick Twyman & Rachel Watson,Seller,Condo,2653 Post Street,San Francisco,1041000,26025,21621.25,Repeat client,,,3903.75,500.0
+2025,2024-02-12,Kristin & Mike Ryker,Buyer,Single Family,1446 30th Avenue,San Francisco,2112000,52800,43745,Not recorded,,,7920.0,1135.0
+2025,2025-02-03,Krystal Koop,Seller,Single Family,94 Sussex Street,San Francisco,1500000,37500,31375,Repeat client,,,5625.0,500.0
+2025,2025-02-13,Jacob & Anne Bartel,Buyer,Single Family,1375 25th Avenue,San Francisco,1630000,40750,33502.5,Not recorded,,,6112.5,1135.0
+2025,2025-02-24,Catherine Labrado,Seller,Single Family,538 Paris Street,San Francisco,999999,24999.98,20749.98,Other,,,3750.0,500.0
+2025,2025-02-28,Joseph Garvey,Seller,Condo,3345 17th Street #5,San Francisco,775000,15500,12675,Repeat client,,,2325.0,500.0
+2025,2025-03-24,Morgan Fabian & Dominic Molinari,Buyer,Condo,973 14th Street,San Francisco,1200000,30000,24471,Not recorded,,,4500.0,1029.0
+2025,2025-04-16,Manisha Mishra & Vijit Nair,Buyer,Single Family,3726 21st Street,San Francisco,3050000,76250,63677.5,Not recorded,,,11437.5,1135.0
+2025,2025-05-07,Christina & Lawrence Booth,Seller,Single Family,714 Chenery Street,San Francisco,2758000,68950,62934,Not recorded,,,5516.0,500.0
+2025,2025-05-13,Matthew Montez,Buyer,Condo,231 Clinton Park,San Francisco,1225000,30625,27140,Sphere of influence,,,2450.0,1035.0
+2025,2025-05-15,Alexandria & Zefram,Buyer,Single Family,1124 Judah Street,San Francisco,1650000,41250,36815,Open house,,,3300.0,1135.0
+2025,2025-05-30,Emily Lawrence & Chuck Heilig,Seller,Single Family,1767 40th Avenue,San Francisco,1925000,48125,32706.25,Referral,,12031.25,2887.5,500.0
+2025,2025-06-02,Han Pham,Buyer,Single Family,1030 Sanchez Stret,San Francisco,1900000,47500,42565,Sphere of influence,,,3800.0,1135.0
+2025,2025-06-02,Mary Koenig,Seller,Single Family,457 Ulloa Street,San Francisco,1418000,35450,32114,Other,,,2836.0,500.0
+2025,2025-06-05,Julie Chao,Buyer,Single Family,535 Lakeview Avenue,San Francisco,1560000,39000,34745,Not recorded,,,3120.0,1135.0
+2025,2025-06-09,Jeff Moss & Robb Rico,Seller,Single Family,3250 Moraga Street,San Francisco,1225000,30625,26450,Yelp,,,3675.0,500.0
+2025,2025-07-03,Kyle & Kim Cascade,Seller,Single Family,258 Sussex,San Francisco,1462500,36562.5,31675,Not recorded,,,4387.5,500.0
+2025,2025-07-11,Veronica & James,Buyer,Single Family,220 Point Lobos,San Francisco,1450000,36250,30770,Not recorded,,,4350.0,1130.0
+2025,2025-07-31,John Mangini & Ann Stanton,Seller,Duplex,1371-1373 16th Avenue,San Francisco,2505000,62625,54610,Self-generated,,,7515.0,500.0
+2025,2025-08-14,Nicolas Delporte & Sylvianne Francou,Buyer,Single Family,2 Ora Way,San Francisco,2156000,53900,46397,Repeat client,,,6468.0,1035.0
+2025,2025-09-29,Julie Chao,Seller,Condo,364 Shotwell Street #101,San Francisco,1100000,27500,23700,Marketing,,,3300.0,500.0
+2025,2025-10-14,David Afolabi,Buyer,Condo,1288 Howard Street #514,San Francisco,1325000,32457.57,28062.66,Open house,,,3894.91,500.0
+2025,2025-10-16,Tana Sabatino,Seller,Condo,738 Masonic Avenue,San Francisco,1410000,35250,30520,Repeat client,,,4230.0,500.0
+2025,2025-10-23,Alex Wolff & Alyna,Buyer,Condo,223 Waller Street,San Francisco,1550000,38750,33065,Open house,,,4650.0,1035.0
+2025,2025-10-27,Angie Lam & Andy Murphy,Buyer,Single Family,2021 14th Avenue,San Francisco,2575000,64375,56150,Other,,,7725.0,500.0
+2025,2025-11-12,Josh Ford,Seller,Condo,163 Octavia Street,San Francisco,1188000,29700,25636,Sphere of influence,,,3564.0,500.0
+2025,2025-11-13,Jessica & Patrick Dillon,Buyer,Single Family,701 Quintara,San Francisco,2015000,50375,43195,Not recorded,,,6045.0,1135.0
+2025,2025-11-20,Irina Farooq,Buyer,Single Family,154 Maywood Drive,San Francisco,3706000,92650,80397,Repeat client,,,11118.0,1135.0
+2025,2025-12-03,Erik Luk & Shreya Kothaneth,Seller,Condo,30 Nido Ave,San Francisco,1675000,41875,36350,Not recorded,,,5025.0,500.0
+2025,2025-12-04,"Sarah ""Liz"" Enochs",Seller,Condo,39 Hartford St,San Francisco,1705000,42625,27632.5,Not recorded,,10656.25,3836.25,500.0
+2025,2025-12-04,Kieran Crean & Cheryl Guerrero,Buyer,Duplex,1584-1586 11th Avenue,San Francisco,1750000,43750,37410,Not recorded,,,5250.0,1090.0
+2025,2025-12-12,Phil Chen & Tiffany Ng,Buyer,Single Family,2271 40th Avenue,San Francisco,2100000,52500,45065,Not recorded,,,6300.0,1135.0
+2026,2025-02-24,Robin Verduijn & Junghwa Choi,Buyer,,497 Dellbrook,San Francisco,1550000,38750,24393,Teammate's client,,10462.5,3394.5,500.0
+2026,2025-03-09,Thuy Nguyen,Seller,,1461 6th Ave,San Francisco,2478000,61950,54016,Teammate's client,,,7434.0,500.0
+2026,2026-02-23,Donald Gu,Buyer,,533 Alto Ave,Half Moon Bay,975000,24375,20950,Teammate's client,,,2925.0,500.0
+2026,2026-03-16,Andrew Shi and Megan Chen,Buyer,,2530 27th Ave,San Francisco,2710000,67750,58485,Marketing,,,8130.0,1135.0
+2026,2026-04-06,Adrienne Sum & Ryan McDonald,Seller,,1278 23rd Ave,San Francisco,3226000,80650,70247,Other,,,9678.0,725.0
+2026,2026-04-07,Bert Van Der Meeren & Y Pham,Buyer,Condo,305 Castro #100,San Francisco,1470000,29400,24937,Open house,,,3528.0,935.0
+2026,2026-04-23,Brigitte Bogert,Seller,Condo,4901 17th Street,San Francisco,1800000,45000,39100,Referral,Maya Kanzaria,,5400.0,500.0
+2026,2026-05-12,Won Yung Choi & Christopher Camacho,Buyer,Single Family,29 Concord Street,San Francisco,1160000,29000,24485,Referral,Robin Ahn,,3480.0,1035.0
+2026,2026-05-28,Brent and Grace Allard,Buyer,Condo,874 14th Street,San Francisco,2160000,54000,34605,Not recorded,,13500.0,4860.0,1035.0
+2026,2026-06-01,Rene Kim,Buyer,Condo,1177 California #809,San Francisco,760000,19000,10868,Other,,6650.0,1482.0,
+2026,2026-06-02,Andrew Shi and Megan Chen,Seller,Condo,2061 10th Avenue,San Francisco,1248000,31200,26956,Repeat client,,,3744.0,500.0
+2026,2026-06-02,Bert Van Der Meeren & Y Pham,Seller,Condo,3620 Cesar Chavez #404,San Francisco,1185000,29625,25570,Repeat client,39 Hartford Open House,,3555.0,500.0
+2026,2026-06-05,Lisa & Matt Wongchenko,Buyer,Single Family,2618 21st Ave,San Francisco,1560850,39021.25,33203.7,Not recorded,,,4682.55,1135.0
+2026,2026-06-15,Rosie & Bobby Hicks,Seller,Single Family,1701 40th Ave,San Francisco,2200000,55000,47900,Referral,sellers at 1767 40th ave,,6600.0,500.0
+2026,2026-07-06,Katie Boyce,Buyer,Condo,2051 10th Ave,San Francisco,1050000,26250,22065,Other,,,3150.0,1035.0
+2026,2026-07-09,Lauren Fendel & Patrick Assini,Seller,Condo,571 14th Avenue,San Francisco,2050000,51250,22550,Other,,25625.0,3075.0,
+2026,2026-07-20,Matthew Harris,Seller,Condo,757 North Point St #3,San Francisco,1320000,33000,28540,Referral,Connie & Hakan,,3960.0,500.0
