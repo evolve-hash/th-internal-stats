@@ -9,8 +9,8 @@
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/favicon.png">
 <link rel="preload" href="assets/fonts/montserrat-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/fonts.css?v=6f31c990">
-<link rel="stylesheet" href="css/app.css?v=6f31c990">
+<link rel="stylesheet" href="css/fonts.css?v=070a9c66">
+<link rel="stylesheet" href="css/app.css?v=070a9c66">
 </head>
 <body>
 
@@ -209,6 +209,60 @@
     </div>
   </div>
 
+  <!-- ================= ECONOMICS ================= -->
+  <section class="section" id="sec-money">
+    <div class="section-head">
+      <h2>Where the Money Goes</h2>
+      <div class="section-head__right">
+        <span class="meta" id="money-meta"></span>
+        <select class="select" id="money-year"></select>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card__head">
+          <h3 class="card__title">From sale price to take-home</h3>
+          <p class="card__sub">Each step is what survives the one above it</p>
+        </div>
+        <div class="card__body"><div id="waterfall"></div></div>
+        <p class="card__note" id="money-note"></p>
+      </div>
+
+      <div class="card">
+        <div class="card__head">
+          <h3 class="card__title">Split calculator</h3>
+          <p class="card__sub">What a deal would pay under the current Compass structure</p>
+        </div>
+        <div class="card__body">
+          <div class="calc-grid">
+            <div class="form-field">
+              <label for="calc-price">Sale price</label>
+              <input class="input" type="number" id="calc-price" value="1500000" min="0" step="25000">
+            </div>
+            <div class="form-field">
+              <label for="calc-rate">Commission rate</label>
+              <select class="select" id="calc-rate">
+                <option value="0.02">2.0%</option>
+                <option value="0.025" selected>2.5%</option>
+                <option value="0.03">3.0%</option>
+              </select>
+            </div>
+            <div class="form-field form-field--full">
+              <label for="calc-scenario">Whose client, and which side</label>
+              <select class="select" id="calc-scenario"></select>
+            </div>
+            <div class="form-field form-field--full">
+              <label for="calc-agent">Teammate</label>
+              <select class="select" id="calc-agent"></select>
+            </div>
+          </div>
+          <div id="calc-out"></div>
+        </div>
+        <p class="card__note">Rates come from the workbook's "Split Rules-Compass" tab. It leaves out TC fees, home warranties and referral fees, which vary per deal — so treat the result as the split, not the final cheque.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= TABLE ================= -->
   <section class="section">
     <div class="section-head">
@@ -386,11 +440,12 @@
 <div class="tooltip" id="tooltip"></div>
 <div class="toast-wrap" id="toast-wrap"></div>
 
-<script src="js/config.js?v=6f31c990"></script>
-<script src="js/seed.js?v=6f31c990"></script>
-<script src="js/agents-seed.js?v=6f31c990"></script>
-<script src="js/store.js?v=6f31c990"></script>
-<script src="js/charts.js?v=6f31c990"></script>
-<script src="js/app.js?v=6f31c990"></script>
+<script src="js/config.js?v=070a9c66"></script>
+<script src="js/seed.js?v=070a9c66"></script>
+<script src="js/agents-seed.js?v=070a9c66"></script>
+<script src="js/economics-seed.js?v=070a9c66"></script>
+<script src="js/store.js?v=070a9c66"></script>
+<script src="js/charts.js?v=070a9c66"></script>
+<script src="js/app.js?v=070a9c66"></script>
 </body>
 </html>

@@ -547,6 +547,33 @@ tr:hover .row-actions, tr:focus-within .row-actions { opacity: 1; }
 .form-field .hint { font-size: 10.5px; color: var(--ink-3); }
 .form-field.invalid .input { border-color: var(--ink); box-shadow: 0 0 0 3px var(--brand-wash-2); }
 
+/* ---------- Waterfall (ordinal funnel: stages, so one hue by design) ---------- */
+.wf-step { margin-bottom: 11px; }
+.wf-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+.wf-label { font-size: 12px; font-weight: 600; color: var(--ink); }
+.wf-label small { font-weight: 500; color: var(--ink-3); font-size: 11px; }
+.wf-val { font-size: 12.5px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.wf-bar { height: 17px; border-radius: 3px; background: var(--surface-sunken); border: 1px solid var(--border); overflow: hidden; }
+.wf-fill { height: 100%; border-radius: 2px 3px 3px 2px; width: 0; transition: width .6s var(--ease); }
+.wf-step--cut { padding-left: 22px; }
+.wf-step--cut .wf-label, .wf-step--cut .wf-val { color: var(--ink-2); font-weight: 600; }
+.wf-step--cut .wf-bar { height: 11px; }
+.wf-rule { height: 1px; background: var(--line); margin: 15px 0 13px; }
+
+/* ---------- Split calculator ---------- */
+.calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 4px; }
+.calc-line {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 12.5px;
+}
+.calc-line:last-child { border-bottom: none; }
+.calc-line span:first-child { color: var(--ink-2); }
+.calc-line span:last-child { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.calc-line--total { border-top: 1px solid var(--line-strong); margin-top: 4px; padding-top: 12px; }
+.calc-line--total span { font-size: 14px; color: var(--ink) !important; }
+.calc-line--sub span:first-child { padding-left: 16px; color: var(--ink-3); }
+.calc-note { margin-top: 12px; font-size: 11px; color: var(--ink-3); line-height: 1.5; }
+
 /* ---------- Payout split rows in the form ---------- */
 .split-head {
   display: flex; align-items: baseline; justify-content: space-between; gap: 12px;

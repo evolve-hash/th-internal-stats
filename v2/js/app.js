@@ -141,6 +141,7 @@
     store.loadPayroll().then(function (info) {
       populateAgentPicker();
       renderAgents();
+      renderWaterfall();
       if (info && info.seeded) toast('Loaded ' + info.payouts.toLocaleString('en-US') + ' historical payouts.');
     }).catch(function (e) {
       console.warn('[Team Howe] payroll unavailable:', e.message || e);
@@ -538,6 +539,141 @@
   });
   on('agents-signin', 'click', openAuth);
 
+  /* ==================== WHERE THE MONEY GOES ====================
+     A funnel: stages of one quantity, which is ordinal, not categorical —
+     so a single-hue ramp is the right encoding here rather than a compromise. */
+  var WF = window.TH_WATERFALL || [];
+
+  function renderWaterfall() {
+    if (!WF.length) { $('sec-money').hidden = true; return; }
+    var sel = $('money-year').value;
+    var rows = sel === 'all' ? WF : WF.filter(function (r) { return String(r.year) === sel; });
+    if (!rows.length) return;
+
+    var t = rows.reduce(function (a, r) {
+      a.n += r.n; a.volume += r.volume; a.gross += r.gross;
+      a.referral += r.referral; a.brokerage += r.brokerage; a.costs += r.costs; a.net += r.net;
+      return a;
+    }, { n: 0, volume: 0, gross: 0, referral: 0, brokerage: 0, costs: 0, net: 0 });
+
+    // Net → house / teammates, from the payout records when we have them.
+    var pay = store.payouts().filter(function (p) {
+      return sel === 'all' ? true : String(p.year) === sel;
+    });
+    var house = pay.filter(function (p) { return p.role === 'house'; })
+                   .reduce(function (s, p) { return s + Number(p.amount || 0); }, 0);
+    var team = pay.filter(function (p) { return p.role !== 'house'; })
+                  .reduce(function (s, p) { return s + Number(p.amount || 0); }, 0);
+    var havePay = (house + team) > 0;
+
+    var pctOfGross = function (v) { return t.gross ? (v / t.gross * 100).toFixed(1) + '% of gross' : ''; };
+    var steps = [
+      { label: 'Sale price', sub: t.n + (t.n === 1 ? ' sale' : ' sales'), val: t.volume, w: 100, step: 6 },
+      { label: 'Gross commission', sub: t.volume ? (t.gross / t.volume * 100).toFixed(2) + '% of sale price' : '',
+        val: t.gross, w: 100, step: 5, rule: true },
+      { cut: true, label: 'Referral fees out', sub: pctOfGross(t.referral), val: -t.referral,
+        w: t.gross ? t.referral / t.gross * 100 : 0, step: 3 },
+      { cut: true, label: 'Brokerage split', sub: pctOfGross(t.brokerage), val: -t.brokerage,
+        w: t.gross ? t.brokerage / t.gross * 100 : 0, step: 3 },
+      { cut: true, label: 'TC fees & home warranties', sub: pctOfGross(t.costs), val: -t.costs,
+        w: t.gross ? t.costs / t.gross * 100 : 0, step: 3 },
+      { label: 'Net commission', sub: pctOfGross(t.net) + ' survived', val: t.net,
+        w: t.gross ? t.net / t.gross * 100 : 0, step: 5, rule: true }
+    ];
+    if (havePay) {
+      steps.push({ label: 'Kept by the house', sub: Math.round(house / (house + team) * 100) + '% of net',
+                   val: house, w: t.gross ? house / t.gross * 100 : 0, step: 6 });
+      steps.push({ label: 'Paid to teammates', sub: Math.round(team / (house + team) * 100) + '% of net',
+                   val: team, w: t.gross ? team / t.gross * 100 : 0, step: 4 });
+    }
+
+    $('waterfall').innerHTML = steps.map(function (s) {
+      return (s.rule ? '' : '') +
+        '<div class="wf-step' + (s.cut ? ' wf-step--cut' : '') + '">' +
+          '<div class="wf-top">' +
+            '<span class="wf-label">' + (s.cut ? '− ' : '') + esc(s.label) +
+              (s.sub ? ' <small>' + esc(s.sub) + '</small>' : '') + '</span>' +
+            '<span class="wf-val">' + money(Math.abs(s.val)) + '</span>' +
+          '</div>' +
+          '<div class="wf-bar"><div class="wf-fill" style="background:var(--ramp-' + s.step + ')"></div></div>' +
+        '</div>' + (s.rule ? '<div class="wf-rule"></div>' : '');
+    }).join('');
+    // Animate from zero on the next frame.
+    requestAnimationFrame(function () {
+      var fills = $('waterfall').querySelectorAll('.wf-fill');
+      steps.forEach(function (s, i) { if (fills[i]) fills[i].style.width = Math.max(s.w, 0.6) + '%'; });
+    });
+
+    $('money-meta').textContent = sel === 'all'
+      ? WF[0].year + '–' + WF[WF.length - 1].year + ' · from the source workbook'
+      : t.n + ' sales in ' + sel;
+    $('money-note').textContent =
+      'Deductions are read from the workbook\'s own columns and reconcile to its net commission ' +
+      'exactly in ten of the twelve years (2015 and 2016 are within 2.5%). This panel reflects the ' +
+      'workbook through August 2026 — sales you add here update the tables and charts above, but not ' +
+      'this breakdown, because the app only captures gross and net, not the individual deduction lines.' +
+      (havePay ? '' : ' Sign in to see how the net was split between the house and the team.');
+  }
+
+  (function initMoney() {
+    if (!WF.length) { $('sec-money').hidden = true; return; }
+    var sel = $('money-year');
+    sel.innerHTML = '<option value="all">All years</option>' +
+      WF.slice().reverse().map(function (r) { return '<option value="' + r.year + '">' + r.year + '</option>'; }).join('');
+    sel.addEventListener('change', renderWaterfall);
+  })();
+
+  /* ==================== SPLIT CALCULATOR ==================== */
+  var SP = window.TH_SPLITS || null;
+
+  function initCalc() {
+    if (!SP) { return; }
+    $('calc-scenario').innerHTML = SP.scenarios.map(function (s) {
+      return '<option value="' + s.id + '">' + s.side + ' — ' + esc(s.label) + '</option>';
+    }).join('');
+    var opts = [];
+    Object.keys(SP.people).sort().forEach(function (lv) {
+      SP.people[lv].forEach(function (n) {
+        opts.push('<option value="' + lv + '">' + esc(n) + ' — Level ' + lv + '</option>');
+      });
+    });
+    $('calc-agent').innerHTML = opts.join('');
+    ['calc-price', 'calc-rate', 'calc-scenario', 'calc-agent'].forEach(function (id) {
+      $(id).addEventListener('input', renderCalc);
+      $(id).addEventListener('change', renderCalc);
+    });
+    renderCalc();
+  }
+
+  function renderCalc() {
+    if (!SP) return;
+    var price = Number($('calc-price').value) || 0;
+    var rate = Number($('calc-rate').value) || 0.025;
+    var scId = $('calc-scenario').value;
+    var lv = $('calc-agent').value;
+    var sc = SP.scenarios.filter(function (s) { return s.id === scId; })[0];
+    if (!sc) return;
+
+    var gross = price * rate;
+    var fee = gross * SP.resource_fee;
+    var afterFee = gross - fee;
+    var agentRate = sc.rates[lv];
+    var toAgent = afterFee * agentRate;
+    var toHouse = afterFee - toAgent;
+    var agentName = ($('calc-agent').selectedOptions[0] || {}).textContent || '';
+
+    $('calc-out').innerHTML =
+      '<div class="calc-line"><span>Gross commission at ' + (rate * 100).toFixed(1) + '%</span><span>' + money(gross) + '</span></div>' +
+      '<div class="calc-line"><span>Less Compass resource fee (' + (SP.resource_fee * 100) + '%)</span><span>−' + money(fee) + '</span></div>' +
+      '<div class="calc-line calc-line--total"><span>Net to the team</span><span>' + money(afterFee) + '</span></div>' +
+      '<div class="calc-line calc-line--sub"><span>' + esc(agentName.split(' — ')[0]) + ' at ' + Math.round(agentRate * 100) + '%</span><span>' + money(toAgent) + '</span></div>' +
+      '<div class="calc-line calc-line--sub"><span>Team Howe keeps</span><span>' + money(toHouse) + '</span></div>' +
+      '<div class="calc-note">The ' + Math.round(agentRate * 100) + '% comes from the “' + esc(sc.label) +
+      '” row for a Level ' + lv + ' associate on the ' + sc.side.toLowerCase() + ' side. ' +
+      'Compass\'s own split improves as cumulative GCI grows for the year — this uses the 4% resource fee only, ' +
+      'so on a low-GCI year the real net to the team would be lower.</div>';
+  }
+
   /* ==================== TABLE ==================== */
   function filtered() {
     var q = state.search.trim().toLowerCase();
@@ -921,6 +1057,7 @@
     renderKPIs(state.rows);
     renderCharts(state.rows);
     renderTable(flashId);
+    renderWaterfall();
   }
 
   /* ==================== BOOT ==================== */
@@ -982,9 +1119,11 @@
       .then(function (pinfo) {
         populateAgentPicker();
         renderAgents();
+        renderWaterfall();          // the net split needs payouts
         if (pinfo && pinfo.seeded) toast('Loaded ' + pinfo.payouts.toLocaleString('en-US') + ' historical payouts.');
       })
       .catch(function (e) { console.warn('[Team Howe] payroll unavailable:', e.message || e); renderAgents(); });
+    initCalc();
     if (info.seeded) toast('Database seeded with ' + state.rows.length + ' historical sales.');
     $('footer-storage').textContent = info.mode === 'cloud'
       ? 'Live data — every change is saved to the shared database.'
