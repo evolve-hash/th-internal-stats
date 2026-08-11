@@ -48,15 +48,36 @@
      Reading is open to anyone with the link. Writing needs a signed-in user,
      enforced in the database by row-level security — the UI gating below is
      only there so nobody is offered a button that would fail. */
+  // This file is shared by two pages: the newer one that ships the sign-in
+  // markup, and the original one that does not. Every lookup below therefore
+  // has to tolerate a missing element — one unguarded addEventListener on null
+  // takes down the whole script, and with it the entire dashboard.
+  var authBackdrop = $('auth-backdrop');
+  var hasAuthUI = !!authBackdrop;
+
+  function on(id, evt, fn) {
+    var el = $(id);
+    if (el) el.addEventListener(evt, fn);
+  }
+
   function applyAuthState() {
     var canWrite = store.canWrite();
     var needsAuth = store.authAvailable();
     var user = store.user();
 
     document.body.classList.toggle('is-readonly', !canWrite);
-    $('btn-signin').hidden = !needsAuth || !!user;
-    $('who').hidden = !user;
-    if (user) $('who-email').textContent = user.email || 'signed in';
+
+    var signin = $('btn-signin'), who = $('who'), email = $('who-email');
+    if (signin) signin.hidden = !needsAuth || !!user;
+    if (who) who.hidden = !user;
+    if (email && user) email.textContent = user.email || 'signed in';
+
+    // Older markup has no is-readonly styling, so hide the write affordances
+    // directly there too.
+    if (!hasAuthUI) {
+      var add = $('btn-add');
+      if (add) add.style.display = canWrite ? '' : 'none';
+    }
 
     var meta = document.querySelector('.section-head .meta');
     if (meta && meta.textContent.indexOf('hover a row') > -1 && !canWrite) {
@@ -64,45 +85,52 @@
     }
   }
 
-  var authBackdrop = $('auth-backdrop');
   function openAuth() {
-    $('auth-error').hidden = true;
-    $('auth-form').reset();
+    if (!hasAuthUI) {
+      toast('Editing now lives on the /v2/ version of this page.');
+      return;
+    }
+    var err = $('auth-error'), form = $('auth-form');
+    if (err) err.hidden = true;
+    if (form) form.reset();
     authBackdrop.classList.add('open');
-    setTimeout(function () { $('auth-email').focus(); }, 60);
+    setTimeout(function () { var f = $('auth-email'); if (f) f.focus(); }, 60);
   }
-  function closeAuth() { authBackdrop.classList.remove('open'); }
+  function closeAuth() { if (authBackdrop) authBackdrop.classList.remove('open'); }
 
-  $('btn-signin').addEventListener('click', openAuth);
-  $('auth-close').addEventListener('click', closeAuth);
-  $('auth-cancel').addEventListener('click', closeAuth);
-  authBackdrop.addEventListener('click', function (e) { if (e.target === authBackdrop) closeAuth(); });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && authBackdrop.classList.contains('open')) closeAuth();
-  });
+  on('btn-signin', 'click', openAuth);
+  on('auth-close', 'click', closeAuth);
+  on('auth-cancel', 'click', closeAuth);
 
-  $('auth-form').addEventListener('submit', function (e) {
+  if (hasAuthUI) {
+    authBackdrop.addEventListener('click', function (e) { if (e.target === authBackdrop) closeAuth(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && authBackdrop.classList.contains('open')) closeAuth();
+    });
+  }
+
+  on('auth-form', 'submit', function (e) {
     e.preventDefault();
     var btn = $('auth-submit');
     var err = $('auth-error');
-    err.hidden = true;
-    btn.disabled = true; btn.textContent = 'Signing in…';
-    store.signIn($('auth-email').value.trim(), $('auth-pass').value)
+    if (err) err.hidden = true;
+    if (btn) { btn.disabled = true; btn.textContent = 'Signing in…'; }
+    var em = $('auth-email'), pw = $('auth-pass');
+    store.signIn(em ? em.value.trim() : '', pw ? pw.value : '')
       .then(function (user) {
         closeAuth();
-        toast('Signed in as ' + (user.email || 'you') + '.');
+        toast('Signed in as ' + ((user && user.email) || 'you') + '.');
       })
       .catch(function (e2) {
         var m = String(e2.message || e2);
         if (/invalid login credentials/i.test(m)) m = 'That email and password combination did not match. Check both, or reset the password in Supabase.';
         else if (/email not confirmed/i.test(m)) m = 'That account exists but was never confirmed. In Supabase, open the user and use "Confirm email".';
-        err.textContent = m;
-        err.hidden = false;
+        if (err) { err.textContent = m; err.hidden = false; } else { toast(m); }
       })
-      .finally(function () { btn.disabled = false; btn.textContent = 'Sign in'; });
+      .finally(function () { if (btn) { btn.disabled = false; btn.textContent = 'Sign in'; } });
   });
 
-  $('btn-signout').addEventListener('click', function () {
+  on('btn-signout', 'click', function () {
     store.signOut().then(function () { toast('Signed out. You can still read everything.'); });
   });
 
