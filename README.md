@@ -23,6 +23,10 @@ required. Every chart and KPI recalculates instantly.
 | **This device** (default) | Loads the 521 historical sales, saves your edits in that browser only | Trying it out |
 | **Live** | Reads and writes a shared Supabase database | Real use, so you and Sherri see the same numbers |
 
+In Live mode, reading needs nothing and writing needs a signed-in account. In
+"This device" mode there is nothing to protect — the data never leaves your
+browser — so no sign-in is asked for.
+
 Open `index.html` and it just works in "This device" mode. The steps below
 switch it to Live.
 
@@ -133,6 +137,15 @@ property-type charts for that side only. You can also tap either half of the
 buyer/seller bar to filter, and tap it again to clear. It scopes that section
 only — the KPIs, the trend charts and the table are unaffected.
 
+**Sign in** — the padlock button in the header. Reading is open to anyone with
+the link; adding, editing and removing sales requires an account. When signed
+in the header shows your email and a *Sign out* link, and the *Add Sale* button
+and the per-row pencil/trash icons appear. When signed out they are simply not
+there.
+
+Accounts are created by hand in Supabase (Authentication → Users → Add user,
+with **Auto Confirm User** ticked). There is no self-registration, on purpose.
+
 **Dark mode** — the moon/sun button in the header. Remembered per device.
 
 **On a phone** — tap a bar to see its tooltip; it clears itself after a moment,
@@ -172,12 +185,15 @@ index.html              the whole UI
 css/app.css             design system — all brand tokens live at the top
 css/fonts.css           self-hosted Montserrat
 js/config.js            ← the only file you normally edit
-js/seed.js              the 521 historical sales
+js/seed.js              the 521 historical sales, with deduction lines
 js/store.js             data layer (Supabase or local, same API)
 js/charts.js            hand-built SVG charts
 js/app.js               UI wiring, table, CRUD
 assets/                 logo lockups, favicon, fonts
 supabase/schema.sql     database setup + security notes
+supabase/phase1-lock-writes.sql   makes writing require a sign-in
+supabase/phase2-agents.sql        teammates and their payouts
+supabase/phase3-deductions.sql    per-sale referral / brokerage / TC columns
 supabase/seed.csv       the 521 rows, for manual import if ever needed
 deploy.sh               one-command deploy to GitHub Pages
 ```

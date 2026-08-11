@@ -14,8 +14,10 @@
     rows: [],
     search: '', year: '', side: '', source: '',
     mixSide: '',                       // side filter for the business-mix section
+    trendView: 'year',                 // 'year' | 'rolling' | 'season'
     sortKey: 'date', sortDir: 'desc',
-    page: 1, perPage: 25,
+    agentScope: 'active', agentSort: 'paid', agentDir: 'desc',
+    page: 1, perPage: 15,
     editingId: null
   };
 
@@ -134,7 +136,19 @@
     store.signOut().then(function () { toast('Signed out. You can still read everything.'); });
   });
 
-  store.onAuthChange(function () { applyAuthState(); });
+  store.onAuthChange(function () {
+    applyAuthState();
+    // Payroll is fetched on sign-in and dropped on sign-out.
+    store.loadPayroll().then(function (info) {
+      populateAgentPicker();
+      renderAgents();
+      renderWaterfall();
+      if (info && info.seeded) toast('Loaded ' + info.payouts.toLocaleString('en-US') + ' historical payouts.');
+    }).catch(function (e) {
+      console.warn('[Team Howe] payroll unavailable:', e.message || e);
+      renderAgents();
+    });
+  });
 
   /* ==================== TOASTS ==================== */
   function toast(msg) {
@@ -249,13 +263,173 @@
   }
 
   /* ==================== CHARTS ==================== */
+  var countFmt = function (v, compact) {
+    return compact ? Math.round(v) : Math.round(v) + (Math.round(v) === 1 ? ' transaction' : ' transactions');
+  };
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  /* Month buckets. A handful of historical rows carry a mistyped closing date,
+     so the month comes from the date but the year always comes from the year
+     field — that way nothing is lost and nothing lands in the wrong year. */
+  function monthly(rows) {
+    var map = {}, min = null, max = null;
+    rows.forEach(function (r) {
+      if (!r.date || !r.year) return;
+      var m = Number(String(r.date).slice(5, 7));
+      if (!(m >= 1 && m <= 12)) return;
+      var k = r.year * 12 + (m - 1);
+      if (!map[k]) map[k] = { count: 0, volume: 0 };
+      map[k].count++;
+      map[k].volume += r.sale_price || 0;
+      if (min === null || k < min) min = k;
+      if (max === null || k > max) max = k;
+    });
+    if (min === null) return [];
+    var out = [];
+    for (var k = min; k <= max; k++) {
+      out.push({ k: k, year: Math.floor(k / 12), month: k % 12,
+                 count: map[k] ? map[k].count : 0,
+                 volume: map[k] ? map[k].volume : 0 });
+    }
+    return out;
+  }
+
+  /* Trailing twelve months, stepped one month at a time. Seasonality cancels
+     out by construction — every window holds each calendar month exactly once —
+     which is the honest way to read a business that closes two or three sales a
+     month. No smoothing constant to choose, and it does not wait for December. */
+  function rolling12(rows, key) {
+    var ms = monthly(rows), out = [];
+    for (var i = 11; i < ms.length; i++) {
+      var sum = 0;
+      for (var j = i - 11; j <= i; j++) sum += ms[j][key];
+      out.push({
+        value: sum,
+        label: 'Twelve months to ' + MONTHS[ms[i].month] + ' ' + ms[i].year,
+        short: "'" + String(ms[i].year).slice(2)
+      });
+    }
+    return out;
+  }
+
+  /* Share of the year that closes in each month, averaged over whole years, plus
+     the range across those years so nobody reads a single month as a promise. */
+  function seasonProfile(rows, key) {
+    var ms = monthly(rows);
+    var byYear = {};
+    ms.forEach(function (m) {
+      if (!byYear[m.year]) byYear[m.year] = { tot: 0, m: new Array(12).fill(0) };
+      byYear[m.year].m[m.month] += m[key];
+      byYear[m.year].tot += m[key];
+    });
+    var thisYear = new Date().getFullYear();
+    var shares = [];
+    Object.keys(byYear).forEach(function (y) {
+      // Only whole years: the current one is still running and would drag the
+      // late months down for a reason that has nothing to do with seasonality.
+      if (Number(y) >= thisYear) return;
+      if (byYear[y].tot > 0) shares.push(byYear[y].m.map(function (v) { return v / byYear[y].tot * 100; }));
+    });
+    return MONTHS.map(function (name, i) {
+      var v = shares.map(function (s) { return s[i]; }).sort(function (a, b) { return a - b; });
+      var mean = v.reduce(function (a, b) { return a + b; }, 0) / (v.length || 1);
+      return { year: name, month: name, share: mean, years: v.length,
+               lo: v.length ? v[0] : 0, hi: v.length ? v[v.length - 1] : 0 };
+    });
+  }
+
+  // The season view has only one thing worth showing, so the second card steps
+  // aside and the first takes the full width rather than leaving a hole.
+  function wide(on) {
+    var grid = $('trend-grid'), card2 = $('trend-card-2'), svg = $('chart-volume');
+    if (!grid || !card2 || !svg) return;
+    grid.classList.toggle('grid-2--single', !!on);
+    card2.hidden = !!on;
+    svg.setAttribute('viewBox', on ? '0 0 1160 270' : '0 0 560 250');
+  }
+
   function renderCharts(rows) {
+    var view = state.trendView;
     var years = byYear(rows);
-    C.columns('chart-volume', years, { key: 'volume', format: money, tipLabel: 'Sales volume' });
-    C.columns('chart-count',  years, { key: 'count',
-      format: function (v, compact) { return compact ? Math.round(v) : Math.round(v) + ' transactions'; },
-      tipLabel: 'Transactions' });
     C.grouped('chart-comm', years, { keyA: 'gross_comm', keyB: 'net_comm' });
+
+    if (view === 'rolling') {
+      wide(false);
+      var rv = rolling12(rows, 'volume'), rc = rolling12(rows, 'count');
+      C.line('chart-volume', rv, { format: money, tipLabel: 'Sales volume' });
+      C.line('chart-count',  rc, { format: countFmt, tipLabel: 'Transactions' });
+      $('vol-title').textContent = 'Sales Volume, Trailing 12 Months';
+      $('vol-sub').textContent = 'Every point is the twelve months ending that month';
+      $('cnt-title').textContent = 'Transactions, Trailing 12 Months';
+      $('cnt-sub').textContent = 'Seasonality cancels out — each window holds every month once';
+      $('trend-meta').textContent = rc.length
+        ? 'Now running at ' + Math.round(rc[rc.length - 1].value) + ' sales a year'
+        : '';
+      // Read from the data rather than written in, so the sentence stays true
+      // as sales are added.
+      var lastRolling = (rc.length && rv.length)
+        ? Math.round(rc[rc.length - 1].value) + ' transactions and ' + money(rv[rv.length - 1].value, true)
+        : 'a full year of business';
+      $('trend-note').hidden = false;
+      $('trend-note').innerHTML =
+        '<strong>How to read it.</strong> The last point on the line is what we closed in the last twelve ' +
+        'months: ' + lastRolling + '. The point immediately before it is the total for the twelve months ' +
+        'ending one month earlier. Every point is a full year of business, so the line always answers the ' +
+        'same question: at the pace we are working right now, how much do we produce in a year?' +
+        '<br><br>' +
+        '<strong>Why we do not simply compare months.</strong> In 2025, January closed no transactions and ' +
+        'February closed five. Reading those two months on their own, it would look like the business ' +
+        'collapsed and then recovered thirty days later. Neither happened, because 2025 finished with 31 ' +
+        'transactions, which is a normal year for us. What moves between one month and the next is usually ' +
+        'the recording date, and that date is set by escrow, the lender and the parties\u2019 schedules ' +
+        'rather than by how the team performed. If a deal records on August 2 instead of July 31, the July ' +
+        'total and the August total both change, but the twelve-month total does not change at all, because ' +
+        'both of those dates fall inside the same twelve-month window. That is why this line stays steady ' +
+        'when a closing slides by a few days, and moves only when the amount of business we are actually ' +
+        'doing changes.';
+    } else if (view === 'season') {
+      // One chart, not two: the share of dollars and the share of sales move
+      // together (correlation .95, never more than 1.8 points apart in any
+      // month), so a second panel would repeat the first one in another unit.
+      wide(true);
+      var sc = seasonProfile(rows, 'count');
+      var pct = function (v, compact) { return compact ? Math.round(v) + '%' : v.toFixed(1) + '% of the year'; };
+      var extra = function (d) {
+        return '<div class="t-row"><span>Range across ' + d.years + ' years</span><span>' +
+               d.lo.toFixed(0) + '–' + d.hi.toFixed(0) + '%</span></div>';
+      };
+      C.columns('chart-volume', sc, { key: 'share', format: pct, highlight: 'none', labelEvery: 1,
+                                      hideValueLabels: true, label: function (d) { return d.month; },
+                                      tipTitle: function (d) { return d.month; }, tipExtra: extra,
+                                      tipLabel: 'Share of the year', maxBarW: 46 });
+      $('vol-title').textContent = 'When Sales Close';
+      $('vol-sub').textContent = 'Average share of the year by month, whole years only — an even split would be 8.3% each';
+      $('trend-meta').textContent = 'January runs at 43% of a normal month';
+      $('trend-note').hidden = false;
+      $('trend-note').innerHTML =
+        '<strong>How to read it.</strong> Out of every 100 transactions the team has closed since 2008, this ' +
+        'shows how many landed in each month. If our business were spread evenly across the year, every bar ' +
+        'would sit at 8.3%. The bars above that height are our busier months and the ones below it are our ' +
+        'quieter ones.' +
+        '<br><br>' +
+        '<strong>What it tells us.</strong> January is the one month that is reliably different. We close a ' +
+        'little under half of what a normal month brings, and that has held in thirteen of the last fifteen ' +
+        'years, so it is worth building into the plan. The rest of the chart is less solid than it looks. ' +
+        'June is the tallest bar at 11%, but in some years June carried 24% of the whole year and in others ' +
+        'it carried nothing at all. That range is far too wide to plan against. Use this chart to know when ' +
+        'the slow stretch usually falls, not to predict what any single month will bring.';
+    } else {
+      wide(false);
+      C.columns('chart-volume', years, { key: 'volume', format: money, tipLabel: 'Sales volume' });
+      C.columns('chart-count',  years, { key: 'count', format: countFmt, tipLabel: 'Transactions' });
+      $('vol-title').textContent = 'Sales Volume by Year';
+      $('vol-sub').textContent = 'Total closed sale price, all represented sides';
+      $('cnt-title').textContent = 'Transactions Closed by Year';
+      $('cnt-sub').textContent = 'Number of closed sides represented';
+      $('trend-meta').textContent = '';
+      $('trend-note').innerHTML = '';
+      $('trend-note').hidden = true;
+    }
 
     renderMix(rows);
   }
@@ -351,12 +525,394 @@
     var b = e.target.closest('.seg__btn');
     if (b) setMixSide(b.getAttribute('data-side'));
   });
+
+  $('trend-view').addEventListener('click', function (e) {
+    var b = e.target.closest('.seg__btn');
+    if (!b) return;
+    var v = b.getAttribute('data-view');
+    if (v === state.trendView) return;
+    state.trendView = v;
+    Array.prototype.forEach.call(document.querySelectorAll('#trend-view .seg__btn'), function (o) {
+      o.classList.toggle('is-on', o === b);
+    });
+    renderCharts(state.rows);
+  });
   $('side-split').addEventListener('click', function (e) {
     var s = e.target.closest('.splitbar__seg');
     if (!s) return;
     var v = s.getAttribute('data-side');
     setMixSide(state.mixSide === v ? '' : v);   // tap the active one to clear
   });
+
+  /* ==================== TEAM PRODUCTION ====================
+     Payroll. The database refuses to serve it without a session, so this whole
+     section stays collapsed until someone signs in — the UI is not the lock,
+     it just avoids showing an empty shell. */
+  var HOUSE = 'Team Howe (house)';
+
+  function agentStats() {
+    var payouts = store.payouts();
+    var roster = store.agents();
+    var rowsById = {};
+    state.rows.forEach(function (r) { rowsById[String(r.id)] = r; });
+
+    var per = {};
+    payouts.forEach(function (p) {
+      var a = per[p.agent] || (per[p.agent] = {
+        name: p.agent, role: p.role, paid: 0, years: {}, deals: {}, volume: 0
+      });
+      a.paid += Number(p.amount) || 0;
+      a.years[p.year] = (a.years[p.year] || 0) + (Number(p.amount) || 0);
+      if (p.transaction_id) {
+        var tx = rowsById[String(p.transaction_id)];
+        if (tx && !a.deals[p.transaction_id]) {
+          a.deals[p.transaction_id] = true;
+          a.volume += tx.sale_price || 0;
+        }
+      }
+    });
+
+    var meta = {};
+    roster.forEach(function (r) { meta[r.name] = r; });
+
+    return Object.keys(per).map(function (name) {
+      var a = per[name], m = meta[name] || {};
+      var ys = Object.keys(a.years).map(Number).sort(function (x, y) { return x - y; });
+      var best = ys.reduce(function (acc, y) {
+        return a.years[y] > (acc ? a.years[acc] : -1) ? y : acc;
+      }, null);
+      return {
+        name: name, role: a.role, level: m.level || null, level_source: m.level_source || '',
+        active: !!m.active, first: ys[0] || null, last: ys[ys.length - 1] || null,
+        deals: Object.keys(a.deals).length, volume: a.volume, paid: a.paid,
+        best: best, bestAmt: best ? a.years[best] : 0, byYear: a.years
+      };
+    });
+  }
+
+  // Continuous year series so a gap year reads as a dip, not as a missing point.
+  function sparkFor(a) {
+    if (!a.first || !a.last || a.first === a.last) return '';
+    var vals = [];
+    for (var y = a.first; y <= a.last; y++) vals.push(a.byYear[y] || 0);
+    return C.sparkline(vals, { width: 80, height: 22 });
+  }
+
+  function renderAgents() {
+    var locked = store.authAvailable() && !store.user();
+    $('sec-agents').hidden = locked || !store.payoutsLoaded();
+    $('agents-locked').hidden = !locked;
+    if (locked || !store.payoutsLoaded()) {
+      // Leave nothing behind on sign-out.
+      $('agents-body').innerHTML = '';
+      $('agents-tiles').innerHTML = '';
+      $('chart-payroll').innerHTML = '';
+      return;
+    }
+
+    var all = agentStats();
+    var house = all.filter(function (a) { return a.role === 'house'; })[0];
+    var people = all.filter(function (a) { return a.role !== 'house'; });
+    var shown = state.agentScope === 'all' ? people : people.filter(function (a) { return a.active; });
+    shown.sort(function (a, b) { return b.paid - a.paid; });
+
+    // ---- tiles ----
+    var totalPaid = people.reduce(function (s, a) { return s + a.paid; }, 0);
+    var housePaid = house ? house.paid : 0;
+    var everything = totalPaid + housePaid;
+    var activeCount = people.filter(function (a) { return a.active; }).length;
+    $('agents-tiles').innerHTML =
+      tile('On the team now', String(activeCount)) +
+      tile('People ever paid', String(people.length)) +
+      tile('Paid to teammates', money(totalPaid, true)) +
+      tile('Kept by the house', everything ? Math.round(housePaid / everything * 100) + '%' : '—', null, true);
+    $('agents-meta').textContent = store.payouts().length.toLocaleString('en-US') + ' payments, 2012–2026';
+
+    // ---- stacked chart: two segments only ----
+    // A single-hue ramp cannot separate six stacked identities — measured worst
+    // adjacent ΔE was 7.4 against a floor of 15, i.e. invisible even with full
+    // colour vision. So the chart answers the one question a stack is good at
+    // (house vs. team), and per-person trend rides the sparkline in each row.
+    var years = {};
+    all.forEach(function (a) {
+      Object.keys(a.byYear).forEach(function (y) {
+        var slot = years[y] || (years[y] = { house: 0, team: 0 });
+        if (a.role === 'house') slot.house += a.byYear[y];
+        else slot.team += a.byYear[y];
+      });
+    });
+    var series = [
+      { key: 'house', label: 'Team Howe (house)', color: 'var(--series-b)' },
+      { key: 'team',  label: 'Paid to teammates', color: 'var(--series-a)' }
+    ];
+    var chartYears = Object.keys(years).map(Number).sort(function (a, b) { return a - b; })
+      .map(function (y) { return { year: y, parts: years[y] }; });
+
+    C.stacked('chart-payroll', chartYears, series);
+    $('agents-legend').innerHTML = series.map(function (s) {
+      return '<div class="legend-item"><span class="legend-swatch" style="background:' + s.color + '"></span>' + esc(s.label) + '</div>';
+    }).join('');
+    $('payroll-note').textContent =
+      'Reconciles to 94–114% of each year\'s net commission depending on the year — bonuses and ' +
+      'corrections that were not tied to one sale are included in the totals but cannot be matched ' +
+      'to a specific deal. Treat it as the shape of the split, not as payroll accounting. ' +
+      'No split was recorded before 2012, or in 2014.';
+
+    // ---- table ----
+    var k = state.agentSort, dir = state.agentDir === 'asc' ? 1 : -1;
+    var sorted = shown.slice().sort(function (a, b) {
+      var av, bv;
+      if (k === 'name') { return a.name.localeCompare(b.name) * dir; }
+      if (k === 'span') { av = a.first; bv = b.first; }
+      else if (k === 'level') { av = a.level || 9; bv = b.level || 9; }
+      else if (k === 'best') { av = a.bestAmt; bv = b.bestAmt; }
+      else { av = a[k]; bv = b[k]; }
+      return ((av || 0) - (bv || 0)) * dir;
+    });
+
+    $('agents-body').innerHTML = sorted.map(function (a, i) {
+      var span = a.first === a.last ? String(a.first) : a.first + '–' + a.last;
+      var lvl = a.level
+        ? '<span class="pill pill--buyer" title="' + esc(a.level_source) + '">L' + a.level + '</span>'
+        : '<span style="color:var(--ink-3)">—</span>';
+      return '<tr class="row-in" style="animation-delay:' + Math.min(i * 22, 300) + 'ms">' +
+        '<td class="client">' + esc(a.name) + (a.active ? '' : ' <span style="color:var(--ink-3);font-weight:400">· past</span>') + '</td>' +
+        '<td>' + lvl + '</td>' +
+        '<td>' + span + '</td>' +
+        '<td class="num">' + (a.deals || '—') + '</td>' +
+        '<td class="num">' + (a.volume ? money(a.volume, true) : '—') + '</td>' +
+        '<td class="num">' + money(a.paid) + '</td>' +
+        '<td class="num">' + (a.best ? a.best + ' · ' + money(a.bestAmt, true) : '—') + '</td>' +
+        '<td>' + sparkFor(a) + '</td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  document.querySelectorAll('#agents-table th[data-asort]').forEach(function (th) {
+    th.addEventListener('click', function () {
+      var key = th.getAttribute('data-asort');
+      if (state.agentSort === key) state.agentDir = state.agentDir === 'asc' ? 'desc' : 'asc';
+      else { state.agentSort = key; state.agentDir = key === 'name' ? 'asc' : 'desc'; }
+      document.querySelectorAll('#agents-table th[data-asort]').forEach(function (o) {
+        o.classList.remove('sorted', 'sorted-desc');
+      });
+      th.classList.add('sorted');
+      if (state.agentDir === 'desc') th.classList.add('sorted-desc');
+      renderAgents();
+    });
+  });
+  $('agents-scope').addEventListener('click', function (e) {
+    var b = e.target.closest('.seg__btn');
+    if (!b) return;
+    state.agentScope = b.getAttribute('data-scope');
+    Array.prototype.forEach.call($('agents-scope').querySelectorAll('.seg__btn'), function (o) {
+      o.classList.toggle('is-on', o === b);
+    });
+    renderAgents();
+  });
+  on('agents-signin', 'click', openAuth);
+
+  /* ==================== WHERE THE MONEY GOES ====================
+     A funnel: stages of one quantity, which is ordinal, not categorical —
+     so a single-hue ramp is the right encoding here rather than a compromise.
+
+     Computed live from the transactions themselves, so a sale you add or edit
+     moves this panel exactly like it moves every other chart. Each sale can
+     carry its own deduction lines; whatever gross minus net does not explain
+     is shown honestly as "Other deductions" instead of being hidden. */
+
+  function moneyYears() {
+    var seen = {};
+    store.all().forEach(function (r) {
+      if (r.year && Number(r.net_comm) > 0) seen[r.year] = true;
+    });
+    return Object.keys(seen).map(Number).sort(function (a, b) { return a - b; });
+  }
+
+  function moneyTotals(sel) {
+    return store.all().reduce(function (a, r) {
+      if (!r.year || !(Number(r.net_comm) > 0)) return a;
+      if (sel !== 'all' && String(r.year) !== sel) return a;
+      a.n++;
+      a.volume    += Number(r.sale_price)    || 0;
+      a.gross     += Number(r.gross_comm)    || 0;
+      a.net       += Number(r.net_comm)      || 0;
+      a.referral  += Number(r.referral_fee)  || 0;
+      a.brokerage += Number(r.brokerage_fee) || 0;
+      a.costs     += Number(r.other_costs)   || 0;
+      return a;
+    }, { n: 0, volume: 0, gross: 0, net: 0, referral: 0, brokerage: 0, costs: 0 });
+  }
+
+  function renderWaterfall() {
+    var years = moneyYears();
+    if (!years.length) { $('sec-money').hidden = true; return; }
+    $('sec-money').hidden = false;
+
+    var sel = $('money-year').value || 'all';
+    var t = moneyTotals(sel);
+    if (!t.gross) return;
+
+    // Anything the three deduction lines do not account for. Never negative on
+    // screen: in two early years the workbook's own lines slightly overshoot its
+    // stated net, and inventing a negative bar would be worse than saying so.
+    var other = Math.max(0, (t.gross - t.net) - (t.referral + t.brokerage + t.costs));
+
+    // Net → house / teammates, from the payout records when we have them.
+    var pay = store.payouts().filter(function (p) {
+      return sel === 'all' ? true : String(p.year) === sel;
+    });
+    var house = pay.filter(function (p) { return p.role === 'house'; })
+                   .reduce(function (s, p) { return s + Number(p.amount || 0); }, 0);
+    var team = pay.filter(function (p) { return p.role !== 'house'; })
+                  .reduce(function (s, p) { return s + Number(p.amount || 0); }, 0);
+    var havePay = (house + team) > 0;
+
+    var pctOfGross = function (v) { return t.gross ? (v / t.gross * 100).toFixed(1) + '% of gross' : ''; };
+    var w = function (v) { return t.gross ? v / t.gross * 100 : 0; };
+
+    var steps = [
+      { label: 'Sale price', sub: t.n + (t.n === 1 ? ' sale' : ' sales'), val: t.volume, w: 100, step: 6 },
+      { label: 'Gross commission', sub: t.volume ? (t.gross / t.volume * 100).toFixed(2) + '% of sale price' : '',
+        val: t.gross, w: 100, step: 5, rule: true }
+    ];
+    if (t.referral)  steps.push({ cut: true, label: 'Referral fees out', sub: pctOfGross(t.referral),
+                                  val: t.referral, w: w(t.referral), step: 3 });
+    if (t.brokerage) steps.push({ cut: true, label: 'Brokerage split', sub: pctOfGross(t.brokerage),
+                                  val: t.brokerage, w: w(t.brokerage), step: 3 });
+    if (t.costs)     steps.push({ cut: true, label: 'TC fees & home warranties', sub: pctOfGross(t.costs),
+                                  val: t.costs, w: w(t.costs), step: 3 });
+    if (other > t.gross * 0.001)
+      steps.push({ cut: true, label: 'Other deductions', sub: pctOfGross(other),
+                   val: other, w: w(other), step: 3 });
+    steps.push({ label: 'Net commission', sub: pctOfGross(t.net) + ' survived',
+                 val: t.net, w: w(t.net), step: 5, rule: true });
+
+    if (havePay) {
+      steps.push({ label: 'Kept by the house', sub: Math.round(house / (house + team) * 100) + '% of net',
+                   val: house, w: w(house), step: 6 });
+      steps.push({ label: 'Paid to teammates', sub: Math.round(team / (house + team) * 100) + '% of net',
+                   val: team, w: w(team), step: 4 });
+    }
+
+    $('waterfall').innerHTML = steps.map(function (s) {
+      return '<div class="wf-step' + (s.cut ? ' wf-step--cut' : '') + '">' +
+          '<div class="wf-top">' +
+            '<span class="wf-label">' + (s.cut ? '− ' : '') + esc(s.label) +
+              (s.sub ? ' <small>' + esc(s.sub) + '</small>' : '') + '</span>' +
+            '<span class="wf-val">' + money(Math.abs(s.val)) + '</span>' +
+          '</div>' +
+          '<div class="wf-bar"><div class="wf-fill" style="background:var(--ramp-' + s.step + ')"></div></div>' +
+        '</div>' + (s.rule ? '<div class="wf-rule"></div>' : '');
+    }).join('');
+    // Animate from zero on the next frame.
+    requestAnimationFrame(function () {
+      var fills = $('waterfall').querySelectorAll('.wf-fill');
+      steps.forEach(function (s, i) { if (fills[i]) fills[i].style.width = Math.max(s.w, 0.6) + '%'; });
+    });
+
+    $('money-meta').textContent = sel === 'all'
+      ? years[0] + '–' + years[years.length - 1] + ' · every sale with a recorded net'
+      : t.n + (t.n === 1 ? ' sale in ' : ' sales in ') + sel;
+
+    var detailed = (t.referral + t.brokerage + t.costs) > 0;
+    $('money-note').textContent =
+      'Built from the sales themselves, so anything you add or edit lands here too. ' +
+      (detailed
+        ? 'Each sale carries its own referral, brokerage and TC lines where the workbook broke them out; ' +
+          'whatever those lines do not explain is shown as "Other deductions" rather than hidden. '
+        : 'The workbook does not break out the individual deductions for these years, so the whole gap ' +
+          'between gross and net shows as "Other deductions". ') +
+      'Referrals Team Howe sent out and collected a fee on are not sales, so they are not counted here ' +
+      'or anywhere else in this dashboard.' +
+      (store.payoutsLoaded() ? '' : ' Sign in to see how the net was split between the house and the team.');
+  }
+
+  function initMoney() {
+    var years = moneyYears();
+    var sel = $('money-year');
+    if (!years.length || !sel) { if ($('sec-money')) $('sec-money').hidden = true; return; }
+    var keep = sel.value;
+    sel.innerHTML = '<option value="all">All years</option>' +
+      years.slice().reverse().map(function (y) { return '<option value="' + y + '">' + y + '</option>'; }).join('');
+    if (keep && sel.querySelector('option[value="' + keep + '"]')) sel.value = keep;
+    if (!sel.dataset.wired) {
+      sel.addEventListener('change', renderWaterfall);
+      sel.dataset.wired = '1';
+    }
+  }
+
+  /* ==================== SPLIT CALCULATOR ==================== */
+  var SP = window.TH_SPLITS || null;
+
+  function initCalc() {
+    if (!SP) { return; }
+    $('calc-scenario').innerHTML = SP.scenarios.map(function (s) {
+      return '<option value="' + s.id + '">' + s.side + ' — ' + esc(s.label) + '</option>';
+    }).join('');
+    var opts = [];
+    Object.keys(SP.people).sort().forEach(function (lv) {
+      SP.people[lv].forEach(function (n) {
+        opts.push('<option value="' + lv + '">' + esc(n) + ' — Level ' + lv + '</option>');
+      });
+    });
+    $('calc-agent').innerHTML = opts.join('');
+    ['calc-price', 'calc-rate', 'calc-scenario', 'calc-agent'].forEach(function (id) {
+      $(id).addEventListener('input', renderCalc);
+      $(id).addEventListener('change', renderCalc);
+    });
+    renderCalc();
+  }
+
+  /* ---- collapsible sections ---- */
+  function initCollapse(toggleId, bodyId, labelId, key) {
+    var btn = $(toggleId), body = $(bodyId), label = $(labelId);
+    if (!btn || !body) return;
+    function apply(open, save) {
+      body.setAttribute('data-open', open ? 'true' : 'false');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (label) label.textContent = open ? 'Hide' : 'Show';
+      if (save) safeSet(key, open ? 'open' : 'closed');
+    }
+    // Collapsed unless this browser was left with it open.
+    apply(safeGet(key) === 'open', false);
+    btn.addEventListener('click', function () {
+      var open = body.getAttribute('data-open') !== 'true';
+      apply(open, true);
+      // Charts measure themselves, so anything drawn while hidden needs a redraw.
+      if (open) setTimeout(function () { renderWaterfall(); }, 360);
+    });
+  }
+  initCollapse('money-toggle', 'money-body', 'money-toggle-label', 'teamhowe.money.open');
+
+  function renderCalc() {
+    if (!SP) return;
+    var price = Number($('calc-price').value) || 0;
+    var rate = Number($('calc-rate').value) || 0.025;
+    var scId = $('calc-scenario').value;
+    var lv = $('calc-agent').value;
+    var sc = SP.scenarios.filter(function (s) { return s.id === scId; })[0];
+    if (!sc) return;
+
+    var gross = price * rate;
+    var fee = gross * SP.resource_fee;
+    var afterFee = gross - fee;
+    var agentRate = sc.rates[lv];
+    var toAgent = afterFee * agentRate;
+    var toHouse = afterFee - toAgent;
+    var agentName = ($('calc-agent').selectedOptions[0] || {}).textContent || '';
+
+    $('calc-out').innerHTML =
+      '<div class="calc-line"><span>Gross commission at ' + (rate * 100).toFixed(1) + '%</span><span>' + money(gross) + '</span></div>' +
+      '<div class="calc-line"><span>Less Compass resource fee (' + (SP.resource_fee * 100) + '%)</span><span>−' + money(fee) + '</span></div>' +
+      '<div class="calc-line calc-line--total"><span>Net to the team</span><span>' + money(afterFee) + '</span></div>' +
+      '<div class="calc-line calc-line--sub"><span>' + esc(agentName.split(' — ')[0]) + ' at ' + Math.round(agentRate * 100) + '%</span><span>' + money(toAgent) + '</span></div>' +
+      '<div class="calc-line calc-line--sub"><span>Team Howe keeps</span><span>' + money(toHouse) + '</span></div>' +
+      '<div class="calc-note">The ' + Math.round(agentRate * 100) + '% comes from the “' + esc(sc.label) +
+      '” row for a Level ' + lv + ' associate on the ' + sc.side.toLowerCase() + ' side. ' +
+      'Compass\'s own split improves as cumulative GCI grows for the year — this uses the 4% resource fee only, ' +
+      'so on a low-GCI year the real net to the team would be lower.</div>';
+  }
 
   /* ==================== TABLE ==================== */
   function filtered() {
@@ -489,6 +1045,111 @@
   var backdrop = $('modal-backdrop');
   var form = $('tx-form');
 
+  /* ---- payout rows inside the Add/Edit form ---- */
+  var agentOptions = [];
+
+  function populateAgentPicker() {
+    var roster = store.agents().filter(function (a) { return a.role !== 'house'; });
+    var active = roster.filter(function (a) { return a.active; }).map(function (a) { return a.name; }).sort();
+    var past   = roster.filter(function (a) { return !a.active; }).map(function (a) { return a.name; }).sort();
+    agentOptions = active.concat(past.length ? ['—'] : [], past);
+  }
+
+  function splitRowHTML(agent, amount) {
+    var opts = '<option value="">Choose a teammate…</option>' + agentOptions.map(function (n) {
+      if (n === '—') return '<option disabled>── no longer on the team ──</option>';
+      return '<option' + (n === agent ? ' selected' : '') + '>' + esc(n) + '</option>';
+    }).join('');
+    return '<div class="split-row">' +
+      '<select class="select js-agent">' + opts + '</select>' +
+      '<input class="input js-amount" type="number" min="0" step="0.01" placeholder="Their $" value="' +
+        (amount === null || amount === undefined ? '' : amount) + '">' +
+      '<button type="button" class="split-del" aria-label="Remove"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
+    '</div>';
+  }
+
+  function refreshSplitSum() {
+    var net = Number($('i-net').value) || 0;
+    var sum = 0;
+    Array.prototype.forEach.call(document.querySelectorAll('#split-rows .js-amount'), function (i) {
+      sum += Number(i.value) || 0;
+    });
+    var el = $('split-sum');
+    if (!sum) { el.textContent = ''; el.classList.remove('over'); return; }
+    if (net) {
+      var house = net - sum;
+      el.innerHTML = 'Teammates <strong>' + money(sum) + '</strong> · house keeps <strong>' + money(house) + '</strong>';
+      el.classList.toggle('over', house < 0);
+      if (house < 0) el.innerHTML += ' — more than the net commission';
+    } else {
+      el.innerHTML = 'Teammates <strong>' + money(sum) + '</strong>';
+      el.classList.remove('over');
+    }
+  }
+
+  function setSplitRows(list) {
+    var host = $('split-rows');
+    host.innerHTML = (list && list.length ? list : [{ agent: '', amount: '' }])
+      .map(function (p) { return splitRowHTML(p.agent, p.amount); }).join('');
+    refreshSplitSum();
+  }
+
+  $('split-add').addEventListener('click', function () {
+    $('split-rows').insertAdjacentHTML('beforeend', splitRowHTML('', ''));
+  });
+  $('split-rows').addEventListener('click', function (e) {
+    var d = e.target.closest('.split-del');
+    if (!d) return;
+    var rows = $('split-rows').querySelectorAll('.split-row');
+    if (rows.length > 1) d.closest('.split-row').remove();
+    else setSplitRows(null);
+    refreshSplitSum();
+  });
+  $('split-rows').addEventListener('input', refreshSplitSum);
+  $('i-net').addEventListener('input', refreshSplitSum);
+
+  // Live read-out of what the three deduction lines do and do not explain, so
+  // nobody has to guess what "other deductions" will end up holding.
+  function refreshDeductSum() {
+    var gross = Number($('i-gross').value) || 0;
+    var net = Number($('i-net').value) || 0;
+    var named = ['i-referral', 'i-brokerage', 'i-costs']
+      .reduce(function (a, id) { return a + (Number($(id).value) || 0); }, 0);
+    var el = $('deduct-sum');
+    if (!gross || !net) {
+      el.textContent = named ? 'Accounted for ' + money(named) : '';
+      el.classList.remove('over');
+      return;
+    }
+    var gap = gross - net;
+    var other = gap - named;
+    if (other > 1) {
+      el.innerHTML = 'Gross less net is <strong>' + money(gap) + '</strong> · ' +
+                     money(other) + ' of that will show as other deductions';
+      el.classList.remove('over');
+    } else if (other < -1) {
+      el.innerHTML = 'These lines add up to <strong>' + money(named) + '</strong>, more than the ' +
+                     money(gap) + ' between gross and net';
+      el.classList.add('over');
+    } else {
+      el.innerHTML = 'Fully accounted for — <strong>' + money(named) + '</strong>';
+      el.classList.remove('over');
+    }
+  }
+  ['i-referral', 'i-brokerage', 'i-costs', 'i-gross', 'i-net'].forEach(function (id) {
+    $(id).addEventListener('input', refreshDeductSum);
+  });
+
+  function collectSplit(year) {
+    var out = [];
+    Array.prototype.forEach.call(document.querySelectorAll('#split-rows .split-row'), function (r) {
+      var a = r.querySelector('.js-agent').value;
+      var v = Number(r.querySelector('.js-amount').value);
+      if (a && v) out.push({ agent: a, amount: v, role: 'agent', year: year || null });
+    });
+    return out;
+  }
+
   function openModal(row) {
     state.editingId = row ? row.id : null;
     $('modal-title').textContent = row ? 'Edit Sale' : 'Add a Sale';
@@ -507,10 +1168,24 @@
       $('i-net').value = row.net_comm === null ? '' : row.net_comm;
       $('i-source').value = row.source || 'Referral';
       $('i-referrer').value = row.referrer || '';
+      $('i-referral').value = row.referral_fee === null || row.referral_fee === undefined ? '' : row.referral_fee;
+      $('i-brokerage').value = row.brokerage_fee === null || row.brokerage_fee === undefined ? '' : row.brokerage_fee;
+      $('i-costs').value = row.other_costs === null || row.other_costs === undefined ? '' : row.other_costs;
     } else {
       $('i-city').value = 'San Francisco';
       $('i-source').value = 'Referral';
     }
+
+    // The split block only appears once payroll is available (i.e. signed in).
+    var canSplit = store.payoutsLoaded() && agentOptions.length;
+    $('split-block').hidden = !canSplit;
+    if (canSplit) {
+      setSplitRows(row ? store.payoutsFor(row.id)
+        .filter(function (p) { return p.role !== 'house'; })
+        .map(function (p) { return { agent: p.agent, amount: p.amount }; }) : null);
+    }
+
+    refreshDeductSum();
     backdrop.classList.add('open');
     setTimeout(function () { $('i-date').focus(); }, 60);
   }
@@ -531,7 +1206,8 @@
     e.preventDefault();
     var fd = new FormData(form);
     var rec = {};
-    ['date','client','side','prop_type','address','city','sale_price','gross_comm','net_comm','source','referrer']
+    ['date','client','side','prop_type','address','city','sale_price','gross_comm','net_comm','source','referrer',
+     'referral_fee','brokerage_fee','other_costs']
       .forEach(function (k) { rec[k] = fd.get(k); });
 
     if (!store.canWrite()) { closeModal(); openAuth(); return; }
@@ -554,13 +1230,21 @@
     var btn = $('modal-save');
     btn.disabled = true; btn.textContent = 'Saving…';
 
-    var op = state.editingId ? store.update(state.editingId, rec) : store.add(rec);
+    var wasEditing = state.editingId;
+    var split = $('split-block').hidden ? null : collectSplit(rec.year || (rec.date ? Number(String(rec.date).slice(0, 4)) : null));
+
+    var op = wasEditing ? store.update(wasEditing, rec) : store.add(rec);
     op.then(function (saved) {
+      if (!split) return saved;
+      // Replace rather than append so editing a sale does not double-count.
+      return store.replacePayouts(saved.id, split).then(function () { return saved; });
+    }).then(function (saved) {
       state.rows = store.all();
       populateFilters();
       closeModal();
       render(saved && saved.id);
-      toast(state.editingId ? 'Sale updated.' : 'Sale added — dashboard updated.');
+      renderAgents();
+      toast(wasEditing ? 'Sale updated.' : 'Sale added — dashboard updated.');
     }).catch(function (err) {
       console.error(err);
       toast('Could not save: ' + (err.message || 'unknown error'));
@@ -650,6 +1334,8 @@
     renderKPIs(state.rows);
     renderCharts(state.rows);
     renderTable(flashId);
+    initMoney();          // a sale in a brand-new year adds that year to the picker
+    renderWaterfall();
   }
 
   /* ==================== BOOT ==================== */
@@ -705,7 +1391,17 @@
     th.classList.add('sorted', 'sorted-desc');
     render();
     // Restore any existing session before deciding what to show.
-    store.initAuth().then(applyAuthState);
+    store.initAuth()
+      .then(applyAuthState)
+      .then(function () { return store.loadPayroll(); })
+      .then(function (pinfo) {
+        populateAgentPicker();
+        renderAgents();
+        renderWaterfall();          // the net split needs payouts
+        if (pinfo && pinfo.seeded) toast('Loaded ' + pinfo.payouts.toLocaleString('en-US') + ' historical payouts.');
+      })
+      .catch(function (e) { console.warn('[Team Howe] payroll unavailable:', e.message || e); renderAgents(); });
+    initCalc();
     if (info.seeded) toast('Database seeded with ' + state.rows.length + ' historical sales.');
     $('footer-storage').textContent = info.mode === 'cloud'
       ? 'Live data — every change is saved to the shared database.'

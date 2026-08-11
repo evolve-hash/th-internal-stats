@@ -9,8 +9,8 @@
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/favicon.png">
 <link rel="preload" href="assets/fonts/montserrat-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/fonts.css?v=8f61d823">
-<link rel="stylesheet" href="css/app.css?v=8f61d823">
+<link rel="stylesheet" href="css/fonts.css?v=197340f2">
+<link rel="stylesheet" href="css/app.css?v=197340f2">
 </head>
 <body>
 
@@ -30,6 +30,14 @@
       <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+      <div class="who" id="who" hidden>
+        <span class="who__dot"></span>
+        <span class="who__email" id="who-email"></span>
+        <button type="button" class="who__out" id="btn-signout" title="Sign out">Sign out</button>
+      </div>
+      <button class="icon-btn" id="btn-signin" hidden title="Sign in to edit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       </button>
       <button class="btn-add" id="btn-add">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
@@ -68,23 +76,34 @@
 
   <!-- ================= TRENDS ================= -->
   <section class="section">
-    <div class="section-head"><h2>Production Over Time</h2></div>
-    <div class="grid-2">
+    <div class="section-head">
+      <h2>Production Over Time</h2>
+      <div class="section-head__right">
+        <span class="meta" id="trend-meta"></span>
+        <div class="seg" id="trend-view" role="group" aria-label="How to slice the timeline">
+          <button type="button" class="seg__btn is-on" data-view="year">By year</button>
+          <button type="button" class="seg__btn" data-view="rolling">Last 12 months</button>
+          <button type="button" class="seg__btn" data-view="season">Season</button>
+        </div>
+      </div>
+    </div>
+    <div class="grid-2" id="trend-grid">
       <div class="card">
         <div class="card__head">
-          <h3 class="card__title">Sales Volume by Year</h3>
-          <p class="card__sub">Total closed sale price, all represented sides</p>
+          <h3 class="card__title" id="vol-title">Sales Volume by Year</h3>
+          <p class="card__sub" id="vol-sub">Total closed sale price, all represented sides</p>
         </div>
         <div class="card__body"><div class="chart-holder"><svg class="chart" id="chart-volume" viewBox="0 0 560 250"></svg></div></div>
       </div>
-      <div class="card">
+      <div class="card" id="trend-card-2">
         <div class="card__head">
-          <h3 class="card__title">Transactions Closed by Year</h3>
-          <p class="card__sub">Number of closed sides represented</p>
+          <h3 class="card__title" id="cnt-title">Transactions Closed by Year</h3>
+          <p class="card__sub" id="cnt-sub">Number of closed sides represented</p>
         </div>
         <div class="card__body"><div class="chart-holder"><svg class="chart" id="chart-count" viewBox="0 0 560 250"></svg></div></div>
       </div>
     </div>
+    <p class="card__note" id="trend-note" hidden></p>
 
     <div class="card" style="margin-top:14px;">
       <div class="card__head">
@@ -133,6 +152,132 @@
           <div class="legend" id="side-legend"></div>
           <div id="prop-mix" style="margin-top:20px;"></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AGENTS ================= -->
+  <section class="section" id="sec-agents" hidden>
+    <div class="section-head">
+      <h2>Team Production</h2>
+      <div class="section-head__right">
+        <span class="meta" id="agents-meta"></span>
+        <div class="seg" id="agents-scope" role="group" aria-label="Which teammates">
+          <button type="button" class="seg__btn is-on" data-scope="active">On the team</button>
+          <button type="button" class="seg__btn" data-scope="all">Everyone ever</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-grid" id="agents-tiles" style="grid-template-columns:repeat(4,1fr)"></div>
+
+    <div class="card" style="margin-top:14px;">
+      <div class="card__head">
+        <h3 class="card__title">Who the net commission went to</h3>
+        <p class="card__sub">Each year's net split between the house and the teammates who earned it</p>
+      </div>
+      <div class="card__body">
+        <div class="legend" id="agents-legend"></div>
+        <div class="chart-holder"><svg class="chart" id="chart-payroll" viewBox="0 0 1160 300"></svg></div>
+      </div>
+      <p class="card__note" id="payroll-note"></p>
+    </div>
+
+    <div class="card" style="margin-top:14px;overflow:hidden;">
+      <div class="card__head" style="padding-bottom:14px;">
+        <h3 class="card__title">By teammate</h3>
+        <p class="card__sub">Click a column to sort. <em>Volume worked</em> is every sale they were paid on — including Sherri's clients that they assisted — so it overlaps between teammates and will not add up to the career total. Levels come from the Compass split sheet where declared, and from each person's own payout ratios otherwise.</p>
+      </div>
+      <div class="table-scroll">
+        <table class="tx" id="agents-table">
+          <thead>
+            <tr>
+              <th data-asort="name">Teammate<span class="sort-arrow">▲</span></th>
+              <th data-asort="level">Level<span class="sort-arrow">▲</span></th>
+              <th data-asort="span">Years<span class="sort-arrow">▲</span></th>
+              <th data-asort="deals" style="text-align:right">Deals<span class="sort-arrow">▲</span></th>
+              <th data-asort="volume" style="text-align:right">Volume Worked<span class="sort-arrow">▲</span></th>
+              <th data-asort="paid" style="text-align:right">Total Paid<span class="sort-arrow">▲</span></th>
+              <th data-asort="best" style="text-align:right">Best Year<span class="sort-arrow">▲</span></th>
+              <th class="no-sort">Trend</th>
+            </tr>
+          </thead>
+          <tbody id="agents-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <div class="card" id="agents-locked" hidden style="margin-bottom:34px;">
+    <div class="card__body" style="display:flex;align-items:center;gap:14px;padding:22px;">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color:var(--ink-3);flex-shrink:0"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <div style="font-size:12.5px;color:var(--ink-2);line-height:1.6;">
+        <strong style="color:var(--ink)">Team production is private.</strong>
+        It shows what each teammate was paid, so it only loads for a signed-in account —
+        the database will not hand it over otherwise.
+        <button type="button" class="btn-ghost" id="agents-signin" style="margin-left:8px;">Sign in</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= ECONOMICS ================= -->
+  <section class="section" id="sec-money">
+    <div class="section-head">
+      <h2>Where the Money Goes</h2>
+      <div class="section-head__right">
+        <span class="meta" id="money-meta"></span>
+        <select class="select" id="money-year"></select>
+        <button type="button" class="sec-toggle" id="money-toggle" aria-expanded="false" aria-controls="money-body">
+          <span id="money-toggle-label">Show</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="sec-collapse" id="money-body" data-open="false">
+    <div class="sec-collapse__inner">
+    <div class="grid-2">
+      <div class="card">
+        <div class="card__head">
+          <h3 class="card__title">From sale price to take-home</h3>
+          <p class="card__sub">Each step is what survives the one above it</p>
+        </div>
+        <div class="card__body"><div id="waterfall"></div></div>
+        <p class="card__note" id="money-note"></p>
+      </div>
+
+      <div class="card">
+        <div class="card__head">
+          <h3 class="card__title">Split calculator</h3>
+          <p class="card__sub">What a deal would pay under the current Compass structure</p>
+        </div>
+        <div class="card__body">
+          <div class="calc-grid">
+            <div class="form-field">
+              <label for="calc-price">Sale price</label>
+              <input class="input" type="number" id="calc-price" value="1500000" min="0" step="25000">
+            </div>
+            <div class="form-field">
+              <label for="calc-rate">Commission rate</label>
+              <select class="select" id="calc-rate">
+                <option value="0.02">2.0%</option>
+                <option value="0.025" selected>2.5%</option>
+                <option value="0.03">3.0%</option>
+              </select>
+            </div>
+            <div class="form-field form-field--full">
+              <label for="calc-scenario">Whose client, and which side</label>
+              <select class="select" id="calc-scenario"></select>
+            </div>
+            <div class="form-field form-field--full">
+              <label for="calc-agent">Teammate</label>
+              <select class="select" id="calc-agent"></select>
+            </div>
+          </div>
+          <div id="calc-out"></div>
+        </div>
+        <p class="card__note">Rates come from the workbook's "Split Rules-Compass" tab. It leaves out TC fees, home warranties and referral fees, which vary per deal — so treat the result as the split, not the final cheque.</p>
+      </div>
+    </div>
       </div>
     </div>
   </section>
@@ -260,6 +405,42 @@
             <input class="input" type="text" id="i-referrer" name="referrer" placeholder="Who sent them your way">
           </div>
         </div>
+
+        <div id="deduct-block">
+          <div class="split-head">
+            <span>Where the difference went</span>
+            <span class="split-head__hint">Optional — anything you skip shows as “other deductions”</span>
+          </div>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="i-referral">Referral paid out ($)</label>
+              <input class="input" type="number" id="i-referral" name="referral_fee" min="0" step="0.01" placeholder="0">
+            </div>
+            <div class="form-field">
+              <label for="i-brokerage">Brokerage split ($)</label>
+              <input class="input" type="number" id="i-brokerage" name="brokerage_fee" min="0" step="0.01" placeholder="0">
+            </div>
+            <div class="form-field">
+              <label for="i-costs">TC fee &amp; warranties ($)</label>
+              <input class="input" type="number" id="i-costs" name="other_costs" min="0" step="0.01" placeholder="0">
+            </div>
+          </div>
+          <div class="split-foot">
+            <div class="split-sum" id="deduct-sum"></div>
+          </div>
+        </div>
+
+        <div id="split-block" hidden>
+          <div class="split-head">
+            <span>Who gets paid</span>
+            <span class="split-head__hint">Optional — leave blank if you'll fill it in later</span>
+          </div>
+          <div id="split-rows"></div>
+          <div class="split-foot">
+            <button type="button" class="btn-ghost" id="split-add">+ Add another teammate</button>
+            <div class="split-sum" id="split-sum"></div>
+          </div>
+        </div>
       </div>
       <div class="modal__foot">
         <button type="button" class="btn-secondary" id="modal-cancel">Cancel</button>
@@ -269,13 +450,45 @@
   </div>
 </div>
 
+<!-- ================= SIGN IN ================= -->
+<div class="modal-backdrop" id="auth-backdrop">
+  <div class="modal modal--narrow" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+    <div class="modal__head">
+      <h3 id="auth-title">Sign in</h3>
+      <button class="modal__close" id="auth-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="auth-form">
+      <div class="modal__body">
+        <p class="auth-lede">Anyone with the link can read these numbers. Signing in is what lets you add, edit, and remove sales.</p>
+        <div class="form-field form-field--full">
+          <label for="auth-email">Email</label>
+          <input class="input" type="email" id="auth-email" autocomplete="username" required>
+        </div>
+        <div class="form-field form-field--full" style="margin-top:14px;">
+          <label for="auth-pass">Password</label>
+          <input class="input" type="password" id="auth-pass" autocomplete="current-password" required>
+        </div>
+        <div class="auth-error" id="auth-error" hidden></div>
+      </div>
+      <div class="modal__foot">
+        <button type="button" class="btn-secondary" id="auth-cancel">Cancel</button>
+        <button type="submit" class="btn-primary" id="auth-submit">Sign in</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <div class="tooltip" id="tooltip"></div>
 <div class="toast-wrap" id="toast-wrap"></div>
 
-<script src="js/config.js?v=8f61d823"></script>
-<script src="js/seed.js?v=8f61d823"></script>
-<script src="js/store.js?v=8f61d823"></script>
-<script src="js/charts.js?v=8f61d823"></script>
-<script src="js/app.js?v=8f61d823"></script>
+<script src="js/config.js?v=197340f2"></script>
+<script src="js/seed.js?v=197340f2"></script>
+<script src="js/agents-seed.js?v=197340f2"></script>
+<script src="js/economics-seed.js?v=197340f2"></script>
+<script src="js/store.js?v=197340f2"></script>
+<script src="js/charts.js?v=197340f2"></script>
+<script src="js/app.js?v=197340f2"></script>
 </body>
 </html>

@@ -119,6 +119,10 @@ html[data-theme="dark"] {
 
 /* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
+/* The UA rule for [hidden] is display:none at the lowest possible specificity,
+   so any class that sets display (.icon-btn, .who, …) silently defeats it.
+   Restate it with !important or the hidden attribute becomes a no-op. */
+[hidden] { display: none !important; }
 html, body { margin: 0; padding: 0; }
 body {
   background: var(--page);
@@ -185,6 +189,37 @@ html[data-theme="dark"] .icon-moon { display: none; }
 .btn-add:active { transform: translateY(0); }
 .btn-add svg { width: 13px; height: 13px; }
 @media (max-width: 560px) { .btn-add span { display: none; } .btn-add { padding: 0 11px; } }
+
+/* ---------- Signed-in identity ---------- */
+.who {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 34px; padding: 0 6px 0 11px;
+  border: 1px solid var(--header-line); border-radius: var(--radius);
+  font-size: 11px; color: var(--header-ink-2); max-width: 260px;
+}
+.who__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand); flex-shrink: 0; }
+.who__email {
+  font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.who__out {
+  font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--header-ink-2); padding: 4px 7px; border-radius: 3px;
+  transition: background-color .18s var(--ease), color .18s var(--ease);
+}
+.who__out:hover { background: var(--header-hover); color: var(--header-ink); }
+@media (max-width: 860px) { .who__email { display: none; } .who { padding: 0 4px 0 9px; } }
+
+.modal--narrow { width: min(430px, 100%); }
+.auth-lede { margin: 0 0 18px; font-size: 12.5px; color: var(--ink-2); line-height: 1.6; }
+.auth-error {
+  margin-top: 14px; padding: 10px 12px; border-radius: var(--radius);
+  background: var(--brand-wash); border-left: 2px solid var(--critical, #d03b3b);
+  font-size: 12px; color: var(--ink); line-height: 1.5;
+}
+
+/* When nobody is signed in, the whole write surface simply isn't there. */
+body.is-readonly #btn-add,
+body.is-readonly .row-actions { display: none !important; }
 
 /* ---------- Connection pill ---------- */
 .conn {
@@ -511,6 +546,73 @@ tr:hover .row-actions, tr:focus-within .row-actions { opacity: 1; }
 .form-field .input, .form-field .select { width: 100%; }
 .form-field .hint { font-size: 10.5px; color: var(--ink-3); }
 .form-field.invalid .input { border-color: var(--ink); box-shadow: 0 0 0 3px var(--brand-wash-2); }
+
+/* ---------- Waterfall (ordinal funnel: stages, so one hue by design) ---------- */
+.wf-step { margin-bottom: 11px; }
+.wf-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+.wf-label { font-size: 12px; font-weight: 600; color: var(--ink); }
+.wf-label small { font-weight: 500; color: var(--ink-3); font-size: 11px; }
+.wf-val { font-size: 12.5px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.wf-bar { height: 17px; border-radius: 3px; background: var(--surface-sunken); border: 1px solid var(--border); overflow: hidden; }
+.wf-fill { height: 100%; border-radius: 2px 3px 3px 2px; width: 0; transition: width .6s var(--ease); }
+.wf-step--cut { padding-left: 22px; }
+.wf-step--cut .wf-label, .wf-step--cut .wf-val { color: var(--ink-2); font-weight: 600; }
+.wf-step--cut .wf-bar { height: 11px; }
+.wf-rule { height: 1px; background: var(--line); margin: 15px 0 13px; }
+
+/* ---------- Split calculator ---------- */
+.calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 4px; }
+.calc-line {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 12.5px;
+}
+.calc-line:last-child { border-bottom: none; }
+.calc-line span:first-child { color: var(--ink-2); }
+.calc-line span:last-child { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.calc-line--total { border-top: 1px solid var(--line-strong); margin-top: 4px; padding-top: 12px; }
+.calc-line--total span { font-size: 14px; color: var(--ink) !important; }
+.calc-line--sub span:first-child { padding-left: 16px; color: var(--ink-3); }
+.calc-note { margin-top: 12px; font-size: 11px; color: var(--ink-3); line-height: 1.5; }
+
+/* ---------- Payout split rows in the form ---------- */
+.split-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  margin: 22px 0 10px; padding-top: 18px; border-top: 1px solid var(--line);
+  font-size: 10px; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.split-head__hint { font-weight: 500; letter-spacing: 0; text-transform: none; font-size: 11px; }
+.split-row { display: grid; grid-template-columns: 1fr 130px 30px; gap: 10px; align-items: center; margin-bottom: 8px; }
+.split-row .select, .split-row .input { width: 100%; }
+.split-del {
+  width: 28px; height: 28px; border-radius: var(--radius); display: grid; place-items: center;
+  color: var(--ink-3); transition: background-color .16s var(--ease), color .16s var(--ease);
+}
+.split-del:hover { background: var(--brand-wash-2); color: var(--ink); }
+.split-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
+.split-sum { font-size: 11.5px; color: var(--ink-3); }
+.split-sum strong { color: var(--ink); font-weight: 700; }
+.split-sum.over { color: var(--serious); }
+.grid-2--single { grid-template-columns: 1fr; }
+
+/* Collapsible section. grid-template-rows 0fr -> 1fr animates a height the
+   browser works out itself, which max-height cannot do without a magic number. */
+.sec-collapse { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .34s var(--ease); }
+.sec-collapse[data-open="false"] { grid-template-rows: 0fr; }
+.sec-collapse__inner { overflow: hidden; min-height: 0; }
+.sec-toggle {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 30px; padding: 0 11px; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--surface); color: var(--ink-2);
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  transition: background-color .16s var(--ease), color .16s var(--ease), border-color .16s var(--ease);
+}
+.sec-toggle:hover { background: var(--brand-wash-2); color: var(--ink); border-color: var(--brand); }
+.sec-toggle svg { transition: transform .3s var(--ease); }
+.sec-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+#deduct-block .form-grid { margin-top: 0; }
+#deduct-block .split-foot { margin-top: 10px; }
+@media (max-width: 560px) { .split-row { grid-template-columns: 1fr 100px 28px; } }
 
 .btn-primary {
   height: 36px; padding: 0 20px; border-radius: var(--radius);
