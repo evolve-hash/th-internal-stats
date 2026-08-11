@@ -300,6 +300,9 @@ body.is-readonly .row-actions { display: none !important; }
 .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
 @media (max-width: 1080px) { .kpi-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 680px)  { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+.kpi-grid--4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1080px) { .kpi-grid--4 { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 680px)  { .kpi-grid--4 { grid-template-columns: repeat(2, 1fr); } }
 
 .kpi {
   background: var(--surface); border: 1px solid var(--border);
@@ -323,7 +326,10 @@ body.is-readonly .row-actions { display: none !important; }
 .kpi__value {
   font-size: 25px; font-weight: 700; letter-spacing: -.025em; line-height: 1.05;
   font-variant-numeric: proportional-nums;
+  overflow-wrap: anywhere;
 }
+.kpi { min-width: 0; }
+.kpi__label { overflow-wrap: anywhere; }
 @media (max-width: 680px) { .kpi__value { font-size: 21px; } }
 .kpi__delta { margin-top: 7px; font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 5px; }
 .kpi__delta--up   { color: var(--pos); }
@@ -334,8 +340,19 @@ body.is-readonly .row-actions { display: none !important; }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .grid-3 { display: grid; grid-template-columns: 1.15fr .85fr; gap: 14px; }
 @media (max-width: 940px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+/* A grid item refuses to shrink below its content unless told to, which is how
+   one wide chart drags its whole card off the side of a phone. */
+.grid-2 > *, .grid-3 > *, .card { min-width: 0; }
 
 .chart-holder { position: relative; }
+/* On a phone a dense chart is drawn at full size and scrolled, rather than
+   shrunk until the labels are unreadable. */
+@media (max-width: 700px) {
+  .chart-holder { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+  .chart-holder::-webkit-scrollbar { height: 4px; }
+  .chart-holder::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
+  svg.chart { max-width: none; }
+}
 svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
 .grid-line { stroke: var(--grid); stroke-width: 1; }
 .baseline   { stroke: var(--baseline); stroke-width: 1; }
@@ -509,13 +526,13 @@ tr:hover .row-actions, tr:focus-within .row-actions { opacity: 1; }
 .modal-backdrop {
   position: fixed; inset: 0; background: rgba(11,11,11,.55);
   backdrop-filter: blur(3px); z-index: 100;
-  display: grid; place-items: center; padding: 20px;
+  display: grid; grid-template-columns: minmax(0, 1fr); place-items: center; padding: 20px;
   opacity: 0; pointer-events: none; transition: opacity .26s var(--ease);
 }
 .modal-backdrop.open { opacity: 1; pointer-events: auto; }
 .modal {
   background: var(--surface-raised); border-radius: var(--radius-lg);
-  width: min(680px, 100%); max-height: 90vh; overflow-y: auto;
+  width: min(680px, 100%); min-width: 0; max-height: 90vh; overflow-y: auto;
   box-shadow: var(--shadow-lg); border: 1px solid var(--border);
   transform: translateY(14px) scale(.985); transition: transform .3s var(--ease);
 }
@@ -537,6 +554,31 @@ tr:hover .row-actions, tr:focus-within .row-actions { opacity: 1; }
 
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 @media (max-width: 560px) { .form-grid { grid-template-columns: 1fr; } }
+
+/* ---------- phone: forms and dialogs ----------
+   iOS Safari zooms the whole page in whenever a focused field has type smaller
+   than 16px, which is what makes the form look like it bursts out of the
+   screen. Bigger type and taller targets fix the cause, not the symptom. */
+@media (max-width: 700px) {
+  .input, .select, textarea { font-size: 16px; height: 42px; }
+  .split-row .input, .split-row .select { height: 40px; }
+  .form-field label { font-size: 11px; }
+  .modal-backdrop { padding: 0; place-items: end center; }
+  .modal {
+    width: 100%; max-height: 92vh; border-radius: 18px 18px 0 0;
+    transform: translateY(28px);
+  }
+  .modal__head { padding: 16px 18px 13px; }
+  .modal__body { padding: 16px 18px calc(16px + env(safe-area-inset-bottom, 0px)); }
+  .modal__foot { padding: 12px 18px calc(14px + env(safe-area-inset-bottom, 0px)); }
+  .modal__foot .btn-primary, .modal__foot .btn-secondary { flex: 1; height: 44px; }
+  .split-row { grid-template-columns: 1fr 108px 30px; }
+}
+/* Dynamic viewport units where they exist: on iOS, 100vh silently includes the
+   address bar, so a 92vh dialog is taller than the screen actually is. */
+@supports (height: 100dvh) {
+  @media (max-width: 700px) { .modal { max-height: 92dvh; } }
+}
 .form-field { display: flex; flex-direction: column; gap: 5px; }
 .form-field--full { grid-column: 1 / -1; }
 .form-field label {

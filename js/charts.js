@@ -162,6 +162,40 @@ window.TH_CHARTS = (function () {
   }
 
 
+
+  /* ---------- responsive sizing ----------
+     A fixed viewBox scaled into a 360px phone shrinks every label with it: the
+     19-year chart ends up drawing 10px type at a third of its size. On small
+     screens we instead draw the chart at real pixel size, so a 10px label is a
+     10px label, and let the holder scroll sideways when the data genuinely
+     needs more room than the screen has. */
+  function fit(svgId, opts) {
+    var svg = document.getElementById(svgId);
+    if (!svg) return;
+    var holder = svg.parentNode;
+    var avail = holder && holder.clientWidth ? holder.clientWidth : 0;
+    var small = window.matchMedia && window.matchMedia('(max-width: 700px)').matches;
+    if (!small || !avail) {                       // desktop: leave the design alone
+      svg.style.width = '';
+      svg.setAttribute('viewBox', '0 0 ' + opts.w + ' ' + opts.h);
+      return;
+    }
+    var gutter = 66;                              // y-axis labels plus right padding
+    var need = opts.count ? opts.count * (opts.minSlot || 30) + gutter : 0;
+    var W = Math.max(avail, need);
+    var H = opts.mobileH || Math.round(opts.h * 0.92);
+    svg.setAttribute('viewBox', '0 0 ' + Math.round(W) + ' ' + H);
+    svg.style.width = Math.round(W) + 'px';
+    // A time series that does not fit opens on the newest data, not on 2008.
+    if (opts.scrollTo === 'end' && W > avail + 4) {
+      requestAnimationFrame(function () { holder.scrollLeft = W; });
+    } else {
+      // Switching views reuses the same holder; without this it would keep the
+      // sideways scroll from whatever was drawn there before.
+      holder.scrollLeft = 0;
+    }
+  }
+
   /* ---------- single-series line ----------
      Used for the rolling twelve-month view: one quantity through time, so one
      hue and no legend. Every point is hoverable, but only a few are drawn as
@@ -544,6 +578,6 @@ window.TH_CHARTS = (function () {
     '</svg>';
   }
 
-  return { columns: columns, line: line, grouped: grouped, ranked: ranked, stacked: stacked,
+  return { fit: fit, columns: columns, line: line, grouped: grouped, ranked: ranked, stacked: stacked,
            sparkline: sparkline, money: money, niceMax: niceMax };
 })();

@@ -351,10 +351,13 @@
   function renderCharts(rows) {
     var view = state.trendView;
     var years = byYear(rows);
+    C.fit('chart-comm', { w: 1160, h: 270, count: years.length, minSlot: 34, mobileH: 260, scrollTo: 'end' });
     C.grouped('chart-comm', years, { keyA: 'gross_comm', keyB: 'net_comm' });
 
     if (view === 'rolling') {
       wide(false);
+      C.fit('chart-volume', { w: 560, h: 250, mobileH: 230 });
+      C.fit('chart-count',  { w: 560, h: 250, mobileH: 230 });
       var rv = rolling12(rows, 'volume'), rc = rolling12(rows, 'count');
       C.line('chart-volume', rv, { format: money, tipLabel: 'Sales volume' });
       C.line('chart-count',  rc, { format: countFmt, tipLabel: 'Transactions' });
@@ -392,6 +395,7 @@
       // together (correlation .95, never more than 1.8 points apart in any
       // month), so a second panel would repeat the first one in another unit.
       wide(true);
+      C.fit('chart-volume', { w: 1160, h: 270, count: 12, minSlot: 20, mobileH: 250 });
       var sc = seasonProfile(rows, 'count');
       var pct = function (v, compact) { return compact ? Math.round(v) + '%' : v.toFixed(1) + '% of the year'; };
       var extra = function (d) {
@@ -420,6 +424,8 @@
         'the slow stretch usually falls, not to predict what any single month will bring.';
     } else {
       wide(false);
+      C.fit('chart-volume', { w: 560, h: 250, count: years.length, minSlot: 26, mobileH: 230, scrollTo: 'end' });
+      C.fit('chart-count',  { w: 560, h: 250, count: years.length, minSlot: 26, mobileH: 230, scrollTo: 'end' });
       C.columns('chart-volume', years, { key: 'volume', format: money, tipLabel: 'Sales volume' });
       C.columns('chart-count',  years, { key: 'count', format: countFmt, tipLabel: 'Transactions' });
       $('vol-title').textContent = 'Sales Volume by Year';
@@ -648,6 +654,7 @@
     var chartYears = Object.keys(years).map(Number).sort(function (a, b) { return a - b; })
       .map(function (y) { return { year: y, parts: years[y] }; });
 
+    C.fit('chart-payroll', { w: 1160, h: 300, count: chartYears.length, minSlot: 32, mobileH: 280, scrollTo: 'end' });
     C.stacked('chart-payroll', chartYears, series);
     $('agents-legend').innerHTML = series.map(function (s) {
       return '<div class="legend-item"><span class="legend-swatch" style="background:' + s.color + '"></span>' + esc(s.label) + '</div>';
