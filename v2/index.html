@@ -9,8 +9,8 @@
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/favicon.png">
 <link rel="preload" href="assets/fonts/montserrat-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/fonts.css?v=41bca56e">
-<link rel="stylesheet" href="css/app.css?v=41bca56e">
+<link rel="stylesheet" href="css/fonts.css?v=4591fb99">
+<link rel="stylesheet" href="css/app.css?v=4591fb99">
 </head>
 <body>
 
@@ -76,23 +76,34 @@
 
   <!-- ================= TRENDS ================= -->
   <section class="section">
-    <div class="section-head"><h2>Production Over Time</h2></div>
-    <div class="grid-2">
+    <div class="section-head">
+      <h2>Production Over Time</h2>
+      <div class="section-head__right">
+        <span class="meta" id="trend-meta"></span>
+        <div class="seg" id="trend-view" role="group" aria-label="How to slice the timeline">
+          <button type="button" class="seg__btn is-on" data-view="year">By year</button>
+          <button type="button" class="seg__btn" data-view="rolling">Last 12 months</button>
+          <button type="button" class="seg__btn" data-view="season">Season</button>
+        </div>
+      </div>
+    </div>
+    <div class="grid-2" id="trend-grid">
       <div class="card">
         <div class="card__head">
-          <h3 class="card__title">Sales Volume by Year</h3>
-          <p class="card__sub">Total closed sale price, all represented sides</p>
+          <h3 class="card__title" id="vol-title">Sales Volume by Year</h3>
+          <p class="card__sub" id="vol-sub">Total closed sale price, all represented sides</p>
         </div>
         <div class="card__body"><div class="chart-holder"><svg class="chart" id="chart-volume" viewBox="0 0 560 250"></svg></div></div>
       </div>
-      <div class="card">
+      <div class="card" id="trend-card-2">
         <div class="card__head">
-          <h3 class="card__title">Transactions Closed by Year</h3>
-          <p class="card__sub">Number of closed sides represented</p>
+          <h3 class="card__title" id="cnt-title">Transactions Closed by Year</h3>
+          <p class="card__sub" id="cnt-sub">Number of closed sides represented</p>
         </div>
         <div class="card__body"><div class="chart-holder"><svg class="chart" id="chart-count" viewBox="0 0 560 250"></svg></div></div>
       </div>
     </div>
+    <p class="card__note" id="trend-note" hidden></p>
 
     <div class="card" style="margin-top:14px;">
       <div class="card__head">
@@ -464,12 +475,12 @@
 <div class="tooltip" id="tooltip"></div>
 <div class="toast-wrap" id="toast-wrap"></div>
 
-<script src="js/config.js?v=41bca56e"></script>
-<script src="js/seed.js?v=41bca56e"></script>
-<script src="js/agents-seed.js?v=41bca56e"></script>
-<script src="js/economics-seed.js?v=41bca56e"></script>
-<script src="js/store.js?v=41bca56e"></script>
-<script src="js/charts.js?v=41bca56e"></script>
-<script src="js/app.js?v=41bca56e"></script>
+<script src="js/config.js?v=4591fb99"></script>
+<script src="js/seed.js?v=4591fb99"></script>
+<script src="js/agents-seed.js?v=4591fb99"></script>
+<script src="js/economics-seed.js?v=4591fb99"></script>
+<script src="js/store.js?v=4591fb99"></script>
+<script src="js/charts.js?v=4591fb99"></script>
+<script src="js/app.js?v=4591fb99"></script>
 </body>
 </html>

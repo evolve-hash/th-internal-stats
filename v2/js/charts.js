@@ -110,7 +110,7 @@ window.TH_CHARTS = (function () {
     var maxRaw = Math.max.apply(null, data.map(function (d) { return d[key] || 0; }));
     var top = niceMax(maxRaw * 1.08);
     var slot = plotW / data.length;
-    var barW = Math.min(24, slot - 5);
+    var barW = Math.min(opts.maxBarW || 24, slot - 5);
 
     for (var i = 0; i <= 4; i++) {
       var yv = top * i / 4;
@@ -127,7 +127,7 @@ window.TH_CHARTS = (function () {
       var x = padL + i * slot + (slot - barW) / 2;
       var h = Math.max((v / top) * plotH, v > 0 ? 2 : 0);
       var y = padT + plotH - h;
-      var isLast = i === data.length - 1;
+      var isLast = opts.highlight === 'none' ? false : (i === data.length - 1);
 
       var g = el('g', { 'class': 'bar-group' });
       var rect = el('rect', {
@@ -140,21 +140,108 @@ window.TH_CHARTS = (function () {
 
       var hit = el('rect', { x: padL + i * slot, y: padT, width: slot, height: plotH, 'class': 'bar-hit' });
       bindTip(hit, function () {
-        return '<strong>' + d.year + '</strong><div class="t-row"><span>' + opts.tipLabel + '</span><span>' + fmt(v) + '</span></div>';
+        var title = opts.tipTitle ? opts.tipTitle(d) : d.year;
+        return '<strong>' + title + '</strong><div class="t-row"><span>' + opts.tipLabel +
+               '</span><span>' + fmt(v) + '</span></div>' +
+               (opts.tipExtra ? opts.tipExtra(d) : '');
       });
       g.appendChild(hit);
       svg.appendChild(g);
 
-      if (isLast || v === maxRaw) {
+      if ((isLast || v === maxRaw) && opts.hideValueLabels !== true) {
         var lbl = el('text', { x: x + barW / 2, y: y - 6, 'class': 'val-label' });
         lbl.textContent = fmt(v, true);
         svg.appendChild(lbl);
       }
-      if (i % everyN === 0 || isLast) {
+      if (i % everyN === 0 || isLast || opts.labelEvery === 1) {
         var xl = el('text', { x: x + barW / 2, y: H - 9, 'text-anchor': 'middle', 'class': 'axis-label' });
-        xl.textContent = "'" + String(d.year).slice(2);
+        xl.textContent = opts.label ? opts.label(d) : ("'" + String(d.year).slice(2));
         svg.appendChild(xl);
       }
+    });
+  }
+
+
+  /* ---------- single-series line ----------
+     Used for the rolling twelve-month view: one quantity through time, so one
+     hue and no legend. Every point is hoverable, but only a few are drawn as
+     dots — 200-odd visible dots would read as noise rather than as data. */
+  function line(svgId, points, opts) {
+    var svg = document.getElementById(svgId);
+    if (!svg) return;
+    var vb = svg.viewBox.baseVal;
+    var W = vb.width, H = vb.height;
+    svg.innerHTML = '';
+    if (points.length < 2) return;
+
+    var padL = 52, padR = 12, padT = 18, padB = 28;
+    var plotW = W - padL - padR, plotH = H - padT - padB;
+    var fmt = opts.format;
+    var maxRaw = Math.max.apply(null, points.map(function (p) { return p.value || 0; }));
+    var top = niceMax(maxRaw * 1.08);
+
+    for (var i = 0; i <= 4; i++) {
+      var yv = top * i / 4;
+      var gy = padT + plotH - (yv / top) * plotH;
+      svg.appendChild(el('line', { x1: padL, x2: W - padR, y1: gy, y2: gy,
+                                   'class': i === 0 ? 'baseline' : 'grid-line' }));
+      var t = el('text', { x: padL - 8, y: gy + 3.5, 'text-anchor': 'end', 'class': 'axis-label' });
+      t.textContent = fmt(yv, true);
+      svg.appendChild(t);
+    }
+
+    var X = function (i) { return padL + (points.length === 1 ? plotW / 2 : i * plotW / (points.length - 1)); };
+    var Y = function (v) { return padT + plotH - ((v || 0) / top) * plotH; };
+
+    var dArea = 'M' + X(0) + ' ' + (padT + plotH);
+    var dLine = '';
+    points.forEach(function (p, i) {
+      dArea += ' L' + X(i).toFixed(1) + ' ' + Y(p.value).toFixed(1);
+      dLine += (i ? ' L' : 'M') + X(i).toFixed(1) + ' ' + Y(p.value).toFixed(1);
+    });
+    dArea += ' L' + X(points.length - 1) + ' ' + (padT + plotH) + ' Z';
+
+    svg.appendChild(el('path', { d: dArea, fill: 'var(--brand-wash)', stroke: 'none' }));
+    var path = el('path', { d: dLine, fill: 'none', stroke: 'var(--brand)',
+                            'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round',
+                            'class': 'line-path' });
+    svg.appendChild(path);
+    // Draw the line on, left to right.
+    try {
+      var len = path.getTotalLength();
+      path.style.strokeDasharray = len;
+      path.style.strokeDashoffset = len;
+      path.getBoundingClientRect();
+      path.style.transition = 'stroke-dashoffset .7s cubic-bezier(.22,.61,.36,1)';
+      path.style.strokeDashoffset = 0;
+    } catch (e) {}
+
+    // Final point, called out.
+    var lastI = points.length - 1;
+    svg.appendChild(el('circle', { cx: X(lastI), cy: Y(points[lastI].value), r: 3.5,
+                                   fill: 'var(--brand)', stroke: 'var(--surface)', 'stroke-width': 2 }));
+    var lbl = el('text', { x: X(lastI), y: Y(points[lastI].value) - 9, 'text-anchor': 'end', 'class': 'val-label' });
+    lbl.textContent = fmt(points[lastI].value, true);
+    svg.appendChild(lbl);
+
+    // Hover columns across the whole plot.
+    var slot = plotW / points.length;
+    points.forEach(function (p, i) {
+      var hit = el('rect', { x: X(i) - slot / 2, y: padT, width: slot, height: plotH, 'class': 'bar-hit' });
+      bindTip(hit, function () {
+        return '<strong>' + p.label + '</strong><div class="t-row"><span>' + opts.tipLabel +
+               '</span><span>' + fmt(p.value) + '</span></div>' + (p.extra || '');
+      });
+      svg.appendChild(hit);
+    });
+
+    // Sparse x labels.
+    var everyN = Math.max(1, Math.round(points.length / 8));
+    points.forEach(function (p, i) {
+      if (i % everyN && i !== lastI) return;
+      var xl = el('text', { x: X(i), y: H - 9, 'text-anchor': 'middle', 'class': 'axis-label' });
+      xl.textContent = p.short;
+      svg.appendChild(xl);
     });
   }
 
@@ -457,6 +544,6 @@ window.TH_CHARTS = (function () {
     '</svg>';
   }
 
-  return { columns: columns, grouped: grouped, ranked: ranked, stacked: stacked,
+  return { columns: columns, line: line, grouped: grouped, ranked: ranked, stacked: stacked,
            sparkline: sparkline, money: money, niceMax: niceMax };
 })();
