@@ -365,11 +365,28 @@
       $('trend-meta').textContent = rc.length
         ? 'Now running at ' + Math.round(rc[rc.length - 1].value) + ' sales a year'
         : '';
+      // Read from the data rather than written in, so the sentence stays true
+      // as sales are added.
+      var lastRolling = (rc.length && rv.length)
+        ? Math.round(rc[rc.length - 1].value) + ' transactions and ' + money(rv[rv.length - 1].value, true)
+        : 'a full year of business';
       $('trend-note').hidden = false;
-      $('trend-note').textContent =
-        'A rolling twelve-month total is the cleanest read on pace at this volume: it strips out the ' +
-        'season without a model, and it moves every month instead of once a year. The line lags a turn ' +
-        'by about half a year, which is the price of that stability.';
+      $('trend-note').innerHTML =
+        '<strong>How to read it.</strong> The last point on the line is what we closed in the last twelve ' +
+        'months: ' + lastRolling + '. The point immediately before it is the total for the twelve months ' +
+        'ending one month earlier. Every point is a full year of business, so the line always answers the ' +
+        'same question: at the pace we are working right now, how much do we produce in a year?' +
+        '<br><br>' +
+        '<strong>Why we do not simply compare months.</strong> In 2025, January closed no transactions and ' +
+        'February closed five. Reading those two months on their own, it would look like the business ' +
+        'collapsed and then recovered thirty days later. Neither happened, because 2025 finished with 31 ' +
+        'transactions, which is a normal year for us. What moves between one month and the next is usually ' +
+        'the recording date, and that date is set by escrow, the lender and the parties\u2019 schedules ' +
+        'rather than by how the team performed. If a deal records on August 2 instead of July 31, the July ' +
+        'total and the August total both change, but the twelve-month total does not change at all, because ' +
+        'both of those dates fall inside the same twelve-month window. That is why this line stays steady ' +
+        'when a closing slides by a few days, and moves only when the amount of business we are actually ' +
+        'doing changes.';
     } else if (view === 'season') {
       // One chart, not two: the share of dollars and the share of sales move
       // together (correlation .95, never more than 1.8 points apart in any
@@ -387,15 +404,20 @@
                                       tipLabel: 'Share of the year', maxBarW: 46 });
       $('vol-title').textContent = 'When Sales Close';
       $('vol-sub').textContent = 'Average share of the year by month, whole years only — an even split would be 8.3% each';
-      $('trend-meta').textContent = 'Q1 runs about 19% of the year';
+      $('trend-meta').textContent = 'January runs at 43% of a normal month';
       $('trend-note').hidden = false;
-      $('trend-note').textContent =
-        'The reliable pattern is the first quarter: it has come in under a normal quarter in thirteen of ' +
-        'the last fifteen years, and January alone averages about 4% of the year against the 8.3% an even ' +
-        'split would give it. Individual months past that bounce around far too much to plan on — hover any ' +
-        'bar to see the range it has actually taken. Read this as when to expect the lull, not as a forecast. ' +
-        'Dollars follow the same shape as deal count almost exactly, so counting sales is enough — there is ' +
-        'no month where the team closes fewer, bigger deals.';
+      $('trend-note').innerHTML =
+        '<strong>How to read it.</strong> Out of every 100 transactions the team has closed since 2008, this ' +
+        'shows how many landed in each month. If our business were spread evenly across the year, every bar ' +
+        'would sit at 8.3%. The bars above that height are our busier months and the ones below it are our ' +
+        'quieter ones.' +
+        '<br><br>' +
+        '<strong>What it tells us.</strong> January is the one month that is reliably different. We close a ' +
+        'little under half of what a normal month brings, and that has held in thirteen of the last fifteen ' +
+        'years, so it is worth building into the plan. The rest of the chart is less solid than it looks. ' +
+        'June is the tallest bar at 11%, but in some years June carried 24% of the whole year and in others ' +
+        'it carried nothing at all. That range is far too wide to plan against. Use this chart to know when ' +
+        'the slow stretch usually falls, not to predict what any single month will bring.';
     } else {
       wide(false);
       C.columns('chart-volume', years, { key: 'volume', format: money, tipLabel: 'Sales volume' });
@@ -405,6 +427,7 @@
       $('cnt-title').textContent = 'Transactions Closed by Year';
       $('cnt-sub').textContent = 'Number of closed sides represented';
       $('trend-meta').textContent = '';
+      $('trend-note').innerHTML = '';
       $('trend-note').hidden = true;
     }
 
