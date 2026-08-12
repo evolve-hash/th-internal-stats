@@ -636,6 +636,8 @@ tr:hover .row-actions, tr:focus-within .row-actions { opacity: 1; }
 .split-sum strong { color: var(--ink); font-weight: 700; }
 .split-sum.over { color: var(--serious); }
 .grid-2--single { grid-template-columns: 1fr; }
+/* A line series in the legend reads as a line, not as a filled block. */
+.legend-swatch--line { height: 3px; border-radius: 2px; align-self: center; }
 
 /* Collapsible section. grid-template-rows 0fr -> 1fr animates a height the
    browser works out itself, which max-height cannot do without a magic number. */

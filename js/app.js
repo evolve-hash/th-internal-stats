@@ -267,6 +267,7 @@
     return compact ? Math.round(v) : Math.round(v) + (Math.round(v) === 1 ? ' transaction' : ' transactions');
   };
   var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var MKT = window.TH_MARKET || null;
 
   /* Month buckets. A handful of historical rows carry a mistyped closing date,
      so the month comes from the date but the year always comes from the year
@@ -354,6 +355,7 @@
     C.fit('chart-comm', { w: 1160, h: 270, count: years.length, minSlot: 34, mobileH: 260, scrollTo: 'end' });
     C.grouped('chart-comm', years, { keyA: 'gross_comm', keyB: 'net_comm' });
 
+    if ($('trend-legend')) $('trend-legend').hidden = true;
     if (view === 'rolling') {
       wide(false);
       C.fit('chart-volume', { w: 560, h: 250, mobileH: 230 });
@@ -399,29 +401,51 @@
       var sc = seasonProfile(rows, 'count');
       var pct = function (v, compact) { return compact ? Math.round(v) + '%' : v.toFixed(1) + '% of the year'; };
       var extra = function (d) {
-        return '<div class="t-row"><span>Range across ' + d.years + ' years</span><span>' +
+        return '<div class="t-row"><span>Team Howe range, ' + d.years + ' years</span><span>' +
                d.lo.toFixed(0) + '–' + d.hi.toFixed(0) + '%</span></div>';
       };
+      // The market series is in the same unit — share of its own year — so both
+      // sit on one axis with no second scale to mislead anyone.
+      var ovl = MKT ? { values: MKT.shares, label: MKT.label, tipLabel: 'SF market listings',
+                        color: 'var(--series-a)' } : null;
       C.columns('chart-volume', sc, { key: 'share', format: pct, highlight: 'none', labelEvery: 1,
                                       hideValueLabels: true, label: function (d) { return d.month; },
                                       tipTitle: function (d) { return d.month; }, tipExtra: extra,
-                                      tipLabel: 'Share of the year', maxBarW: 46 });
+                                      tipLabel: 'Team Howe closings', maxBarW: 46, overlay: ovl });
+      if (MKT) {
+        $('trend-legend').hidden = false;
+        $('trend-legend').innerHTML =
+          '<div class="legend-item"><span class="legend-swatch" style="background:var(--ramp-5)"></span>' +
+          'Team Howe — closings</div>' +
+          '<div class="legend-item"><span class="legend-swatch legend-swatch--line" ' +
+          'style="background:var(--series-a)"></span>' + esc(MKT.label) + '</div>';
+      }
       $('vol-title').textContent = 'When Sales Close';
-      $('vol-sub').textContent = 'Average share of the year by month, whole years only — an even split would be 8.3% each';
-      $('trend-meta').textContent = 'January runs at 43% of a normal month';
+      $('vol-sub').textContent = MKT
+        ? 'Share of the year by month — Team Howe closings against San Francisco listings'
+        : 'Average share of the year by month, whole years only — an even split would be 8.3% each';
+      $('trend-meta').textContent = 'The market leads us by one month';
       $('trend-note').hidden = false;
       $('trend-note').innerHTML =
-        '<strong>How to read it.</strong> Out of every 100 transactions the team has closed since 2008, this ' +
-        'shows how many landed in each month. If our business were spread evenly across the year, every bar ' +
-        'would sit at 8.3%. The bars above that height are our busier months and the ones below it are our ' +
-        'quieter ones.' +
+        '<strong>How to read it.</strong> Out of every 100 transactions the team has closed since 2008, the ' +
+        'bars show how many landed in each month. If our business were spread evenly across the year, every ' +
+        'bar would sit at 8.3%. The line is the same measure for San Francisco as a whole: out of every 100 ' +
+        'homes put on the market, how many were listed in each month.' +
         '<br><br>' +
-        '<strong>What it tells us.</strong> January is the one month that is reliably different. We close a ' +
-        'little under half of what a normal month brings, and that has held in thirteen of the last fifteen ' +
-        'years, so it is worth building into the plan. The rest of the chart is less solid than it looks. ' +
-        'June is the tallest bar at 11%, but in some years June carried 24% of the whole year and in others ' +
-        'it carried nothing at all. That range is far too wide to plan against. Use this chart to know when ' +
-        'the slow stretch usually falls, not to predict what any single month will bring.';
+        '<strong>What it tells us.</strong> January is the one month of ours that is reliably different. We ' +
+        'close a little under half of what a normal month brings, and that has held in thirteen of the last ' +
+        'fifteen years, so it is worth building into the plan. The rest of the chart is less solid than it ' +
+        'looks. June is our tallest bar at 11%, but in some years June carried 24% of the whole year and in ' +
+        'others it carried nothing at all. That range is far too wide to plan against.' +
+        '<br><br>' +
+        '<strong>Why the line sits one month to the left.</strong> The city lists and we close about thirty ' +
+        'days later, so our calendar is the market\u2019s calendar shifted forward a month. Line the two up ' +
+        'that way and they match almost exactly. September is the market\u2019s biggest month by far, at 12.7% ' +
+        'of the year\u2019s listings, and it arrives as our October. May, at 10.2%, arrives as our June. And ' +
+        'December is the market\u2019s floor at 2.1%, which is what our slow January actually is: nobody can ' +
+        'close in January what the city never listed in December. The practical read is that the work which ' +
+        'wins the September wave has to happen in August, because by September the listings are already ' +
+        'signed. Market figures cover ' + MKT.period + ' and come from ' + esc(MKT.source) + '.';
     } else {
       wide(false);
       C.fit('chart-volume', { w: 560, h: 250, count: years.length, minSlot: 26, mobileH: 230, scrollTo: 'end' });

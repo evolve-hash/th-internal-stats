@@ -108,6 +108,10 @@ window.TH_CHARTS = (function () {
     var plotW = W - padL - padR, plotH = H - padT - padB;
     var key = opts.key, fmt = opts.format;
     var maxRaw = Math.max.apply(null, data.map(function (d) { return d[key] || 0; }));
+    var ov = opts.overlay;                     // second series, same units, drawn as a line
+    if (ov && ov.values && ov.values.length) {
+      maxRaw = Math.max(maxRaw, Math.max.apply(null, ov.values));
+    }
     var top = niceMax(maxRaw * 1.08);
     var slot = plotW / data.length;
     var barW = Math.min(opts.maxBarW || 24, slot - 5);
@@ -141,9 +145,13 @@ window.TH_CHARTS = (function () {
       var hit = el('rect', { x: padL + i * slot, y: padT, width: slot, height: plotH, 'class': 'bar-hit' });
       bindTip(hit, function () {
         var title = opts.tipTitle ? opts.tipTitle(d) : d.year;
-        return '<strong>' + title + '</strong><div class="t-row"><span>' + opts.tipLabel +
-               '</span><span>' + fmt(v) + '</span></div>' +
-               (opts.tipExtra ? opts.tipExtra(d) : '');
+        var html = '<strong>' + title + '</strong><div class="t-row"><span>' + opts.tipLabel +
+                   '</span><span>' + fmt(v) + '</span></div>';
+        if (ov && ov.values && ov.values[i] !== undefined) {
+          html += '<div class="t-row"><span>' + (ov.tipLabel || ov.label) + '</span><span>' +
+                  fmt(ov.values[i]) + '</span></div>';
+        }
+        return html + (opts.tipExtra ? opts.tipExtra(d) : '');
       });
       g.appendChild(hit);
       svg.appendChild(g);
@@ -159,6 +167,29 @@ window.TH_CHARTS = (function () {
         svg.appendChild(xl);
       }
     });
+
+    if (ov && ov.values && ov.values.length === data.length) {
+      var cx = function (i) { return padL + i * slot + slot / 2; };
+      var cy = function (v) { return padT + plotH - ((v || 0) / top) * plotH; };
+      var dLine = ov.values.map(function (v, i) {
+        return (i ? 'L' : 'M') + cx(i).toFixed(1) + ' ' + cy(v).toFixed(1);
+      }).join(' ');
+      var op = el('path', { d: dLine, fill: 'none', stroke: ov.color || 'var(--series-a)',
+                            'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' });
+      svg.appendChild(op);
+      ov.values.forEach(function (v, i) {
+        svg.appendChild(el('circle', { cx: cx(i), cy: cy(v), r: 2.6,
+                                       fill: ov.color || 'var(--series-a)',
+                                       stroke: 'var(--surface)', 'stroke-width': 1.5 }));
+      });
+      try {
+        var L = op.getTotalLength();
+        op.style.strokeDasharray = L; op.style.strokeDashoffset = L;
+        op.getBoundingClientRect();
+        op.style.transition = 'stroke-dashoffset .8s cubic-bezier(.22,.61,.36,1)';
+        op.style.strokeDashoffset = 0;
+      } catch (e) {}
+    }
   }
 
 
