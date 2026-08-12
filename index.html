@@ -9,8 +9,8 @@
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/favicon.png">
 <link rel="preload" href="assets/fonts/montserrat-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/fonts.css?v=506d486a">
-<link rel="stylesheet" href="css/app.css?v=506d486a">
+<link rel="stylesheet" href="css/fonts.css?v=bab61cab">
+<link rel="stylesheet" href="css/app.css?v=bab61cab">
 </head>
 <body>
 
@@ -381,20 +381,6 @@
             <input class="input" type="text" id="i-city" name="city" placeholder="San Francisco">
           </div>
           <div class="form-field">
-            <label for="i-price">Sale price ($) *</label>
-            <input class="input" type="number" id="i-price" name="sale_price" required min="0" step="1000" placeholder="1500000">
-          </div>
-          <div class="form-field">
-            <label for="i-gross">Gross commission ($)</label>
-            <input class="input" type="number" id="i-gross" name="gross_comm" min="0" step="0.01" placeholder="37500">
-            <span class="hint" id="hint-gross">Leave blank to auto-fill at 2.5% of sale price</span>
-          </div>
-          <div class="form-field">
-            <label for="i-net">Net commission ($)</label>
-            <input class="input" type="number" id="i-net" name="net_comm" min="0" step="0.01" placeholder="31875">
-            <span class="hint">What actually landed after splits and deductions</span>
-          </div>
-          <div class="form-field">
             <label for="i-source">Source</label>
             <select class="select" id="i-source" name="source">
               <option>Referral</option><option>Repeat client</option><option>Sphere of influence</option>
@@ -403,40 +389,75 @@
               <option>Self-generated</option><option>Other</option><option>Not recorded</option>
             </select>
           </div>
-          <div class="form-field">
+          <div class="form-field" id="referrer-field">
             <label for="i-referrer">Referrer name</label>
             <input class="input" type="text" id="i-referrer" name="referrer" placeholder="Who sent them your way">
+            <span class="hint" id="hint-referrer"></span>
           </div>
         </div>
 
-        <div id="deduct-block">
+        <div id="money-block">
           <div class="split-head">
-            <span>Where the difference went</span>
-            <span class="split-head__hint">Optional — anything you skip shows as “other deductions”</span>
+            <span>The money</span>
+            <span class="split-head__hint">Type the price and the rate — everything below works itself out</span>
           </div>
           <div class="form-grid">
             <div class="form-field">
-              <label for="i-referral">Referral paid out ($)</label>
-              <input class="input" type="number" id="i-referral" name="referral_fee" min="0" step="0.01" placeholder="0">
+              <label for="i-price">Sale price ($) *</label>
+              <input class="input" type="number" id="i-price" name="sale_price" required min="0" step="1000" placeholder="1500000">
             </div>
             <div class="form-field">
-              <label for="i-brokerage">Brokerage split ($)</label>
-              <input class="input" type="number" id="i-brokerage" name="brokerage_fee" min="0" step="0.01" placeholder="0">
-            </div>
-            <div class="form-field">
-              <label for="i-costs">TC fee &amp; warranties ($)</label>
-              <input class="input" type="number" id="i-costs" name="other_costs" min="0" step="0.01" placeholder="0">
+              <label for="i-rate">Commission rate</label>
+              <div class="pct-field">
+                <input class="input" type="number" id="i-rate" min="0" max="10" step="0.05" value="2.5">
+                <span class="pct-field__sign">%</span>
+              </div>
+              <span class="hint" id="hint-rate"></span>
             </div>
           </div>
-          <div class="split-foot">
-            <div class="split-sum" id="deduct-sum"></div>
+
+          <div class="calc-chain" id="calc-chain">
+            <div class="calc-line calc-line--total"><span>Gross commission</span><span id="o-gross">—</span></div>
+
+            <div class="calc-in">
+              <label for="i-ref-pct">Referral paid out</label>
+              <div class="pct-field pct-field--sm">
+                <input class="input" type="number" id="i-ref-pct" min="0" max="100" step="1" value="0">
+                <span class="pct-field__sign">%</span>
+              </div>
+              <span class="calc-in__note" id="n-ref">of gross</span>
+              <span class="calc-in__val" id="o-ref">$0</span>
+            </div>
+
+            <div class="calc-in">
+              <label for="i-brok-pct">Brokerage split</label>
+              <div class="pct-field pct-field--sm">
+                <input class="input" type="number" id="i-brok-pct" min="0" max="100" step="0.5" value="12">
+                <span class="pct-field__sign">%</span>
+              </div>
+              <span class="calc-in__note" id="n-brok">of what is left</span>
+              <span class="calc-in__val" id="o-brok">$0</span>
+            </div>
+
+            <div class="calc-in">
+              <label for="i-costs">TC fee &amp; warranties</label>
+              <div class="pct-field pct-field--sm pct-field--money">
+                <span class="pct-field__sign pct-field__sign--pre">$</span>
+                <input class="input" type="number" id="i-costs" min="0" step="5" value="500">
+              </div>
+              <span class="calc-in__note" id="n-costs">flat</span>
+              <span class="calc-in__val" id="o-costs">$0</span>
+            </div>
+
+            <div class="calc-line calc-line--total"><span>Net commission</span><span id="o-net">—</span></div>
           </div>
+          <p class="calc-note" id="money-hint"></p>
         </div>
 
         <div id="split-block" hidden>
           <div class="split-head">
             <span>Who gets paid</span>
-            <span class="split-head__hint">Optional — leave blank if you'll fill it in later</span>
+            <span class="split-head__hint">Pick the teammate and their share — the amount follows</span>
           </div>
           <div id="split-rows"></div>
           <div class="split-foot">
@@ -486,13 +507,13 @@
 <div class="tooltip" id="tooltip"></div>
 <div class="toast-wrap" id="toast-wrap"></div>
 
-<script src="js/config.js?v=506d486a"></script>
-<script src="js/seed.js?v=506d486a"></script>
-<script src="js/agents-seed.js?v=506d486a"></script>
+<script src="js/config.js?v=bab61cab"></script>
+<script src="js/seed.js?v=bab61cab"></script>
+<script src="js/agents-seed.js?v=bab61cab"></script>
 <script src="js/market-seed.js"></script>
-<script src="js/economics-seed.js?v=506d486a"></script>
-<script src="js/store.js?v=506d486a"></script>
-<script src="js/charts.js?v=506d486a"></script>
-<script src="js/app.js?v=506d486a"></script>
+<script src="js/economics-seed.js?v=bab61cab"></script>
+<script src="js/store.js?v=bab61cab"></script>
+<script src="js/charts.js?v=bab61cab"></script>
+<script src="js/app.js?v=bab61cab"></script>
 </body>
 </html>

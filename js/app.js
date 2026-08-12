@@ -1086,6 +1086,28 @@
     agentOptions = active.concat(past.length ? ['—'] : [], past);
   }
 
+  /* Every share this teammate has actually been paid, worked out from the
+     payout records against each sale's own net commission. The rate depends on
+     whose client it was, so one person legitimately shows several — the list is
+     ordered by how often each has been used. */
+  function ratesFor(agent) {
+    if (!agent || !store.payoutsLoaded()) return [];
+    var byId = {};
+    store.all().forEach(function (r) { byId[r.id] = r; });
+    var c = {};
+    store.payouts().forEach(function (p) {
+      if (p.role === 'house' || p.agent !== agent || !p.transaction_id) return;
+      var t = byId[p.transaction_id];
+      if (!t || !(t.net_comm > 0)) return;
+      var pct = Math.round(p.amount / t.net_comm * 20) * 5;      // nearest 5%
+      if (pct <= 0 || pct > 100) return;
+      c[pct] = (c[pct] || 0) + 1;
+    });
+    return Object.keys(c).map(Number)
+      .sort(function (a, b) { return c[b] - c[a] || b - a; })
+      .map(function (pct) { return { pct: pct, n: c[pct] }; });
+  }
+
   function splitRowHTML(agent, amount) {
     var opts = '<option value="">Choose a teammate…</option>' + agentOptions.map(function (n) {
       if (n === '—') return '<option disabled>── no longer on the team ──</option>';
@@ -1093,14 +1115,61 @@
     }).join('');
     return '<div class="split-row">' +
       '<select class="select js-agent">' + opts + '</select>' +
-      '<input class="input js-amount" type="number" min="0" step="0.01" placeholder="Their $" value="' +
+      '<select class="select js-rate">' + rateOptionsHTML(agent, null) + '</select>' +
+      '<input class="input js-amount" type="number" min="0" step="0.01" placeholder="$" value="' +
         (amount === null || amount === undefined ? '' : amount) + '">' +
       '<button type="button" class="split-del" aria-label="Remove"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
     '</div>';
   }
 
+  function rateOptionsHTML(agent, selectedPct) {
+    var list = ratesFor(agent).slice(0, 5);
+    var out = '<option value="">Share…</option>';
+    list.forEach(function (r) {
+      out += '<option value="' + r.pct + '"' + (r.pct === selectedPct ? ' selected' : '') + '>' +
+             r.pct + '% · ' + r.n + 'x</option>';
+    });
+    [20, 25, 30, 50, 55, 70, 75, 80].forEach(function (p) {
+      if (list.some(function (r) { return r.pct === p; })) return;
+      out += '<option value="' + p + '"' + (p === selectedPct ? ' selected' : '') + '>' + p + '%</option>';
+    });
+    out += '<option value="custom">Enter the dollars myself</option>';
+    return out;
+  }
+
+  // Pick a teammate and the amount appears; type an amount and the share follows.
+  function syncSplitRow(row, from) {
+    var agentEl = row.querySelector('.js-agent');
+    var rateEl = row.querySelector('.js-rate');
+    var amtEl = row.querySelector('.js-amount');
+    var net = calcState.net;
+
+    if (from === 'agent') {
+      var list = ratesFor(agentEl.value);
+      rateEl.innerHTML = rateOptionsHTML(agentEl.value, list.length ? list[0].pct : null);
+    }
+    if (from === 'amount') {
+      if (net > 0 && Number(amtEl.value) > 0) {
+        var pct = Math.round(Number(amtEl.value) / net * 20) * 5;
+        var opt = rateEl.querySelector('option[value="' + pct + '"]');
+        rateEl.value = opt ? String(pct) : 'custom';
+      }
+      return;
+    }
+    if (rateEl.value && rateEl.value !== 'custom' && net > 0) {
+      amtEl.value = Math.round(net * Number(rateEl.value) / 100 * 100) / 100;
+    }
+  }
+
+  function syncAllSplitRows() {
+    Array.prototype.forEach.call(document.querySelectorAll('#split-rows .split-row'), function (row) {
+      if (row.querySelector('.js-agent').value) syncSplitRow(row, 'rate');
+    });
+  }
+
   function refreshSplitSum() {
-    var net = Number($('i-net').value) || 0;
+    var net = calcState.net || 0;
+    syncAllSplitRows();
     var sum = 0;
     Array.prototype.forEach.call(document.querySelectorAll('#split-rows .js-amount'), function (i) {
       sum += Number(i.value) || 0;
@@ -1109,7 +1178,7 @@
     if (!sum) { el.textContent = ''; el.classList.remove('over'); return; }
     if (net) {
       var house = net - sum;
-      el.innerHTML = 'Teammates <strong>' + money(sum) + '</strong> · house keeps <strong>' + money(house) + '</strong>';
+      el.innerHTML = 'Teammates <strong>' + money(sum) + '</strong> · Team Howe keeps <strong>' + money(house) + '</strong>';
       el.classList.toggle('over', house < 0);
       if (house < 0) el.innerHTML += ' — more than the net commission';
     } else {
@@ -1136,40 +1205,115 @@
     else setSplitRows(null);
     refreshSplitSum();
   });
-  $('split-rows').addEventListener('input', refreshSplitSum);
-  $('i-net').addEventListener('input', refreshSplitSum);
-
-  // Live read-out of what the three deduction lines do and do not explain, so
-  // nobody has to guess what "other deductions" will end up holding.
-  function refreshDeductSum() {
-    var gross = Number($('i-gross').value) || 0;
-    var net = Number($('i-net').value) || 0;
-    var named = ['i-referral', 'i-brokerage', 'i-costs']
-      .reduce(function (a, id) { return a + (Number($(id).value) || 0); }, 0);
-    var el = $('deduct-sum');
-    if (!gross || !net) {
-      el.textContent = named ? 'Accounted for ' + money(named) : '';
-      el.classList.remove('over');
-      return;
-    }
-    var gap = gross - net;
-    var other = gap - named;
-    if (other > 1) {
-      el.innerHTML = 'Gross less net is <strong>' + money(gap) + '</strong> · ' +
-                     money(other) + ' of that will show as other deductions';
-      el.classList.remove('over');
-    } else if (other < -1) {
-      el.innerHTML = 'These lines add up to <strong>' + money(named) + '</strong>, more than the ' +
-                     money(gap) + ' between gross and net';
-      el.classList.add('over');
-    } else {
-      el.innerHTML = 'Fully accounted for — <strong>' + money(named) + '</strong>';
-      el.classList.remove('over');
-    }
-  }
-  ['i-referral', 'i-brokerage', 'i-costs', 'i-gross', 'i-net'].forEach(function (id) {
-    $(id).addEventListener('input', refreshDeductSum);
+  $('split-rows').addEventListener('change', function (e) {
+    var row = e.target.closest('.split-row');
+    if (!row) return;
+    if (e.target.classList.contains('js-agent')) syncSplitRow(row, 'agent');
+    if (e.target.classList.contains('js-rate')) syncSplitRow(row, 'rate');
+    refreshSplitSum();
   });
+  $('split-rows').addEventListener('input', function (e) {
+    if (e.target.classList.contains('js-amount')) {
+      var row = e.target.closest('.split-row');
+      if (row) syncSplitRow(row, 'amount');
+    }
+    var net = calcState.net || 0, sum = 0;
+    Array.prototype.forEach.call(document.querySelectorAll('#split-rows .js-amount'), function (i) {
+      sum += Number(i.value) || 0;
+    });
+    var el = $('split-sum');
+    if (!sum) { el.textContent = ''; el.classList.remove('over'); return; }
+    var house = net - sum;
+    el.innerHTML = 'Teammates <strong>' + money(sum) + '</strong>' +
+      (net ? ' · Team Howe keeps <strong>' + money(house) + '</strong>' : '');
+    el.classList.toggle('over', net > 0 && house < 0);
+  });
+
+  /* ==================== THE MONEY, WORKED OUT ====================
+     The workbook computes a sale in one chain, and so does this form:
+       gross      = sale price x commission rate
+       referral   = gross x referral %
+       brokerage  = (gross - referral) x brokerage %
+       net        = gross - referral - brokerage - TC and warranties
+     Net is never typed. It is the identity above, which is what keeps the
+     "where the money goes" panel from ever showing an unexplained remainder. */
+
+  var calcState = { gross: 0, referral: 0, brokerage: 0, costs: 0, net: 0 };
+
+  function num(id) { var el = $(id); var v = el ? Number(el.value) : 0; return isNaN(v) ? 0 : v; }
+
+  // What the team has actually been charging lately, read from the records
+  // rather than written in, so the suggestion ages with the business.
+  function suggestedRates() {
+    var recent = store.all().filter(function (r) {
+      return r.sale_price > 0 && r.gross_comm > 0 && r.year;
+    }).sort(function (a, b) { return (b.year - a.year) || String(b.date || '').localeCompare(String(a.date || '')); })
+      .slice(0, 30);
+    var mode = function (vals, dp) {
+      if (!vals.length) return null;
+      var c = {};
+      vals.forEach(function (v) { var k = v.toFixed(dp); c[k] = (c[k] || 0) + 1; });
+      var best = null;
+      Object.keys(c).forEach(function (k) { if (!best || c[k] > c[best]) best = k; });
+      return { value: Number(best), n: c[best], of: vals.length };
+    };
+    return {
+      comm: mode(recent.map(function (r) { return r.gross_comm / r.sale_price * 100; }), 2),
+      brok: mode(recent.filter(function (r) { return r.brokerage_fee > 0; })
+                       .map(function (r) { return r.brokerage_fee / (r.gross_comm - (r.referral_fee || 0)) * 100; }), 0),
+      cost: mode(recent.filter(function (r) { return r.other_costs > 0; })
+                       .map(function (r) { return r.other_costs; }), 0)
+    };
+  }
+
+  function recalcMoney() {
+    var g = num('i-price') * (num('i-rate') / 100);
+    var ref = g * (num('i-ref-pct') / 100);
+    var brok = (g - ref) * (num('i-brok-pct') / 100);
+    var costs = num('i-costs');
+    var net = g - ref - brok - costs;
+    calcState = { gross: g, referral: ref, brokerage: brok, costs: costs, net: net };
+
+    $('o-gross').textContent = g ? money(g) : '—';
+    $('o-ref').textContent = '−' + money(ref);
+    $('o-brok').textContent = '−' + money(brok);
+    $('o-costs').textContent = '−' + money(costs);
+    $('o-net').textContent = g ? money(Math.max(net, 0)) : '—';
+    $('n-ref').textContent = g ? 'of ' + money(g) : 'of gross';
+    $('n-brok').textContent = g ? 'of ' + money(g - ref) : 'of what is left';
+    $('o-net').classList.toggle('is-bad', net < 0);
+    $('money-hint').textContent = !g
+      ? 'Type the sale price and this fills itself in.'
+      : (net < 0
+          ? 'The deductions add up to more than the commission — check the percentages.'
+          : Math.round(net / g * 100) + '% of the gross survives');
+    refreshSplitSum();
+  }
+
+  ['i-price', 'i-rate', 'i-ref-pct', 'i-brok-pct', 'i-costs'].forEach(function (id) {
+    var el = $(id);
+    if (el) el.addEventListener('input', recalcMoney);
+  });
+
+  /* ---- referrer: only offered where the records say it belongs ----
+     Measured over all 521 sales: 94% of referrals name someone, and the sources
+     below effectively never do. Greying it out beats an empty box nobody knows
+     whether to fill. */
+  var NO_REFERRER = ['Repeat client', 'Marketing', 'Not recorded', "Teammate's client",
+                     'Networking', 'Yelp'];
+  function syncReferrer() {
+    var src = $('i-source').value;
+    var off = NO_REFERRER.indexOf(src) > -1;
+    var f = $('i-referrer');
+    f.disabled = off;
+    $('referrer-field').classList.toggle('is-off', off);
+    if (off) f.value = '';
+    $('hint-referrer').textContent = off
+      ? 'Not used for ' + src.toLowerCase()
+      : (src === 'Referral' ? '94% of referrals name someone' : 'Optional');
+  }
+  on('i-source', 'change', syncReferrer);
+
 
   function collectSplit(year) {
     var out = [];
@@ -1185,8 +1329,8 @@
     state.editingId = row ? row.id : null;
     $('modal-title').textContent = row ? 'Edit Sale' : 'Add a Sale';
     $('modal-save').textContent = row ? 'Save Changes' : 'Save Sale';
-    $('hint-gross').style.display = row ? 'none' : '';
     form.reset();
+    var sug = suggestedRates();
     if (row) {
       $('i-date').value = row.date || '';
       $('i-client').value = row.client || '';
@@ -1195,17 +1339,31 @@
       $('i-address').value = row.address || '';
       $('i-city').value = row.city || '';
       $('i-price').value = row.sale_price === null ? '' : row.sale_price;
-      $('i-gross').value = row.gross_comm === null ? '' : row.gross_comm;
-      $('i-net').value = row.net_comm === null ? '' : row.net_comm;
       $('i-source').value = row.source || 'Referral';
       $('i-referrer').value = row.referrer || '';
-      $('i-referral').value = row.referral_fee === null || row.referral_fee === undefined ? '' : row.referral_fee;
-      $('i-brokerage').value = row.brokerage_fee === null || row.brokerage_fee === undefined ? '' : row.brokerage_fee;
-      $('i-costs').value = row.other_costs === null || row.other_costs === undefined ? '' : row.other_costs;
+      // The record stores dollars; the form works in percentages. Read them back
+      // out so an edit starts from what was actually saved, not from a default.
+      var p0 = Number(row.sale_price) || 0, g0 = Number(row.gross_comm) || 0;
+      $('i-rate').value = p0 && g0 ? +(g0 / p0 * 100).toFixed(3) : 2.5;
+      var rf = Number(row.referral_fee) || 0;
+      $('i-ref-pct').value = g0 ? +(rf / g0 * 100).toFixed(2) : 0;
+      var bf = Number(row.brokerage_fee) || 0;
+      $('i-brok-pct').value = (g0 - rf) > 0 ? +(bf / (g0 - rf) * 100).toFixed(2) : 0;
+      $('i-costs').value = Number(row.other_costs) || 0;
     } else {
       $('i-city').value = 'San Francisco';
       $('i-source').value = 'Referral';
+      $('i-rate').value = sug.comm ? sug.comm.value : 2.5;
+      $('i-ref-pct').value = 0;
+      $('i-brok-pct').value = sug.brok ? sug.brok.value : 12;
+      $('i-costs').value = sug.cost ? sug.cost.value : 500;
     }
+    $('hint-rate').textContent = sug.comm
+      ? sug.comm.value + '% on ' + sug.comm.n + ' of the last ' + sug.comm.of + ' sales'
+      : '';
+    $('n-costs').textContent = sug.cost ? 'usually ' + money(sug.cost.value) : 'flat';
+    syncReferrer();
+    recalcMoney();
 
     // The split block only appears once payroll is available (i.e. signed in).
     var canSplit = store.payoutsLoaded() && agentOptions.length;
@@ -1214,9 +1372,16 @@
       setSplitRows(row ? store.payoutsFor(row.id)
         .filter(function (p) { return p.role !== 'house'; })
         .map(function (p) { return { agent: p.agent, amount: p.amount }; }) : null);
+      Array.prototype.forEach.call(document.querySelectorAll('#split-rows .split-row'), function (r2) {
+        var a = r2.querySelector('.js-agent').value;
+        if (!a) return;
+        var amt = Number(r2.querySelector('.js-amount').value) || 0;
+        var pct = calcState.net > 0 && amt ? Math.round(amt / calcState.net * 20) * 5 : null;
+        r2.querySelector('.js-rate').innerHTML = rateOptionsHTML(a, pct);
+      });
     }
 
-    refreshDeductSum();
+    refreshSplitSum();
     backdrop.classList.add('open');
     setTimeout(function () { $('i-date').focus(); }, 60);
   }
@@ -1237,9 +1402,16 @@
     e.preventDefault();
     var fd = new FormData(form);
     var rec = {};
-    ['date','client','side','prop_type','address','city','sale_price','gross_comm','net_comm','source','referrer',
-     'referral_fee','brokerage_fee','other_costs']
+    ['date','client','side','prop_type','address','city','sale_price','source','referrer']
       .forEach(function (k) { rec[k] = fd.get(k); });
+    // The four money fields are derived, never typed, so the stored row always
+    // satisfies net = gross - referral - brokerage - costs.
+    recalcMoney();
+    rec.gross_comm    = calcState.gross || null;
+    rec.net_comm      = calcState.net > 0 ? calcState.net : null;
+    rec.referral_fee  = calcState.referral > 0 ? calcState.referral : null;
+    rec.brokerage_fee = calcState.brokerage > 0 ? calcState.brokerage : null;
+    rec.other_costs   = calcState.costs > 0 ? calcState.costs : null;
 
     if (!store.canWrite()) { closeModal(); openAuth(); return; }
     if (!rec.date || !rec.client || !rec.sale_price) {
@@ -1252,10 +1424,6 @@
     if (state.editingId) {
       var original = state.rows.find(function (r) { return String(r.id) === String(state.editingId); });
       if (original && original.date === rec.date) rec.year = original.year;
-    }
-    // auto-fill gross commission on new records only
-    if (!state.editingId && (rec.gross_comm === '' || rec.gross_comm === null)) {
-      rec.gross_comm = Number(rec.sale_price) * (cfg.DEFAULT_COMMISSION_RATE || 0.025);
     }
 
     var btn = $('modal-save');
